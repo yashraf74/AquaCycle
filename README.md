@@ -1,6 +1,6 @@
-# AquaCycle 🌊♻️
+# TadweerHub 🌿♻️
 
-A full-stack water bottle recycling tracking platform. Users register, log bottle drop-offs, earn points, and compete on a leaderboard — all in real time.
+A full-stack plastic and aluminum recycling platform bridging consumers and recycling factories across Egypt. Consumers log drop-offs, request home pickups, and earn rewards. Factories register to access clean, sorted supply and place delivery orders.
 
 ---
 
@@ -21,7 +21,7 @@ A full-stack water bottle recycling tracking platform. Users register, log bottl
 ## Project Structure
 
 ```
-aquacycle/
+tadweerhub/
 ├── frontend/
 │   └── index.html        ← The entire frontend (single file)
 └── worker/
@@ -37,14 +37,14 @@ aquacycle/
 
 ### Step 1 — Push to GitHub
 
-1. Create a new GitHub repository (e.g. `aquacycle`)
+1. Create a new GitHub repository (e.g. `TadweerHub`)
 2. Push this entire project folder to it:
 
 ```bash
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/aquacycle.git
+git remote add origin https://github.com/YOUR_USERNAME/TadweerHub.git
 git push -u origin main
 ```
 
@@ -66,14 +66,14 @@ npx wrangler login
 
 **Create your D1 database:**
 ```bash
-npx wrangler d1 create aquacycle-db
+npx wrangler d1 create tadweerhub-db
 ```
 
 This prints something like:
 ```
 [[d1_databases]]
 binding = "DB"
-database_name = "aquacycle-db"
+database_name = "tadweerhub-db"
 database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
@@ -85,7 +85,7 @@ npx wrangler deploy
 ```
 
 Your API is now live at:
-`https://aquacycle-api.YOUR_SUBDOMAIN.workers.dev`
+`https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev`
 
 ---
 
@@ -94,7 +94,7 @@ Your API is now live at:
 Open `frontend/index.html` and find this line near the bottom (in the `<script>` tag):
 
 ```javascript
-const API = 'https://aquacycle-api.YOUR_SUBDOMAIN.workers.dev';
+const API = 'https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev';
 ```
 
 Replace it with your actual Worker URL from Step 2.
@@ -102,7 +102,7 @@ Replace it with your actual Worker URL from Step 2.
 Commit and push:
 ```bash
 git add frontend/index.html
-git commit -m "Set API URL"
+git commit -m "Connect frontend to API"
 git push
 ```
 
@@ -119,9 +119,9 @@ git push
    - **Build output directory**: `frontend`
 5. Click **Save and Deploy**
 
-Your site is live at `https://aquacycle.pages.dev` (or a custom domain if you add one).
+Your site is live at `https://tadweerhub.pages.dev` (or a custom domain if you add one).
 
-**Every future `git push` to `main` will auto-redeploy both the frontend and trigger Cloudflare Pages to rebuild.**
+**Every future `git push` to `main` will auto-redeploy the frontend automatically.**
 
 ---
 
@@ -129,49 +129,86 @@ Your site is live at `https://aquacycle.pages.dev` (or a custom domain if you ad
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/api/users` | Register a new user |
-| `GET` | `/api/users` | List all users |
-| `GET` | `/api/users/:id` | Get user by ID |
-| `POST` | `/api/dropoffs` | Log a bottle drop-off |
+| `POST` | `/api/users` | Register a new consumer |
+| `GET` | `/api/users` | List all consumers |
+| `GET` | `/api/users/:id` | Get consumer by ID |
+| `POST` | `/api/factories` | Register a new factory |
+| `GET` | `/api/factories` | List all factories |
+| `GET` | `/api/factories/:id` | Get factory by ID |
+| `POST` | `/api/dropoffs` | Log a drop-off |
 | `GET` | `/api/dropoffs?user_id=X` | Get drop-offs (optional filter) |
-| `GET` | `/api/stats` | Global impact statistics |
-| `GET` | `/api/leaderboard` | Top 10 users by points |
+| `POST` | `/api/pickups` | Request a home pickup |
+| `GET` | `/api/pickups?user_id=X` | Get pickup requests (optional filter) |
+| `PUT` | `/api/pickups/:id/status` | Update pickup status |
+| `POST` | `/api/orders` | Submit a factory supply order |
+| `GET` | `/api/orders?factory_id=X` | Get supply orders (optional filter) |
+| `GET` | `/api/stats` | Global platform statistics |
+| `GET` | `/api/leaderboard` | Top 10 collectors by points |
 
-### Example: Register a user
+### Example: Register a consumer
 ```bash
-curl -X POST https://your-worker.workers.dev/api/users \
+curl -X POST https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev/api/users \
   -H "Content-Type: application/json" \
-  -d '{"name": "Sara Ahmed", "email": "sara@example.com"}'
+  -d '{"name": "Sara Ahmed", "email": "sara@example.com", "phone": "+201001234567"}'
 ```
 
 ### Example: Log a drop-off
 ```bash
-curl -X POST https://your-worker.workers.dev/api/dropoffs \
+curl -X POST https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev/api/dropoffs \
   -H "Content-Type: application/json" \
-  -d '{"user_id": 1, "bottles": 15, "location": "Faculty of Engineering"}'
+  -d '{"user_id": 1, "bottles": 15, "location": "Faculty of Engineering", "material_type": "plastic"}'
+```
+
+### Example: Request a home pickup
+```bash
+curl -X POST https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev/api/pickups \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 1, "address": "12 Tahrir St, Cairo", "quantity": 30, "material_type": "mixed"}'
+```
+
+### Example: Register a factory
+```bash
+curl -X POST https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev/api/factories \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Cairo Recycling Co.", "contact": "Mahmoud Ali", "email": "info@cairorecycling.com", "governorate": "Cairo", "material_pref": "plastic"}'
+```
+
+### Example: Submit a supply order
+```bash
+curl -X POST https://tadweerhub-api.YOUR_SUBDOMAIN.workers.dev/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{"factory_id": 1, "material": "plastic_flakes", "quantity_kg": 500, "address": "Industrial Zone, 6th of October"}'
 ```
 
 ---
 
 ## Features
 
-- **User registration & sign-in** (email-based, no password required for demo)
-- **Drop-off logging** with location selection and optional notes
-- **Live global stats**: bottles recycled, CO₂ saved, water conserved
-- **Real-time activity feed** showing recent drop-offs
-- **Leaderboard** ranking members by points
-- **Points system**: 1 point per bottle recycled
-- **Auto-refresh** every 30 seconds
-- **Responsive** — works on mobile and desktop
+**Consumer Side**
+- Registration & email-based sign-in
+- Drop-off logging with material type and location
+- Home pickup requests with address, date, and quantity
+- Live global impact stats: bottles collected, CO₂ saved, water conserved
+- Real-time activity feed
+- Points leaderboard
+
+**Factory Side**
+- Factory registration with governorate and material preferences
+- Supply overview dashboard (available bottles, pending pickups, active collectors)
+- Supply delivery order form (material type, quantity in KG, delivery address)
+- Live pickup requests feed
+
+**General**
+- Auto-refresh every 30 seconds
+- Fully responsive — desktop and mobile
+- Hamburger menu on mobile
 
 ---
 
 ## Customisation Notes
 
-Once you have the full use cases from the project owner, easy things to change:
-
-- **Locations list** — edit the `<select>` options in `index.html`
+- **Drop-off locations list** — edit the `<select>` options in `index.html`
 - **Points formula** — change `1 point per bottle` in `worker/src/index.js`
 - **Impact calculations** — CO₂, water, and oil savings are in the `/api/stats` route
 - **Color scheme** — all colors are CSS variables at the top of `index.html`
-- **Add more fields** — e.g. bottle type, photo upload, etc.
+- **Logo** — replace the `LOGO HERE` placeholder divs in the navbar and footer with an `<img>` tag

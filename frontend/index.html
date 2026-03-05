@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>AquaCycle — Recycle. Restore. Repeat.</title>
+  <title>TadweerHub — Collect. Recycle. Earn.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #0a0f0d;
@@ -18,23 +15,15 @@
       --green: #3dff7a;
       --green-dim: #1a5c30;
       --blue: #00d4ff;
+      --amber: #ffb830;
       --text: #e8f5ed;
       --muted: #6b8f76;
       --border: #1e3326;
       --danger: #ff4d4d;
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -45,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Noise overlay ── */
     body::before {
       content: '';
       position: fixed;
@@ -56,60 +44,68 @@
       opacity: 0.4;
     }
 
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--green-dim);
-      border-radius: 3px;
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green-dim); border-radius: 3px; }
 
     /* ── Nav ── */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 3rem;
-      padding-top: calc(1.25rem + env(safe-area-inset-top));
-      background: rgba(10, 15, 13, 0.85);
+      padding: 0.85rem 2.5rem;
+      background: rgba(10, 15, 13, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.1em;
-      color: var(--green);
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       text-decoration: none;
       z-index: 101;
     }
 
-    .nav-logo span {
-      color: var(--blue);
+    .nav-logo-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px dashed var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.3;
+      flex-shrink: 0;
     }
+
+    .nav-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.08em;
+      color: var(--green);
+    }
+
+    .nav-logo-text span { color: var(--blue); }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.75rem;
       list-style: none;
       align-items: center;
     }
 
     .nav-links a {
       font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--muted);
       text-decoration: none;
       text-transform: uppercase;
@@ -117,23 +113,28 @@
       transition: color 0.2s;
     }
 
-    .nav-links a:hover {
-      color: var(--green);
-    }
+    .nav-links a:hover { color: var(--green); }
 
     .btn-nav {
-      background: var(--green);
+      background: var(--green) !important;
       color: var(--bg) !important;
-      padding: 0.5rem 1.25rem;
+      padding: 0.5rem 1.25rem !important;
       font-weight: 700 !important;
       border-radius: 2px;
-      transition: background 0.2s, transform 0.1s !important;
     }
 
-    .btn-nav:hover {
-      background: #5fffaa !important;
-      transform: translateY(-1px);
+    .btn-nav:hover { background: #5fffaa !important; }
+
+    .btn-nav-factory {
+      background: transparent !important;
+      color: var(--amber) !important;
+      border: 1px solid var(--amber) !important;
+      padding: 0.5rem 1.25rem !important;
+      font-weight: 700 !important;
+      border-radius: 2px;
     }
+
+    .btn-nav-factory:hover { background: rgba(255,184,48,0.1) !important; }
 
     /* ── Hamburger ── */
     .hamburger {
@@ -156,34 +157,17 @@
       transition: all 0.3s;
     }
 
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     @media (max-width: 768px) {
-      nav {
-        padding: 1rem 1.5rem;
-        position: relative;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
+      nav { padding: 1rem 1.5rem; position: relative; }
+      .hamburger { display: flex; }
       .nav-links {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: rgba(10, 15, 13, 0.97);
+        top: 0; left: 0; right: 0;
+        background: rgba(10,15,13,0.97);
         backdrop-filter: blur(16px);
         flex-direction: column;
         justify-content: center;
@@ -191,22 +175,10 @@
         gap: 2rem;
         height: 100vh;
         transform: translateX(100%);
-        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        border-left: 1px solid var(--border);
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
       }
-
-      .nav-links.open {
-        transform: translateX(0);
-      }
-
-      .nav-links a {
-        font-size: 0.9rem;
-      }
-
-      .btn-nav {
-        padding: 0.75rem 2rem;
-        font-size: 0.85rem !important;
-      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 0.9rem; }
     }
 
     /* ── Hero ── */
@@ -224,18 +196,16 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(61, 255, 122, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(61, 255, 122, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(61,255,122,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,255,122,0.03) 1px, transparent 1px);
       background-size: 60px 60px;
     }
 
     .hero-glow {
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(61, 255, 122, 0.08) 0%, transparent 70%);
-      top: -100px;
-      right: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(61,255,122,0.07) 0%, transparent 70%);
+      top: -150px; right: -150px;
       pointer-events: none;
     }
 
@@ -252,7 +222,7 @@
 
     .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 12vw, 10rem);
+      font-size: clamp(3.5rem, 11vw, 9rem);
       line-height: 0.9;
       letter-spacing: 0.02em;
       max-width: 900px;
@@ -260,19 +230,14 @@
       animation: fadeUp 0.7s 0.2s forwards;
     }
 
-    .hero h1 .accent {
-      color: var(--green);
-    }
-
-    .hero h1 .accent2 {
-      color: var(--blue);
-    }
+    .hero h1 .accent { color: var(--green); }
+    .hero h1 .accent2 { color: var(--blue); }
 
     .hero-sub {
-      max-width: 500px;
+      max-width: 520px;
       color: var(--muted);
       margin-top: 2rem;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 300;
       opacity: 0;
       animation: fadeUp 0.7s 0.35s forwards;
@@ -282,6 +247,7 @@
       display: flex;
       gap: 1rem;
       margin-top: 3rem;
+      flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.7s 0.5s forwards;
     }
@@ -306,7 +272,29 @@
     .btn-primary:hover {
       background: #5fffaa;
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(61, 255, 122, 0.3);
+      box-shadow: 0 8px 30px rgba(61,255,122,0.3);
+    }
+
+    .btn-factory {
+      background: transparent;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 1rem 2.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 2px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-factory:hover {
+      background: rgba(255,184,48,0.1);
+      transform: translateY(-2px);
     }
 
     .btn-secondary {
@@ -326,25 +314,47 @@
       display: inline-block;
     }
 
-    .btn-secondary:hover {
-      border-color: var(--green);
-      color: var(--green);
+    .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+    /* ── Segment tabs ── */
+    .segment-tabs {
+      display: flex;
+      gap: 2rem;
+      margin-top: 4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
     }
 
-    /* ── Live stats bar ── */
+    .seg-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .seg-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .seg-dot.consumer { background: var(--green); }
+    .seg-dot.factory { background: var(--amber); }
+
+    /* ── Stats bar ── */
     .stats-bar {
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       padding: 2.5rem 3rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 2rem;
     }
 
-    .stat-item {
-      text-align: center;
-    }
+    .stat-item { text-align: center; }
 
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
@@ -356,17 +366,15 @@
 
     .stat-label {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       margin-top: 0.4rem;
     }
 
     /* ── Sections ── */
-    section {
-      padding: 6rem 3rem;
-    }
+    section { padding: 6rem 3rem; }
 
     .section-tag {
       font-family: 'Space Mono', monospace;
@@ -386,16 +394,40 @@
     }
 
     /* ── How it works ── */
-    #how-it-works {
-      background: var(--surface);
+    #how-it-works { background: var(--surface); }
+
+    .how-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
     }
+
+    .how-tab {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .how-tab.active-consumer { color: var(--green); border-bottom-color: var(--green); }
+    .how-tab.active-factory { color: var(--amber); border-bottom-color: var(--amber); }
 
     .steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2px;
-      margin-top: 3rem;
     }
+
+    .steps.hidden { display: none; }
 
     .step {
       background: var(--bg);
@@ -405,24 +437,19 @@
       transition: background 0.2s;
     }
 
-    .step:hover {
-      background: var(--surface2);
-    }
+    .step:hover { background: var(--surface2); }
 
     .step::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--green);
+      top: 0; left: 0;
+      width: 3px; height: 0;
       transition: height 0.4s;
     }
 
-    .step:hover::before {
-      height: 100%;
-    }
+    .consumer-steps .step::before { background: var(--green); }
+    .factory-steps .step::before { background: var(--amber); }
+    .step:hover::before { height: 100%; }
 
     .step-num {
       font-family: 'Bebas Neue', sans-serif;
@@ -432,57 +459,50 @@
       margin-bottom: 1rem;
     }
 
-    .step h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text);
-    }
-
-    .step p {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .step h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .step p { color: var(--muted); font-size: 0.88rem; }
 
     /* ── Dashboard ── */
-    #dashboard {
-      background: var(--bg);
+    #dashboard { background: var(--bg); }
+
+    .dashboard-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
     }
+
+    .dash-tab {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .dash-tab.active-consumer { color: var(--green); border-bottom-color: var(--green); }
+    .dash-tab.active-factory { color: var(--amber); border-bottom-color: var(--amber); }
+
+    .dash-panel { display: none; }
+    .dash-panel.active { display: block; }
 
     .dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr 360px;
       gap: 2rem;
-      margin-top: 3rem;
     }
 
     @media (max-width: 900px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-
-      nav {
-        padding: 1rem 1.5rem;
-      }
-
-      nav::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        height: env(safe-area-inset-top);
-        background: rgba(10, 15, 13, 0.85);
-        backdrop-filter: blur(12px);
-      }
-
-      .hero,
-      section {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
-
-      .stats-bar {
-        padding: 2rem 1.5rem;
-      }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .stats-bar { padding: 2rem 1.5rem; }
     }
 
     .card {
@@ -491,6 +511,8 @@
       border-radius: 4px;
       padding: 2rem;
     }
+
+    .card.factory-card { border-color: rgba(255,184,48,0.2); }
 
     .card-title {
       font-family: 'Space Mono', monospace;
@@ -501,10 +523,8 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ── Form ── */
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+    /* ── Forms ── */
+    .form-group { margin-bottom: 1.25rem; }
 
     label {
       display: block;
@@ -516,9 +536,7 @@
       margin-bottom: 0.5rem;
     }
 
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       background: var(--bg);
       border: 1px solid var(--border);
@@ -531,15 +549,10 @@
       transition: border-color 0.2s;
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--green);
-    }
+    input:focus, select:focus, textarea:focus { border-color: var(--green); }
+    .factory-card input:focus, .factory-card select:focus, .factory-card textarea:focus { border-color: var(--amber); }
 
-    select option {
-      background: var(--surface);
-    }
+    select option { background: var(--surface); }
 
     .btn-submit {
       width: 100%;
@@ -558,23 +571,31 @@
       transition: background 0.2s, transform 0.15s;
     }
 
-    .btn-submit:hover {
-      background: #5fffaa;
-      transform: translateY(-1px);
+    .btn-submit:hover { background: #5fffaa; transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--green-dim); cursor: not-allowed; transform: none; }
+
+    .btn-submit-factory {
+      width: 100%;
+      background: var(--amber);
+      color: var(--bg);
+      border: none;
+      padding: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 2px;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.15s;
     }
 
-    .btn-submit:disabled {
-      background: var(--green-dim);
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn-submit-factory:hover { background: #ffd066; transform: translateY(-1px); }
+    .btn-submit-factory:disabled { background: #5c4010; cursor: not-allowed; transform: none; }
 
     /* ── Feed ── */
-    .feed {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .feed { display: flex; flex-direction: column; gap: 0.75rem; }
 
     .feed-item {
       background: var(--bg);
@@ -588,53 +609,42 @@
       animation: fadeUp 0.4s forwards;
     }
 
-    .feed-item-left {
+    .feed-item-left { display: flex; flex-direction: column; gap: 0.2rem; }
+    .feed-user { font-weight: 600; font-size: 0.9rem; }
+    .feed-meta { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .feed-bottles { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); line-height: 1; white-space: nowrap; }
+    .feed-bottles span { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--muted); display: block; text-align: right; }
+
+    /* ── Pickup requests feed ── */
+    .pickup-item {
+      background: var(--bg);
+      border: 1px solid rgba(255,184,48,0.15);
+      border-radius: 2px;
+      padding: 1rem 1.25rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 0.4s forwards;
     }
 
-    .feed-user {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--text);
-    }
-
-    .feed-meta {
+    .pickup-status {
       font-family: 'Space Mono', monospace;
       font-size: 0.6rem;
-      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
     }
 
-    .feed-bottles {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      color: var(--green);
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    .feed-bottles span {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--muted);
-      display: block;
-      text-align: right;
-    }
+    .status-pending { background: rgba(255,184,48,0.1); color: var(--amber); }
+    .status-confirmed { background: rgba(61,255,122,0.1); color: var(--green); }
 
     /* ── Leaderboard ── */
-    #leaderboard {
-      background: var(--surface);
-    }
+    #leaderboard { background: var(--surface); }
 
-    .leaderboard-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-    }
+    .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 0.9rem; }
 
     .leaderboard-table th {
       font-family: 'Space Mono', monospace;
@@ -647,36 +657,16 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .leaderboard-table td {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }
+    .leaderboard-table td { padding: 1rem; border-bottom: 1px solid var(--border); }
+    .leaderboard-table tr:hover td { background: rgba(61,255,122,0.03); }
 
-    .leaderboard-table tr:hover td {
-      background: rgba(61, 255, 122, 0.03);
-    }
-
-    .rank {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      color: var(--muted);
-    }
-
-    .rank-1 {
-      color: #ffd700;
-    }
-
-    .rank-2 {
-      color: #c0c0c0;
-    }
-
-    .rank-3 {
-      color: #cd7f32;
-    }
+    .rank { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--muted); }
+    .rank-1 { color: #ffd700; }
+    .rank-2 { color: #c0c0c0; }
+    .rank-3 { color: #cd7f32; }
 
     .points-badge {
-      background: rgba(61, 255, 122, 0.1);
+      background: rgba(61,255,122,0.1);
       color: var(--green);
       padding: 0.25rem 0.75rem;
       border-radius: 100px;
@@ -685,96 +675,9 @@
       font-weight: 700;
     }
 
-    /* ── Register modal ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 440px;
-      margin: 1rem;
-      transform: translateY(20px);
-      transition: transform 0.3s;
-    }
-
-    .modal-overlay.active .modal {
-      transform: translateY(0);
-    }
-
-    .modal-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .modal-sub {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    /* ── Toast ── */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--green);
-      color: var(--text);
-      padding: 1rem 1.5rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      z-index: 2000;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.3s;
-      max-width: 320px;
-    }
-
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .toast.error {
-      border-color: var(--danger);
-    }
-
-    /* ── User session bar ── */
+    /* ── Session bar ── */
     .session-bar {
-      background: rgba(61, 255, 122, 0.08);
+      background: rgba(61,255,122,0.06);
       border: 1px solid var(--green-dim);
       border-radius: 4px;
       padding: 1rem 1.5rem;
@@ -785,20 +688,12 @@
       gap: 1rem;
     }
 
-    .session-bar.visible {
-      display: flex;
-    }
-
-    .session-name {
-      font-weight: 600;
-      color: var(--green);
-    }
-
-    .session-points {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
+    .session-bar.visible { display: flex; }
+    .session-bar.factory-session { background: rgba(255,184,48,0.06); border-color: rgba(255,184,48,0.3); }
+    .session-name { font-weight: 600; }
+    .session-name.consumer-name { color: var(--green); }
+    .session-name.factory-name { color: var(--amber); }
+    .session-points { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); }
 
     .btn-logout {
       background: none;
@@ -814,79 +709,181 @@
       transition: color 0.2s, border-color 0.2s;
     }
 
-    .btn-logout:hover {
-      color: var(--danger);
-      border-color: var(--danger);
+    .btn-logout:hover { color: var(--danger); border-color: var(--danger); }
+
+    /* ── Modals ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 460px;
+      margin: 1rem;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal.factory-modal { border-color: rgba(255,184,48,0.3); }
+    .modal-overlay.active .modal { transform: translateY(0); }
+
+    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
+    .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .modal-switch {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .modal-switch a { color: var(--green); text-decoration: none; }
+    .modal-switch a:hover { text-decoration: underline; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      right: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--green);
+      color: var(--text);
+      padding: 1rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      z-index: 2000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      max-width: 320px;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { border-color: var(--danger); }
+
+    /* ── Warning ── */
+    .warning-box {
+      background: rgba(255,77,77,0.08);
+      border: 1px solid rgba(255,77,77,0.3);
+      border-radius: 2px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #ff9f9f;
+    }
+
+    .warning-box a { color: var(--green); text-decoration: underline; cursor: pointer; }
+
+    /* ── Factory supply cards ── */
+    .supply-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .supply-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,184,48,0.2);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .supply-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--amber);
+      line-height: 1;
+    }
+
+    .supply-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 0.5rem;
     }
 
     /* ── Footer ── */
     footer {
       background: var(--surface);
       border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
+      padding: 2.5rem 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
-    .footer-logo {
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-logo-img {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px dashed var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.4rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .footer-logo-text {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: var(--green);
       letter-spacing: 0.1em;
     }
 
-    footer p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
+    footer p { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; }
 
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .loading-text {
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
-    }
-
-    .empty-state p {
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-
+    /* ── Scroll top ── */
     .scroll-top {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 44px;
-      height: 44px;
+      bottom: 2rem; right: 2rem;
+      width: 44px; height: 44px;
       background: var(--green);
       color: var(--bg);
       border: none;
@@ -900,130 +897,198 @@
       pointer-events: none;
     }
 
-    .scroll-top.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
+    .scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+    /* ── Misc ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden { display: none !important; }
+
+    .loading-text {
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-state p { font-size: 0.9rem; margin-top: 0.5rem; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ── Navigation ── -->
-  <nav>
-    <a href="#" class="nav-logo">Aqua<span>Cycle</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-      <li><a href="#dashboard" class="nav-link">Log Drop-off</a></li>
-      <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
-      <li><a href="#" class="btn-nav nav-link" id="openRegister">Join Now</a></li>
-    </ul>
-  </nav>
+<!-- ── Navigation ── -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo-img">LOGO<br>HERE</div>
+    <span class="nav-logo-text">Tadweer<span>Hub</span></span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+    <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+    <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
+    <li><a href="#" class="btn-nav-factory nav-link" id="openFactoryRegister">Factory Portal</a></li>
+    <li><a href="#" class="btn-nav nav-link" id="openRegister">Join Now</a></li>
+  </ul>
+</nav>
 
-  <!-- ── Hero ── -->
-  <section class="hero" id="home">
-    <div class="hero-grid"></div>
-    <div class="hero-glow"></div>
-    <p class="hero-tag">// Water Bottle Recycling Network</p>
-    <h1>
-      RECYCLE.<br>
-      <span class="accent">RESTORE.</span><br>
-      <span class="accent2">REPEAT.</span>
-    </h1>
-    <p class="hero-sub">
-      Join a growing network of people making a real impact. Drop off your plastic water bottles, track your
-      contribution, and see the difference in real time.
-    </p>
-    <div class="hero-cta">
-      <a href="#dashboard" class="btn-primary">Log a Drop-off</a>
-      <a href="#how-it-works" class="btn-secondary">How It Works</a>
-    </div>
-  </section>
+<!-- ── Hero ── -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <p class="hero-tag">// Egypt's Plastic & Can Recycling Network</p>
+  <h1>
+    COLLECT.<br>
+    <span class="accent">RECYCLE.</span><br>
+    <span class="accent2">EARN.</span>
+  </h1>
+  <p class="hero-sub">
+    TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.
+  </p>
+  <div class="hero-cta">
+    <a href="#dashboard" class="btn-primary">I Have Waste to Recycle</a>
+    <a href="#dashboard" class="btn-factory" id="factoryHeroBtn">I'm a Recycling Factory</a>
+    <a href="#how-it-works" class="btn-secondary">How It Works</a>
+  </div>
+  <div class="segment-tabs">
+    <div class="seg-tab"><div class="seg-dot consumer"></div><span style="color:var(--muted)">Consumers — earn cash from plastic</span></div>
+    <div class="seg-tab"><div class="seg-dot factory"></div><span style="color:var(--muted)">Factories — get clean sorted supply</span></div>
+  </div>
+</section>
 
-  <!-- ── Live Stats Bar ── -->
-  <div class="stats-bar" id="statsBar">
-    <div class="stat-item">
-      <div class="stat-value" id="statBottles">—</div>
-      <div class="stat-label">Bottles Recycled</div>
+<!-- ── Live Stats Bar ── -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value" id="statBottles">—</div>
+    <div class="stat-label">Bottles Collected</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statUsers">—</div>
+    <div class="stat-label">Active Members</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statPickups">—</div>
+    <div class="stat-label">Pickup Requests</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statCO2">—</div>
+    <div class="stat-label">KG CO₂ Saved</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="statWater">—</div>
+    <div class="stat-label">Litres Water Saved</div>
+  </div>
+</div>
+
+<!-- ── How It Works ── -->
+<section id="how-it-works">
+  <p class="section-tag">// Process</p>
+  <h2 class="section-title">HOW IT WORKS</h2>
+
+  <div class="how-tabs">
+    <button class="how-tab active-consumer" id="howTabConsumer" onclick="switchHowTab('consumer')">For Consumers</button>
+    <button class="how-tab" id="howTabFactory" onclick="switchHowTab('factory')">For Factories</button>
+  </div>
+
+  <div class="steps consumer-steps" id="consumerSteps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Collect Your Plastic</h3>
+      <p>Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.</p>
     </div>
-    <div class="stat-item">
-      <div class="stat-value" id="statUsers">—</div>
-      <div class="stat-label">Active Members</div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Choose Drop-off or Pickup</h3>
+      <p>Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.</p>
     </div>
-    <div class="stat-item">
-      <div class="stat-value" id="statCO2">—</div>
-      <div class="stat-label">KG CO₂ Saved</div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Log Your Drop-off</h3>
+      <p>Create your account and log how many items you've dropped off. Every bottle counts toward your balance.</p>
     </div>
-    <div class="stat-item">
-      <div class="stat-value" id="statWater">—</div>
-      <div class="stat-label">Litres Water Saved</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value" id="statDropoffs">—</div>
-      <div class="stat-label">Total Drop-offs</div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Earn Cash & Track Impact</h3>
+      <p>Earn points redeemable for cash payments. Track your environmental impact: CO₂ saved, water conserved, and more.</p>
     </div>
   </div>
 
-  <!-- ── How It Works ── -->
-  <section id="how-it-works">
-    <p class="section-tag">// Process</p>
-    <h2 class="section-title">HOW IT WORKS</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Collect Your Bottles</h3>
-        <p>Gather your empty plastic water bottles. Every single bottle counts toward a cleaner future.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>Find a Drop-off Point</h3>
-        <p>Locate your nearest AquaCycle collection point at schools, offices, or community centres.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Log Your Drop-off</h3>
-        <p>Register on the platform and log how many bottles you've dropped off to earn points.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h3>Track Your Impact</h3>
-        <p>See your personal stats: CO₂ saved, water conserved, and your rank on the leaderboard.</p>
-      </div>
+  <div class="steps factory-steps hidden" id="factorySteps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Register Your Factory</h3>
+      <p>Create a factory account and specify what materials you need — plastic types, aluminum cans — and your required quantities.</p>
     </div>
-  </section>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>View Available Supply</h3>
+      <p>See real-time inventory of collected, sorted plastic and cans available in your region, ready for delivery.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Place a Supply Order</h3>
+      <p>Request the quantity you need. TadweerHub handles collection, sorting, and delivery directly to your factory site.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Receive Sorted Materials</h3>
+      <p>Get clean, quality-tested, well-sorted plastic and aluminum delivered on schedule at competitive prices.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- ── Dashboard ── -->
-  <section id="dashboard">
-    <p class="section-tag">// Dashboard</p>
-    <h2 class="section-title">LOG A DROP-OFF</h2>
+<!-- ── Dashboard ── -->
+<section id="dashboard">
+  <p class="section-tag">// Dashboard</p>
+  <h2 class="section-title">YOUR PORTAL</h2>
 
-    <div id="sessionBar" class="session-bar">
+  <div class="dashboard-tabs">
+    <button class="dash-tab active-consumer" id="dashTabConsumer" onclick="switchDashTab('consumer')">Consumer Dashboard</button>
+    <button class="dash-tab" id="dashTabFactory" onclick="switchDashTab('factory')">Factory Dashboard</button>
+  </div>
+
+  <!-- ── Consumer Panel ── -->
+  <div class="dash-panel active" id="panelConsumer">
+    <div id="consumerSessionBar" class="session-bar">
       <div>
-        <div class="session-name" id="sessionName">—</div>
+        <div class="session-name consumer-name" id="sessionName">—</div>
         <div class="session-points" id="sessionPoints">0 points</div>
       </div>
       <button class="btn-logout" id="logoutBtn">Sign Out</button>
     </div>
 
     <div class="dashboard-grid">
-      <!-- Log form -->
       <div class="card">
-        <div class="card-title">// New Drop-off Entry</div>
-
-        <div id="noUserWarning"
-          style="background: rgba(255,77,77,0.08); border: 1px solid rgba(255,77,77,0.3); border-radius: 2px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: #ff9f9f;">
-          You need to <a href="#" id="joinPromptLink" style="color: var(--green); text-decoration: underline;">create an
-            account</a> before logging a drop-off.
+        <div class="card-title">// Log a Drop-off</div>
+        <div id="noUserWarning" class="warning-box">
+          You need to <a id="joinPromptLink">create an account</a> before logging a drop-off.
         </div>
-
         <form id="dropoffForm">
           <div class="form-group">
-            <label>Number of Bottles</label>
+            <label>Number of Bottles / Cans</label>
             <input type="number" id="bottleCount" min="1" max="10000" placeholder="e.g. 25" required />
+          </div>
+          <div class="form-group">
+            <label>Material Type</label>
+            <select id="materialType" required>
+              <option value="">Select type...</option>
+              <option value="plastic">Plastic Bottles</option>
+              <option value="cans">Aluminum Cans</option>
+              <option value="mixed">Mixed (Plastic + Cans)</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Drop-off Location</label>
@@ -1045,355 +1110,677 @@
             <label>Notes (optional)</label>
             <textarea id="dropoffNotes" rows="2" placeholder="Anything to add..."></textarea>
           </div>
-          <button type="submit" class="btn-submit" id="submitDropoff">Log Drop-off</button>
+          <button type="submit" class="btn-submit" id="submitDropoff" disabled>Log Drop-off</button>
+        </form>
+
+        <hr class="divider" />
+
+        <div class="card-title">// Request Home Pickup</div>
+        <div id="noUserPickup" class="warning-box">
+          <a id="joinPromptPickup">Sign in</a> to request a home pickup.
+        </div>
+        <form id="pickupForm">
+          <div class="form-group">
+            <label>Your Address</label>
+            <input type="text" id="pickupAddress" placeholder="Street, district, city" />
+          </div>
+          <div class="form-group">
+            <label>Estimated Quantity</label>
+            <input type="number" id="pickupQty" min="1" placeholder="Approx. number of items" />
+          </div>
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="pickupDate" />
+          </div>
+          <div class="form-group">
+            <label>Material Type</label>
+            <select id="pickupMaterial">
+              <option value="plastic">Plastic Bottles</option>
+              <option value="cans">Aluminum Cans</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-submit" id="submitPickup" disabled>Request Pickup</button>
         </form>
       </div>
 
-      <!-- Recent feed -->
       <div class="card">
-        <div class="card-title">// Live Drop-off Feed</div>
+        <div class="card-title">// Live Activity Feed</div>
         <div class="feed" id="feed">
           <div class="loading-text">Loading activity...</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ── Leaderboard ── -->
-  <section id="leaderboard">
-    <p class="section-tag">// Rankings</p>
-    <h2 class="section-title">LEADERBOARD</h2>
-    <table class="leaderboard-table" id="leaderboardTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Member</th>
-          <th>Drop-offs</th>
-          <th>Bottles</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboardBody">
-        <tr>
-          <td colspan="5" class="loading-text">Loading...</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+  <!-- ── Factory Panel ── -->
+  <div class="dash-panel" id="panelFactory">
+    <div id="factorySessionBar" class="session-bar factory-session">
+      <div>
+        <div class="session-name factory-name" id="factorySessionName">—</div>
+        <div class="session-points" id="factorySessionSub">Factory Account</div>
+      </div>
+      <button class="btn-logout" id="factoryLogoutBtn">Sign Out</button>
+    </div>
 
-  <!-- ── Footer ── -->
-  <footer>
-    <div class="footer-logo">AquaCycle</div>
-    <p>© 2025 AquaCycle. Every bottle matters.</p>
-    <p style="color: var(--green-dim);">Built for a greener tomorrow.</p>
-  </footer>
+    <div id="noFactoryWarning" class="warning-box">
+      <a id="joinFactoryPrompt">Register your factory</a> to access the supply portal.
+    </div>
 
-  <!-- ── Register Modal ── -->
-  <div class="modal-overlay" id="registerModal">
-    <div class="modal">
-      <button class="modal-close" id="closeModal">×</button>
-      <div class="modal-title">JOIN AQUACYCLE</div>
-      <p class="modal-sub">Create your account to start logging drop-offs and earning points.</p>
-      <form id="registerForm">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="regName" placeholder="Your name" required />
+    <!-- Supply overview -->
+    <div class="supply-grid">
+      <div class="supply-card">
+        <div class="supply-val" id="supplyBottles">—</div>
+        <div class="supply-label">Plastic Bottles Available</div>
+      </div>
+      <div class="supply-card">
+        <div class="supply-val" id="supplyPickups">—</div>
+        <div class="supply-label">Pending Pickups</div>
+      </div>
+      <div class="supply-card">
+        <div class="supply-val" id="supplyMembers">—</div>
+        <div class="supply-label">Active Collectors</div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" style="margin-top:2rem;">
+      <div class="card factory-card">
+        <div class="card-title">// Request Supply Delivery</div>
+        <form id="supplyOrderForm">
+          <div class="form-group">
+            <label>Material Needed</label>
+            <select id="supplyMaterial" required>
+              <option value="">Select material...</option>
+              <option value="plastic_flakes">Plastic Flakes (sorted)</option>
+              <option value="plastic_pellets">Plastic Pellets</option>
+              <option value="aluminum_cans">Aluminum Cans</option>
+              <option value="mixed_plastic">Mixed Plastic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity (KG)</label>
+            <input type="number" id="supplyQty" min="50" placeholder="Minimum 50 kg" required />
+          </div>
+          <div class="form-group">
+            <label>Delivery Address</label>
+            <input type="text" id="supplyAddress" placeholder="Factory address" required />
+          </div>
+          <div class="form-group">
+            <label>Required By (Date)</label>
+            <input type="date" id="supplyDate" />
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea id="supplyNotes" rows="2" placeholder="Quality requirements, special instructions..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit-factory" id="submitSupplyOrder" disabled>Submit Supply Order</button>
+        </form>
+      </div>
+
+      <div class="card factory-card">
+        <div class="card-title">// Recent Pickup Requests</div>
+        <div class="feed" id="pickupFeed">
+          <div class="loading-text">Loading pickups...</div>
         </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="regEmail" placeholder="you@example.com" required />
-        </div>
-        <button type="submit" class="btn-submit" id="registerBtn">Create Account</button>
-      </form>
-      <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--muted); text-align: center;">
-        Already joined? <a href="#" id="loginLink" style="color: var(--green);">Sign in with email</a>
-      </p>
-      <div id="loginSection" class="hidden"
-        style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-        <div class="form-group">
-          <label>Your Email</label>
-          <input type="email" id="loginEmail" placeholder="you@example.com" />
-        </div>
-        <button class="btn-submit" id="loginBtn"
-          style="background: transparent; border: 1px solid var(--green); color: var(--green);">Sign In</button>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ── Toast ── -->
-  <div class="toast" id="toast"></div>
+<!-- ── Leaderboard ── -->
+<section id="leaderboard">
+  <p class="section-tag">// Top Collectors</p>
+  <h2 class="section-title">LEADERBOARD</h2>
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Member</th>
+        <th>Drop-offs</th>
+        <th>Items Collected</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboardBody">
+      <tr><td colspan="5" class="loading-text">Loading...</td></tr>
+    </tbody>
+  </table>
+</section>
 
-  <button class="scroll-top" id="scrollTop">↑</button>
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo-img">LOGO<br>HERE</div>
+    <span class="footer-logo-text">TadweerHub</span>
+  </div>
+  <p>© 2025 TadweerHub. Bridging waste and recycling across Egypt.</p>
+  <p style="color:var(--green-dim)">Built for Egypt's Vision 2030 🌿</p>
+</footer>
 
-  <script>
-    // ── Config ──────────────────────────────────────────────────
-    // Replace with your deployed Worker URL
-    const API = 'https://aquacycle-api.y-ashraf74.workers.dev';
+<!-- ── Consumer Register Modal ── -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" id="closeModal">×</button>
+    <div class="modal-title">JOIN TADWEERHUB</div>
+    <p class="modal-sub">Create your consumer account to log drop-offs, request pickups, and earn rewards.</p>
+    <form id="registerForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="regName" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="+20 1xx xxx xxxx" />
+      </div>
+      <button type="submit" class="btn-submit" id="registerBtn">Create Account</button>
+    </form>
+    <p class="modal-switch">Already joined? <a href="#" id="loginLink">Sign in with email</a></p>
+    <div id="loginSection" class="hidden" style="margin-top:1.5rem; border-top:1px solid var(--border); padding-top:1.5rem;">
+      <div class="form-group">
+        <label>Your Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" />
+      </div>
+      <button class="btn-submit" id="loginBtn" style="background:transparent;border:1px solid var(--green);color:var(--green);">Sign In</button>
+    </div>
+  </div>
+</div>
 
-    // ── State ───────────────────────────────────────────────────
-    let currentUser = JSON.parse(localStorage.getItem('aquacycle_user') || 'null');
+<!-- ── Factory Register Modal ── -->
+<div class="modal-overlay" id="factoryModal">
+  <div class="modal factory-modal">
+    <button class="modal-close" id="closeFactoryModal">×</button>
+    <div class="modal-title" style="color:var(--amber)">FACTORY PORTAL</div>
+    <p class="modal-sub">Register your recycling factory to access sorted supply, place orders, and manage deliveries.</p>
+    <form id="factoryRegisterForm">
+      <div class="form-group">
+        <label>Factory / Company Name</label>
+        <input type="text" id="factoryName" placeholder="e.g. Cairo Recycling Co." required />
+      </div>
+      <div class="form-group">
+        <label>Contact Person</label>
+        <input type="text" id="factoryContact" placeholder="Manager's name" required />
+      </div>
+      <div class="form-group">
+        <label>Business Email</label>
+        <input type="email" id="factoryEmail" placeholder="factory@company.com" required />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" id="factoryPhone" placeholder="+20 2 xxxx xxxx" />
+      </div>
+      <div class="form-group">
+        <label>Factory Location / Governorate</label>
+        <select id="factoryGov" required>
+          <option value="">Select governorate...</option>
+          <option>Cairo</option>
+          <option>Giza</option>
+          <option>Alexandria</option>
+          <option>Qalyubia</option>
+          <option>Sharqia</option>
+          <option>Dakahlia</option>
+          <option>Beheira</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Primary Material Needed</label>
+        <select id="factoryMaterialPref">
+          <option value="plastic">Plastic Bottles</option>
+          <option value="cans">Aluminum Cans</option>
+          <option value="both">Both</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit-factory" id="factoryRegisterBtn">Register Factory</button>
+    </form>
+    <p class="modal-switch">Already registered? <a href="#" id="factoryLoginLink">Sign in</a></p>
+    <div id="factoryLoginSection" class="hidden" style="margin-top:1.5rem;border-top:1px solid rgba(255,184,48,0.2);padding-top:1.5rem;">
+      <div class="form-group">
+        <label>Factory Email</label>
+        <input type="email" id="factoryLoginEmail" placeholder="factory@company.com" />
+      </div>
+      <button class="btn-submit-factory" id="factoryLoginBtn" style="background:transparent;border:1px solid var(--amber);color:var(--amber);">Sign In</button>
+    </div>
+  </div>
+</div>
 
-    // ── Toast ───────────────────────────────────────────────────
-    function showToast(msg, type = 'success') {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast show' + (type === 'error' ? ' error' : '');
-      setTimeout(() => t.className = 'toast', 3500);
+<!-- ── Toast ── -->
+<div class="toast" id="toast"></div>
+
+<button class="scroll-top" id="scrollTop">↑</button>
+
+<script>
+  // ── Config ──────────────────────────────────────────────────
+  const API = 'https://tadweerhub-api.y-ashraf74.workers.dev';
+
+  // ── State ───────────────────────────────────────────────────
+  let currentUser    = JSON.parse(localStorage.getItem('tadweerhub_user') || 'null');
+  let currentFactory = JSON.parse(localStorage.getItem('tadweerhub_factory') || 'null');
+
+  // ── Toast ───────────────────────────────────────────────────
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (type === 'error' ? ' error' : '');
+    setTimeout(() => t.className = 'toast', 3500);
+  }
+
+  // ── API helper ───────────────────────────────────────────────
+  async function api(path, options = {}) {
+    const res = await fetch(API + path, {
+      headers: { 'Content-Type': 'application/json' },
+      ...options,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  // ── Tab switchers ────────────────────────────────────────────
+  function switchHowTab(tab) {
+    const cSteps = document.getElementById('consumerSteps');
+    const fSteps = document.getElementById('factorySteps');
+    const cTab   = document.getElementById('howTabConsumer');
+    const fTab   = document.getElementById('howTabFactory');
+    if (tab === 'consumer') {
+      cSteps.classList.remove('hidden'); fSteps.classList.add('hidden');
+      cTab.className = 'how-tab active-consumer'; fTab.className = 'how-tab';
+    } else {
+      fSteps.classList.remove('hidden'); cSteps.classList.add('hidden');
+      fTab.className = 'how-tab active-factory'; cTab.className = 'how-tab';
     }
+  }
 
-    // ── API helper ───────────────────────────────────────────────
-    async function api(path, options = {}) {
-      const res = await fetch(API + path, {
-        headers: { 'Content-Type': 'application/json' },
-        ...options,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Request failed');
-      return data;
+  function switchDashTab(tab) {
+    const pC = document.getElementById('panelConsumer');
+    const pF = document.getElementById('panelFactory');
+    const dC = document.getElementById('dashTabConsumer');
+    const dF = document.getElementById('dashTabFactory');
+    if (tab === 'consumer') {
+      pC.classList.add('active'); pF.classList.remove('active');
+      dC.className = 'dash-tab active-consumer'; dF.className = 'dash-tab';
+    } else {
+      pF.classList.add('active'); pC.classList.remove('active');
+      dF.className = 'dash-tab active-factory'; dC.className = 'dash-tab';
+      loadSupplyStats(); loadPickupFeed();
     }
+  }
 
-    // ── Session UI ───────────────────────────────────────────────
-    function updateSessionUI() {
-      const bar = document.getElementById('sessionBar');
-      const warning = document.getElementById('noUserWarning');
-      const submitBtn = document.getElementById('submitDropoff');
-      if (currentUser) {
-        bar.classList.add('visible');
-        document.getElementById('sessionName').textContent = currentUser.name;
-        document.getElementById('sessionPoints').textContent = `${currentUser.points || 0} points`;
-        warning.style.display = 'none';
-        submitBtn.disabled = false;
-      } else {
-        bar.classList.remove('visible');
-        warning.style.display = 'block';
-        submitBtn.disabled = true;
+  // ── Session UI ───────────────────────────────────────────────
+  function updateConsumerUI() {
+    const bar     = document.getElementById('consumerSessionBar');
+    const warning = document.getElementById('noUserWarning');
+    const wPickup = document.getElementById('noUserPickup');
+    const submitD = document.getElementById('submitDropoff');
+    const submitP = document.getElementById('submitPickup');
+    if (currentUser) {
+      bar.classList.add('visible');
+      document.getElementById('sessionName').textContent   = currentUser.name;
+      document.getElementById('sessionPoints').textContent = `${currentUser.points || 0} points`;
+      warning.style.display = 'none';
+      wPickup.style.display = 'none';
+      submitD.disabled = false;
+      submitP.disabled = false;
+    } else {
+      bar.classList.remove('visible');
+      warning.style.display = 'block';
+      wPickup.style.display = 'block';
+      submitD.disabled = true;
+      submitP.disabled = true;
+    }
+  }
+
+  function updateFactoryUI() {
+    const bar     = document.getElementById('factorySessionBar');
+    const warning = document.getElementById('noFactoryWarning');
+    const submitO = document.getElementById('submitSupplyOrder');
+    if (currentFactory) {
+      bar.classList.add('visible');
+      document.getElementById('factorySessionName').textContent = currentFactory.name;
+      warning.style.display = 'none';
+      submitO.disabled = false;
+    } else {
+      bar.classList.remove('visible');
+      warning.style.display = 'block';
+      submitO.disabled = true;
+    }
+  }
+
+  // ── Load Stats ───────────────────────────────────────────────
+  async function loadStats() {
+    try {
+      const s = await api('/api/stats');
+      document.getElementById('statBottles').textContent  = Number(s.total_bottles).toLocaleString();
+      document.getElementById('statUsers').textContent    = Number(s.total_users).toLocaleString();
+      document.getElementById('statPickups').textContent  = Number(s.total_pickups || 0).toLocaleString();
+      document.getElementById('statCO2').textContent      = Number(s.co2_saved_kg).toFixed(1);
+      document.getElementById('statWater').textContent    = Number(s.water_saved_liters).toFixed(0);
+    } catch(e) { console.error('Stats:', e); }
+  }
+
+  async function loadSupplyStats() {
+    try {
+      const s = await api('/api/stats');
+      document.getElementById('supplyBottles').textContent = Number(s.total_bottles).toLocaleString();
+      document.getElementById('supplyPickups').textContent = Number(s.total_pickups || 0).toLocaleString();
+      document.getElementById('supplyMembers').textContent = Number(s.total_users).toLocaleString();
+    } catch(e) {}
+  }
+
+  // ── Load Feed ────────────────────────────────────────────────
+  async function loadFeed() {
+    const feed = document.getElementById('feed');
+    try {
+      const items = await api('/api/dropoffs');
+      if (!items.length) {
+        feed.innerHTML = `<div class="empty-state"><div style="font-size:2rem">♻️</div><p>No drop-offs yet. Be the first!</p></div>`;
+        return;
       }
-    }
-
-    // ── Load Stats ───────────────────────────────────────────────
-    async function loadStats() {
-      try {
-        const stats = await api('/api/stats');
-        document.getElementById('statBottles').textContent = stats.total_bottles.toLocaleString();
-        document.getElementById('statUsers').textContent = stats.total_users.toLocaleString();
-        document.getElementById('statCO2').textContent = stats.co2_saved_kg.toFixed(1);
-        document.getElementById('statWater').textContent = stats.water_saved_liters.toFixed(0);
-        document.getElementById('statDropoffs').textContent = stats.total_dropoffs.toLocaleString();
-      } catch (e) {
-        console.error('Stats error:', e);
-      }
-    }
-
-    // ── Load Feed ────────────────────────────────────────────────
-    async function loadFeed() {
-      const feed = document.getElementById('feed');
-      try {
-        const items = await api('/api/dropoffs');
-        if (!items.length) {
-          feed.innerHTML = `<div class="empty-state">
-          <div style="font-size:2rem">♻️</div>
-          <p>No drop-offs yet. Be the first!</p>
-        </div>`;
-          return;
-        }
-        feed.innerHTML = items.slice(0, 8).map(item => `
+      feed.innerHTML = items.slice(0, 8).map(item => `
         <div class="feed-item">
           <div class="feed-item-left">
             <div class="feed-user">${escHtml(item.user_name)}</div>
             <div class="feed-meta">${escHtml(item.location)} · ${timeAgo(item.created_at)}</div>
           </div>
-          <div class="feed-bottles">${item.bottles}<span>bottles</span></div>
-        </div>
-      `).join('');
-      } catch (e) {
-        feed.innerHTML = `<div class="loading-text">Could not load feed.</div>`;
-      }
+          <div class="feed-bottles">${item.bottles}<span>${item.material_type || 'items'}</span></div>
+        </div>`).join('');
+    } catch(e) {
+      feed.innerHTML = `<div class="loading-text">Could not load feed.</div>`;
     }
+  }
 
-    // ── Load Leaderboard ─────────────────────────────────────────
-    async function loadLeaderboard() {
-      const tbody = document.getElementById('leaderboardBody');
-      try {
-        const rows = await api('/api/leaderboard');
-        if (!rows.length) {
-          tbody.innerHTML = `<tr><td colspan="5" class="loading-text">No data yet.</td></tr>`;
-          return;
-        }
-        tbody.innerHTML = rows.map((r, i) => `
+  async function loadPickupFeed() {
+    const feed = document.getElementById('pickupFeed');
+    try {
+      const items = await api('/api/pickups');
+      if (!items.length) {
+        feed.innerHTML = `<div class="empty-state"><div style="font-size:2rem">🚛</div><p>No pickup requests yet.</p></div>`;
+        return;
+      }
+      feed.innerHTML = items.slice(0, 8).map(item => `
+        <div class="pickup-item">
+          <div class="feed-item-left">
+            <div class="feed-user">${escHtml(item.user_name)}</div>
+            <div class="feed-meta">${escHtml(item.address)} · ${timeAgo(item.created_at)}</div>
+            <div class="feed-meta">${item.quantity} items · ${item.material_type}</div>
+          </div>
+          <span class="pickup-status status-${item.status || 'pending'}">${item.status || 'pending'}</span>
+        </div>`).join('');
+    } catch(e) {
+      feed.innerHTML = `<div class="loading-text">Could not load pickups.</div>`;
+    }
+  }
+
+  // ── Load Leaderboard ─────────────────────────────────────────
+  async function loadLeaderboard() {
+    const tbody = document.getElementById('leaderboardBody');
+    try {
+      const rows = await api('/api/leaderboard');
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="loading-text">No data yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = rows.map((r, i) => `
         <tr>
-          <td><span class="rank rank-${i + 1}">${i + 1}</span></td>
+          <td><span class="rank rank-${i+1}">${i+1}</span></td>
           <td>${escHtml(r.name)}</td>
           <td>${r.dropoff_count}</td>
           <td>${Number(r.total_bottles).toLocaleString()}</td>
           <td><span class="points-badge">${r.points} pts</span></td>
-        </tr>
-      `).join('');
-      } catch (e) {
-        tbody.innerHTML = `<tr><td colspan="5" class="loading-text">Could not load leaderboard.</td></tr>`;
-      }
+        </tr>`).join('');
+    } catch(e) {
+      tbody.innerHTML = `<tr><td colspan="5" class="loading-text">Could not load leaderboard.</td></tr>`;
     }
+  }
 
-    // ── Register ─────────────────────────────────────────────────
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('registerBtn');
-      btn.disabled = true;
-      btn.textContent = 'Creating...';
-      try {
-        const user = await api('/api/users', {
-          method: 'POST',
-          body: JSON.stringify({
-            name: document.getElementById('regName').value.trim(),
-            email: document.getElementById('regEmail').value.trim(),
-          }),
-        });
-        currentUser = user;
-        localStorage.setItem('aquacycle_user', JSON.stringify(user));
-        closeModal();
-        updateSessionUI();
-        showToast(`Welcome, ${user.name}! 🎉`);
-        loadLeaderboard();
-      } catch (err) {
-        showToast(err.message, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Create Account';
-      }
-    });
-
-    // ── Login ────────────────────────────────────────────────────
-    document.getElementById('loginLink').addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('loginSection').classList.toggle('hidden');
-    });
-
-    document.getElementById('loginBtn').addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value.trim();
-      if (!email) return showToast('Enter your email', 'error');
-      try {
-        const users = await api('/api/users');
-        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-        if (!user) return showToast('Email not found. Please register.', 'error');
-        currentUser = user;
-        localStorage.setItem('aquacycle_user', JSON.stringify(user));
-        closeModal();
-        updateSessionUI();
-        showToast(`Welcome back, ${user.name}!`);
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    });
-
-    // ── Logout ───────────────────────────────────────────────────
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      currentUser = null;
-      localStorage.removeItem('aquacycle_user');
-      updateSessionUI();
-      showToast('Signed out.');
-    });
-
-    // ── Drop-off form ─────────────────────────────────────────────
-    document.getElementById('dropoffForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!currentUser) return showToast('Please sign in first', 'error');
-
-      const btn = document.getElementById('submitDropoff');
-      btn.disabled = true;
-      btn.textContent = 'Logging...';
-
-      try {
-        await api('/api/dropoffs', {
-          method: 'POST',
-          body: JSON.stringify({
-            user_id: currentUser.id,
-            bottles: parseInt(document.getElementById('bottleCount').value),
-            location: document.getElementById('locationSelect').value,
-            notes: document.getElementById('dropoffNotes').value,
-          }),
-        });
-
-        // Update local points
-        currentUser.points = (currentUser.points || 0) + parseInt(document.getElementById('bottleCount').value);
-        localStorage.setItem('aquacycle_user', JSON.stringify(currentUser));
-        updateSessionUI();
-
-        document.getElementById('dropoffForm').reset();
-        showToast('Drop-off logged! ♻️ Keep it up!');
-        loadFeed();
-        loadStats();
-        loadLeaderboard();
-      } catch (err) {
-        showToast(err.message, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Log Drop-off';
-      }
-    });
-
-    // ── Modal ────────────────────────────────────────────────────
-    function openModal() {
-      document.getElementById('registerModal').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('registerModal').classList.remove('active');
-    }
-
-    document.getElementById('openRegister').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
-    document.getElementById('joinPromptLink').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('registerModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
-
-    // ── Utilities ────────────────────────────────────────────────
-    function escHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function timeAgo(dateStr) {
-      const diff = Date.now() - new Date(dateStr).getTime();
-      const mins = Math.floor(diff / 60000);
-      if (mins < 1) return 'just now';
-      if (mins < 60) return `${mins}m ago`;
-      const hrs = Math.floor(mins / 60);
-      if (hrs < 24) return `${hrs}h ago`;
-      return `${Math.floor(hrs / 24)}d ago`;
-    }
-
-    // ── Hamburger menu ───────────────────────────────────────────
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open');
-    });
-
-    // Close menu when a nav link is clicked
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navLinks.classList.remove('open');
+  // ── Consumer Register ─────────────────────────────────────────
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true; btn.textContent = 'Creating...';
+    try {
+      const user = await api('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+          name:  document.getElementById('regName').value.trim(),
+          email: document.getElementById('regEmail').value.trim(),
+          phone: document.getElementById('regPhone').value.trim(),
+        }),
       });
-    });
+      currentUser = user;
+      localStorage.setItem('tadweerhub_user', JSON.stringify(user));
+      closeModal('registerModal');
+      updateConsumerUI();
+      showToast(`Welcome, ${user.name}! 🎉`);
+      loadLeaderboard();
+    } catch(err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Create Account'; }
+  });
 
-    // ── Init ─────────────────────────────────────────────────────
-    updateSessionUI();
-    loadStats();
-    loadFeed();
-    loadLeaderboard();
+  // ── Consumer Login ────────────────────────────────────────────
+  document.getElementById('loginLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('loginSection').classList.toggle('hidden');
+  });
 
-    // Refresh every 30s
-    setInterval(() => { loadStats(); loadFeed(); loadLeaderboard(); }, 30000);
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) return showToast('Enter your email', 'error');
+    try {
+      const users = await api('/api/users');
+      const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (!user) return showToast('Email not found. Please register.', 'error');
+      currentUser = user;
+      localStorage.setItem('tadweerhub_user', JSON.stringify(user));
+      closeModal('registerModal');
+      updateConsumerUI();
+      showToast(`Welcome back, ${user.name}!`);
+    } catch(err) { showToast(err.message, 'error'); }
+  });
 
-    const scrollBtn = document.getElementById('scrollTop');
-      window.addEventListener('scroll', () => {
-        scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  // ── Consumer Logout ───────────────────────────────────────────
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    currentUser = null;
+    localStorage.removeItem('tadweerhub_user');
+    updateConsumerUI();
+    showToast('Signed out.');
+  });
+
+  // ── Factory Register ──────────────────────────────────────────
+  document.getElementById('factoryRegisterForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('factoryRegisterBtn');
+    btn.disabled = true; btn.textContent = 'Registering...';
+    try {
+      const factory = await api('/api/factories', {
+        method: 'POST',
+        body: JSON.stringify({
+          name:          document.getElementById('factoryName').value.trim(),
+          contact:       document.getElementById('factoryContact').value.trim(),
+          email:         document.getElementById('factoryEmail').value.trim(),
+          phone:         document.getElementById('factoryPhone').value.trim(),
+          governorate:   document.getElementById('factoryGov').value,
+          material_pref: document.getElementById('factoryMaterialPref').value,
+        }),
       });
-      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  </script>
+      currentFactory = factory;
+      localStorage.setItem('tadweerhub_factory', JSON.stringify(factory));
+      closeModal('factoryModal');
+      updateFactoryUI();
+      switchDashTab('factory');
+      showToast(`Factory registered! Welcome, ${factory.name} 🏭`);
+    } catch(err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Register Factory'; }
+  });
+
+  // ── Factory Login ─────────────────────────────────────────────
+  document.getElementById('factoryLoginLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('factoryLoginSection').classList.toggle('hidden');
+  });
+
+  document.getElementById('factoryLoginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('factoryLoginEmail').value.trim();
+    if (!email) return showToast('Enter your factory email', 'error');
+    try {
+      const factories = await api('/api/factories');
+      const factory = factories.find(f => f.email.toLowerCase() === email.toLowerCase());
+      if (!factory) return showToast('Email not found. Please register.', 'error');
+      currentFactory = factory;
+      localStorage.setItem('tadweerhub_factory', JSON.stringify(factory));
+      closeModal('factoryModal');
+      updateFactoryUI();
+      switchDashTab('factory');
+      showToast(`Welcome back, ${factory.name}!`);
+    } catch(err) { showToast(err.message, 'error'); }
+  });
+
+  // ── Factory Logout ────────────────────────────────────────────
+  document.getElementById('factoryLogoutBtn').addEventListener('click', () => {
+    currentFactory = null;
+    localStorage.removeItem('tadweerhub_factory');
+    updateFactoryUI();
+    showToast('Signed out.');
+  });
+
+  // ── Drop-off form ─────────────────────────────────────────────
+  document.getElementById('dropoffForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser) return showToast('Please sign in first', 'error');
+    const btn = document.getElementById('submitDropoff');
+    btn.disabled = true; btn.textContent = 'Logging...';
+    try {
+      await api('/api/dropoffs', {
+        method: 'POST',
+        body: JSON.stringify({
+          user_id:       currentUser.id,
+          bottles:       parseInt(document.getElementById('bottleCount').value),
+          location:      document.getElementById('locationSelect').value,
+          material_type: document.getElementById('materialType').value,
+          notes:         document.getElementById('dropoffNotes').value,
+        }),
+      });
+      currentUser.points = (currentUser.points || 0) + parseInt(document.getElementById('bottleCount').value);
+      localStorage.setItem('tadweerhub_user', JSON.stringify(currentUser));
+      updateConsumerUI();
+      document.getElementById('dropoffForm').reset();
+      showToast('Drop-off logged! ♻️');
+      loadFeed(); loadStats(); loadLeaderboard();
+    } catch(err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Log Drop-off'; }
+  });
+
+  // ── Pickup form ───────────────────────────────────────────────
+  document.getElementById('pickupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser) return showToast('Please sign in first', 'error');
+    const btn = document.getElementById('submitPickup');
+    btn.disabled = true; btn.textContent = 'Requesting...';
+    try {
+      await api('/api/pickups', {
+        method: 'POST',
+        body: JSON.stringify({
+          user_id:       currentUser.id,
+          address:       document.getElementById('pickupAddress').value.trim(),
+          quantity:      parseInt(document.getElementById('pickupQty').value),
+          preferred_date: document.getElementById('pickupDate').value,
+          material_type: document.getElementById('pickupMaterial').value,
+        }),
+      });
+      document.getElementById('pickupForm').reset();
+      showToast('Pickup requested! We\'ll confirm shortly. 🚛');
+      loadStats();
+    } catch(err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Request Pickup'; }
+  });
+
+  // ── Supply order form ─────────────────────────────────────────
+  document.getElementById('supplyOrderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentFactory) return showToast('Please sign in as a factory first', 'error');
+    const btn = document.getElementById('submitSupplyOrder');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+    try {
+      await api('/api/orders', {
+        method: 'POST',
+        body: JSON.stringify({
+          factory_id:    currentFactory.id,
+          material:      document.getElementById('supplyMaterial').value,
+          quantity_kg:   parseInt(document.getElementById('supplyQty').value),
+          address:       document.getElementById('supplyAddress').value.trim(),
+          required_by:   document.getElementById('supplyDate').value,
+          notes:         document.getElementById('supplyNotes').value,
+        }),
+      });
+      document.getElementById('supplyOrderForm').reset();
+      showToast('Supply order submitted! Our team will be in touch. 🏭');
+    } catch(err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Submit Supply Order'; }
+  });
+
+  // ── Modals ────────────────────────────────────────────────────
+  function openModal(id)  { document.getElementById(id).classList.add('active'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+  document.getElementById('openRegister').addEventListener('click',       (e) => { e.preventDefault(); openModal('registerModal'); });
+  document.getElementById('joinPromptLink').addEventListener('click',     (e) => { e.preventDefault(); openModal('registerModal'); });
+  document.getElementById('joinPromptPickup').addEventListener('click',   (e) => { e.preventDefault(); openModal('registerModal'); });
+  document.getElementById('closeModal').addEventListener('click',         ()  => closeModal('registerModal'));
+  document.getElementById('registerModal').addEventListener('click',      (e) => { if (e.target === e.currentTarget) closeModal('registerModal'); });
+
+  document.getElementById('openFactoryRegister').addEventListener('click', (e) => { e.preventDefault(); openModal('factoryModal'); });
+  document.getElementById('joinFactoryPrompt').addEventListener('click',   (e) => { e.preventDefault(); openModal('factoryModal'); });
+  document.getElementById('factoryHeroBtn').addEventListener('click',      (e) => { e.preventDefault(); openModal('factoryModal'); });
+  document.getElementById('closeFactoryModal').addEventListener('click',   ()  => closeModal('factoryModal'));
+  document.getElementById('factoryModal').addEventListener('click',        (e) => { if (e.target === e.currentTarget) closeModal('factoryModal'); });
+
+  // ── Hamburger ─────────────────────────────────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // ── Scroll top ────────────────────────────────────────────────
+  const scrollBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', window.scrollY > 400));
+  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ── Utilities ─────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  }
+
+  // ── Init ──────────────────────────────────────────────────────
+  updateConsumerUI();
+  updateFactoryUI();
+  loadStats();
+  loadFeed();
+  loadLeaderboard();
+
+  setInterval(() => { loadStats(); loadFeed(); loadLeaderboard(); }, 30000);
+</script>
 </body>
-
 </html>
