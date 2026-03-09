@@ -155,6 +155,27 @@
     .section-title { font-family: var(--font-display); font-size: clamp(2.5rem,6vw,5rem); line-height: 1; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
     html[lang="ar"] .section-title { font-weight: 900; letter-spacing: 0; }
 
+    /* Vision & Mission */
+    #vision-mission { background: var(--bg); }
+    .vm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; margin-top: 3rem; }
+    .vm-card { background: var(--surface); padding: 3rem; position: relative; overflow: hidden; }
+    .vm-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; }
+    .vm-vision::before { background: var(--green); }
+    .vm-mission::before { background: var(--blue); }
+    html[dir="rtl"] .vm-card::before { left: auto; right: 0; }
+    .vm-eyebrow { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem; }
+    html[lang="ar"] .vm-eyebrow { text-transform: none; letter-spacing: 0; font-size: 0.75rem; }
+    .vm-vision .vm-eyebrow { color: var(--green); }
+    .vm-mission .vm-eyebrow { color: var(--blue); }
+    .vm-card h3 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.04em; margin-bottom: 1.5rem; }
+    html[lang="ar"] .vm-card h3 { letter-spacing: 0; font-weight: 900; }
+    .vm-card p, .vm-card li { color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+    .vm-card ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+    .vm-card li { padding-left: 1.25rem; position: relative; }
+    .vm-card li::before { content: '—'; position: absolute; left: 0; color: var(--blue); font-size: 0.8rem; }
+    html[dir="rtl"] .vm-card li { padding-left: 0; padding-right: 1.25rem; }
+    html[dir="rtl"] .vm-card li::before { left: auto; right: 0; }
+
     /* How it works */
     #how-it-works { background: var(--surface); }
     .how-tabs { display: flex; margin-bottom: 3rem; border-bottom: 1px solid var(--border); }
@@ -345,6 +366,26 @@
   <div class="stat-item"><div class="stat-value" id="statCO2">—</div><div class="stat-label" data-i18n="stats.co2">KG CO₂ Saved</div></div>
   <div class="stat-item"><div class="stat-value" id="statWater">—</div><div class="stat-label" data-i18n="stats.water">Litres Water Saved</div></div>
 </div>
+
+<section id="vision-mission">
+  <p class="section-tag" data-i18n="vm.tag">// Our Purpose</p>
+  <h2 class="section-title" data-i18n="vm.title">VISION &amp; MISSION</h2>
+  <div class="vm-grid">
+    <div class="vm-card vm-vision">
+      <p class="vm-eyebrow" data-i18n="vm.vTag">// Vision Statement</p>
+      <h3 data-i18n="vm.vTitle">Vision Statement</h3>
+      <p data-i18n="vm.vBody">Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.</p>
+    </div>
+    <div class="vm-card vm-mission">
+      <p class="vm-eyebrow" data-i18n="vm.mTag">// Mission Statement</p>
+      <h3 data-i18n="vm.mTitle">Mission Statement</h3>
+      <ul>
+        <li data-i18n="vm.mBody1">Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.</li>
+        <li data-i18n="vm.mBody2">We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section id="how-it-works">
   <p class="section-tag" data-i18n="how.tag">// Process</p>
@@ -590,6 +631,12 @@ const T = {
     'hero.seg1':'Consumers — earn cash from plastic','hero.seg2':'Factories — get clean sorted supply',
     'stats.bottles':'Bottles Collected','stats.members':'Active Members','stats.pickups':'Pickup Requests',
     'stats.co2':'KG CO₂ Saved','stats.water':'Litres Water Saved',
+    'vm.tag':'// Our Purpose','vm.title':'VISION & MISSION',
+    'vm.vTag':'// Vision Statement','vm.vTitle':'Vision Statement',
+    'vm.vBody':"Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.",
+    'vm.mTag':'// Mission Statement','vm.mTitle':'Mission Statement',
+    'vm.mBody1':'Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.',
+    'vm.mBody2':"We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.",
     'how.tag':'// Process','how.title':'HOW IT WORKS','how.tabC':'For Consumers','how.tabF':'For Factories',
     'how.c1t':'Collect Your Plastic','how.c1b':'Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.',
     'how.c2t':'Choose Drop-off or Pickup','how.c2b':'Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.',
@@ -643,6 +690,12 @@ const T = {
     'hero.seg1':'المستهلكون — اكسب نقوداً من البلاستيك','hero.seg2':'المصانع — احصل على مواد خام نظيفة',
     'stats.bottles':'زجاجات تم جمعها','stats.members':'أعضاء نشطون','stats.pickups':'طلبات استلام',
     'stats.co2':'كجم ثاني أكسيد كربون موفر','stats.water':'لتر ماء موفر',
+    'vm.tag':'// غايتنا','vm.title':'الرؤية والرسالة',
+    'vm.vTag':'// الرؤية','vm.vTitle':'رؤيتنا',
+    'vm.vBody':'رؤيتنا هي أن نصبح المنصة الرقمية الرائدة في مصر لإعادة تدوير البلاستيك والألومنيوم، بما يُشكّل جسراً سلساً بين المستهلكين ومصانع إعادة التدوير. نسعى إلى تحويل إعادة التدوير إلى عادة يومية بسيطة ومجزية وفي متناول الجميع، للأسر والشركات على حدٍّ سواء، مساهمةً في بيئة أنظف ودعماً لرؤية مصر 2030 نحو اقتصاد دائري ومستدام.',
+    'vm.mTag':'// الرسالة','vm.mTitle':'رسالتنا',
+    'vm.mBody1':'رسالتنا هي سد الفجوة بين المستهلكين ومصانع إعادة التدوير من خلال منصة رقمية بسيطة وسهلة الوصول ومدفوعة بالحوافز، تُمكّن من الجمع السليم والتصنيف والتوصيل للنفايات البلاستيكية والألومنيوم.',
+    'vm.mBody2':'نهدف إلى رفع معدلات إعادة التدوير، والحد من التلوث البيئي، ودعم انتقال مصر نحو اقتصاد دائري من خلال تزويد المصانع بمواد نظيفة ومصنّفة جيداً، مع تمكين الأفراد والمجتمعات من المشاركة في إدارة النفايات المستدامة بسهولة ومكافآت ملموسة.',
     'how.tag':'// العملية','how.title':'كيف يعمل','how.tabC':'للمستهلكين','how.tabF':'للمصانع',
     'how.c1t':'اجمع بلاستيكك','how.c1b':'اجمع زجاجاتك الفارغة وعلب الألومنيوم. كل قطعة تجمعها تمنحك مكافأة نقدية.',
     'how.c2t':'اختر التسليم أو الاستلام','how.c2b':'زر أقرب نقطة تجميع تدوير هاب، أو اطلب استلاماً مجانياً من منزلك مباشرةً.',

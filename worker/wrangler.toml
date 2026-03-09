@@ -3,6 +3,6 @@ main = "src/index.js"
 compatibility_date = "2024-01-01"
 
 [[d1_databases]]
-binding = "tadweerhub_db"
+binding = "DB"
 database_name = "tadweerhub-db"
 database_id = "2f9c4205-e000-4b44-a66b-315994e51b59"
