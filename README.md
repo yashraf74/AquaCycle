@@ -23,12 +23,15 @@ A full-stack plastic and aluminum recycling platform bridging consumers and recy
 ```
 tadweerhub/
 ├── frontend/
-│   └── index.html        ← The entire frontend (single file)
-└── worker/
-    ├── src/
-    │   └── index.js      ← Cloudflare Worker API
-    ├── wrangler.toml      ← Worker config
-    └── package.json
+│   ├── index.html        ← Main frontend (light/earthy theme)
+│   ├── index-v1.html     ← Original dark theme (archived)
+│   └── resources/        ← Static assets (images, icons)
+├── worker/
+│   ├── src/
+│   │   └── index.js      ← Cloudflare Worker API
+│   ├── schema.sql         ← D1 database schema
+│   ├── wrangler.toml      ← Worker config
+│   └── package.json
 ```
 
 ---

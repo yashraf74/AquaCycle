@@ -125,7 +125,7 @@
 
     /* ── Sections ── */
     section { padding: 6rem 2.5rem; position: relative; overflow: hidden; }
-    .section-inner { max-width: 1180px; margin: 0 auto; }
+    .section-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
     .section-badge {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--green-mint); color: var(--green);
@@ -137,10 +137,11 @@
     .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.75; margin-bottom: 2.5rem; }
 
     /* ── Decorative illustrations ── */
-    .deco { position: absolute; pointer-events: none; color: var(--green); }
+    .deco { position: absolute; pointer-events: none; color: var(--green); z-index: 0; }
     @keyframes floatY { 0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);} }
     @keyframes floatYR { 0%,100%{transform:translateY(0) scaleX(-1);}50%{transform:translateY(-14px) scaleX(-1);} }
-    @keyframes slowSpin { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
+    @keyframes slowSpin { from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(360deg);} }
+    @keyframes bottleFloat { 0%,100%{transform:rotate(-20deg) scale(1.15) translateY(0);}50%{transform:rotate(-20deg) scale(1.15) translateY(-14px);} }
     @keyframes blobMorph {
       0%,100%{border-radius:60% 40% 55% 45%/50% 60% 40% 55%;}
       33%{border-radius:45% 55% 40% 60%/60% 45% 55% 40%;}
@@ -173,17 +174,24 @@
     .seg-dot.factory  { background: var(--amber); }
 
     /* Hero visual */
-    .hero-visual { position: relative; height: 480px; display: flex; align-items: center; justify-content: center; }
+    .hero-visual { position: relative; height: 480px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: var(--r); }
     .hero-blob {
-      position: absolute; width: 360px; height: 360px;
+      position: absolute; width: 360px; height: 360px; z-index: 0;
       background: linear-gradient(135deg, var(--green-pale) 0%, var(--green-mint) 100%);
       animation: blobMorph 9s ease-in-out infinite;
     }
-    .hero-bottle { position: relative; z-index: 2; width: 175px; animation: floatY 5s ease-in-out infinite; }
-    .leaf-a { position: absolute; top: 8%; left: 8%; width: 78px; animation: floatY 6.5s ease-in-out infinite 0.6s; }
-    .leaf-b { position: absolute; bottom: 12%; right: 6%; width: 58px; animation: floatY 7.2s ease-in-out infinite 0.2s; }
-    .leaf-c { position: absolute; top: 18%; right: 4%; width: 48px; animation: floatY 5.8s ease-in-out infinite 1s; }
-    .leaf-d { position: absolute; bottom: 8%; left: 10%; width: 42px; animation: floatY 8s ease-in-out infinite 0.4s; }
+    .hero-bottle {
+      position: absolute; z-index: 2;
+      width: 295px;
+      bottom: -55px; right: -25px;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 18px 36px rgba(61,107,79,0.22));
+      animation: bottleFloat 5s ease-in-out infinite;
+    }
+    .leaf-a { position: absolute; top: 8%; left: 8%; width: 78px; z-index: 1; animation: floatY 6.5s ease-in-out infinite 0.6s; }
+    .leaf-b { position: absolute; bottom: 12%; right: 6%; width: 58px; z-index: 1; animation: floatY 7.2s ease-in-out infinite 0.2s; }
+    .leaf-c { position: absolute; top: 18%; right: 4%; width: 48px; z-index: 1; animation: floatY 5.8s ease-in-out infinite 1s; }
+    .leaf-d { position: absolute; bottom: 8%; left: 10%; width: 42px; z-index: 1; animation: floatY 8s ease-in-out infinite 0.4s; }
 
     /* ── Stats ── */
     #stats-bar { padding: 2.75rem 2.5rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -229,7 +237,7 @@
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
     .step p { font-size: 0.84rem; color: var(--muted); line-height: 1.72; }
     /* Deco recycle symbol */
-    .how-deco-recycle { width: 220px; right: 3%; top: 50%; opacity: 0.055; animation: slowSpin 40s linear infinite; }
+    .how-deco-recycle { width: 220px; right: 3%; top: 50%; z-index: 0; mix-blend-mode: multiply; filter: sepia(1) saturate(2.5) hue-rotate(85deg); opacity: 0.18; animation: slowSpin 40s linear infinite; }
     html[dir="rtl"] .how-deco-recycle { right: auto; left: 3%; }
 
     /* ── Dashboard ── */
@@ -376,6 +384,7 @@
       .hamburger { display: flex; }
     }
     @media(max-width:600px){
+      .deco { z-index: -1; }
       section { padding: 4rem 1.25rem; }
       #stats-bar { padding: 2rem 1.25rem; }
       footer { padding: 2rem 1.25rem; }
@@ -431,22 +440,8 @@
     <!-- Hero illustration -->
     <div class="hero-visual">
       <div class="hero-blob"></div>
-      <!-- Plastic bottle SVG -->
-      <svg class="hero-bottle" viewBox="0 0 160 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="60" y="0" width="40" height="20" rx="6" fill="#3D6B4F" opacity="0.8"/>
-        <rect x="55" y="18" width="50" height="34" rx="4" fill="#5A8F6A" opacity="0.6"/>
-        <path d="M48 52 Q20 88 18 145 L18 268 Q18 318 80 322 Q142 318 142 268 L142 145 Q140 88 112 52 Z" fill="#A0C890" opacity="0.35"/>
-        <path d="M48 52 Q20 88 18 145 L18 268 Q18 318 80 322 Q142 318 142 268 L142 145 Q140 88 112 52 Z" stroke="#3D6B4F" stroke-width="2.5" fill="none"/>
-        <rect x="55" y="18" width="50" height="34" rx="4" stroke="#3D6B4F" stroke-width="2" fill="none"/>
-        <rect x="60" y="0" width="40" height="20" rx="6" stroke="#3D6B4F" stroke-width="2" fill="none"/>
-        <!-- Label -->
-        <rect x="30" y="145" width="100" height="105" rx="10" fill="white" opacity="0.7"/>
-        <rect x="30" y="145" width="100" height="105" rx="10" stroke="#3D6B4F" stroke-width="1.5" fill="none"/>
-        <text x="80" y="205" text-anchor="middle" font-size="34" fill="#3D6B4F" opacity="0.65">♻</text>
-        <text x="80" y="225" text-anchor="middle" font-size="7.5" fill="#3D6B4F" opacity="0.5" font-family="Inter,sans-serif" font-weight="700" letter-spacing="2">TADWEERHUB</text>
-        <!-- Shine -->
-        <path d="M38 82 Q42 135 38 210" stroke="white" stroke-width="5" opacity="0.35" fill="none" stroke-linecap="round"/>
-      </svg>
+      <!-- Plastic bottle image -->
+      <img class="hero-bottle" src="resources/Empty_plastic_bottle.png" alt="" />
       <!-- Floating leaves -->
       <svg class="leaf-a" viewBox="0 0 80 118" fill="none"><path d="M40 112C40 112 5 78 5 43 5 18 21 4 40 4 59 4 75 18 75 43 75 78 40 112 40 112Z" fill="#5A8F6A" opacity=".38"/><line x1="40" y1="112" x2="40" y2="8" stroke="#3D6B4F" stroke-width="1.5" opacity=".5"/><path d="M40 40 Q58 30 68 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q60 52 72 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 40 Q22 30 12 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q20 52 8 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/></svg>
       <svg class="leaf-b" viewBox="0 0 60 88" fill="none"><path d="M30 83C30 83 4 60 4 33 4 15 16 4 30 4 44 4 56 15 56 33 56 60 30 83 30 83Z" fill="#A0C890" opacity=".45"/><line x1="30" y1="83" x2="30" y2="7" stroke="#5A8F6A" stroke-width="1.5" opacity=".5"/></svg>
@@ -495,16 +490,8 @@
 
 <!-- ── How It Works ── -->
 <section id="how-it-works">
-  <!-- Decorative recycling symbol -->
-  <svg class="deco how-deco-recycle" viewBox="0 0 200 200" fill="none" style="position:absolute;top:50%;transform:translateY(-50%);">
-    <path d="M100 20 L120 55 L100 55 Q65 55 42 78 L28 64 Q55 35 100 20Z" fill="currentColor"/>
-    <path d="M28 64 L8 64 L18 46 L38 46Z" fill="currentColor"/>
-    <path d="M172 136 L152 101 L172 101 Q172 101 158 78 L172 64 Q192 92 192 136Z" fill="currentColor"/>
-    <path d="M192 136 L182 154 L162 154 L172 136Z" fill="currentColor"/>
-    <path d="M100 180 L80 145 L100 145 Q135 145 158 122 L172 136 Q145 165 100 180Z" fill="currentColor"/>
-    <path d="M80 180 L60 180 L70 162 L90 162Z" fill="currentColor"/>
-    <circle cx="100" cy="100" r="22" fill="none" stroke="currentColor" stroke-width="3"/>
-  </svg>
+  <!-- Decorative recycling image -->
+  <img class="deco how-deco-recycle" src="resources/mszinger-Recycle-simple.png" alt="" />
   <div class="section-inner reveal">
     <span class="section-badge" data-i18n="how.tag">Process</span>
     <h2 class="section-title" data-i18n="how.title">HOW IT WORKS</h2>
