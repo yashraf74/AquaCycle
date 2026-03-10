@@ -179,6 +179,11 @@
       position: absolute; width: 360px; height: 360px; z-index: 0;
       background: linear-gradient(135deg, var(--green-pale) 0%, var(--green-mint) 100%);
       animation: blobMorph 9s ease-in-out infinite;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .blob-recycle {
+      font-size: 9rem; opacity: 0.12; user-select: none;
+      color: var(--green); line-height: 1;
     }
     .hero-bottle {
       position: absolute; z-index: 2;
@@ -439,7 +444,7 @@
 
     <!-- Hero illustration -->
     <div class="hero-visual">
-      <div class="hero-blob"></div>
+      <div class="hero-blob"><span class="blob-recycle">♻</span></div>
       <!-- Plastic bottle image -->
       <img class="hero-bottle" src="resources/Empty_plastic_bottle.png" alt="" />
       <!-- Floating leaves -->
