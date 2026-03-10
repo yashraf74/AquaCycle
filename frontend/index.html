@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>TadweerHub — Collect. Recycle. Earn.</title>
+  <title>TadweerHub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
@@ -429,7 +429,7 @@
         <em data-i18n="hero.l1">COLLECT.</em><br>
         <span data-i18n="hero.l2">RECYCLE.</span><br>
         <span data-i18n="hero.l3">EARN.</span>
-      </h1>
+      </h1><br>
       <p class="hero-sub" data-i18n="hero.sub">TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.</p>
       <div class="hero-cta">
         <a href="#dashboard" class="btn btn-primary" data-i18n="hero.cta1">I Have Waste to Recycle</a>
@@ -891,7 +891,7 @@ function applyLang() {
     if (v) el.textContent = v;
   });
   document.getElementById('langToggle').textContent = lang === 'en' ? 'عربي' : 'English';
-  document.title = lang === 'ar' ? 'تدوير هاب — اجمع. أعد التدوير. اكسب.' : 'TadweerHub — Collect. Recycle. Earn.';
+  document.title = lang === 'ar' ? 'تدوير هاب' : 'TadweerHub';
   loadFeed(); loadPickupFeed(); loadLeaderboard();
   updateConsumerUI(); updateFactoryUI();
 }
