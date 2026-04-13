@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
@@ -40,1124 +41,1346 @@
       --font-mono: 'Cairo', sans-serif;
     }
 
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.65; overflow-x: hidden; }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 3px; }
+```
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 3px; }
 
-    /* ── RTL ── */
-    html[dir="rtl"] nav { flex-direction: row-reverse; }
-    html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
-    html[dir="rtl"] .hero-cta { flex-direction: row-reverse; }
-    html[dir="rtl"] .segment-tabs { flex-direction: row-reverse; }
-    html[dir="rtl"] .how-tabs { flex-direction: row-reverse; }
-    html[dir="rtl"] .dashboard-tabs { flex-direction: row-reverse; }
-    html[dir="rtl"] .session-bar { flex-direction: row-reverse; }
-    html[dir="rtl"] .feed-item { flex-direction: row-reverse; }
-    html[dir="rtl"] .pickup-item { flex-direction: row-reverse; }
-    html[dir="rtl"] .footer-inner { flex-direction: row-reverse; }
-    html[dir="rtl"] .leaderboard-table th,
-    html[dir="rtl"] .leaderboard-table td { text-align: right; }
-    html[dir="rtl"] .modal-close { right: auto; left: 1.25rem; }
-    html[dir="rtl"] .toast { right: auto; left: 2rem; }
-    html[dir="rtl"] .scroll-top { right: auto; left: 2rem; }
-    html[dir="rtl"] .step { direction: rtl; }
-    html[dir="rtl"] .vm-card li { padding-left: 0; padding-right: 1.5rem; }
-    html[dir="rtl"] .vm-card li::before { left: auto; right: 0; }
-    html[dir="rtl"] .session-bar .sb-actions { margin-left: 0; margin-right: auto; }
-    html[lang="ar"] .section-badge { text-transform: none; letter-spacing: 0; font-size: 0.82rem; }
-    html[lang="ar"] .section-title { font-weight: 900; }
-    html[lang="ar"] .hero-tag { text-transform: none; letter-spacing: 0; font-size: 0.85rem; }
-    html[lang="ar"] .step-num { font-family: var(--font-body); }
+/* ── RTL ── */
+/* FIXED: Scoped RTL row-reverse rules to desktop only so mobile hamburger stacks properly */
+@media(min-width:901px) {
+  html[dir="rtl"] nav { flex-direction: row-reverse; }
+  html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+}
+html[dir="rtl"] .hero-cta { flex-direction: row-reverse; }
+html[dir="rtl"] .segment-tabs { flex-direction: row-reverse; }
+html[dir="rtl"] .how-tabs { flex-direction: row-reverse; }
+html[dir="rtl"] .dashboard-tabs { flex-direction: row-reverse; }
+html[dir="rtl"] .session-bar { flex-direction: row-reverse; }
+html[dir="rtl"] .feed-item { flex-direction: row-reverse; }
+html[dir="rtl"] .pickup-item { flex-direction: row-reverse; }
+html[dir="rtl"] .footer-inner { flex-direction: row-reverse; }
+html[dir="rtl"] .modal-close { right: auto; left: 1.25rem; }
+html[dir="rtl"] .toast { right: auto; left: 2rem; }
+html[dir="rtl"] .scroll-top { right: auto; left: 2rem; }
+html[dir="rtl"] .step { direction: rtl; }
+html[dir="rtl"] .vm-card li { padding-left: 0; padding-right: 1.5rem; }
+html[dir="rtl"] .vm-card li::before { left: auto; right: 0; }
+html[dir="rtl"] .session-bar .sb-actions { margin-left: 0; margin-right: auto; }
+html[lang="ar"] .section-badge { text-transform: none; letter-spacing: 0; font-size: 0.82rem; }
+html[lang="ar"] .section-title { font-weight: 900; }
+html[lang="ar"] .hero-tag { text-transform: none; letter-spacing: 0; font-size: 0.85rem; }
+html[lang="ar"] .step-num { font-family: var(--font-body); }
 
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2.5rem; height: 66px;
-      background: rgba(245,241,234,.94); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-    .nav-logo-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      background: var(--green); display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; color: white; flex-shrink: 0;
-    }
-    .nav-logo-text { font-family: var(--font-display); font-size: 1.3rem; color: var(--text); font-weight: 700; }
-    .nav-logo-text span { color: var(--green); }
-    .nav-links { display: flex; gap: 0.15rem; list-style: none; align-items: center; }
-    .nav-links a { font-size: 0.81rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: var(--r-pill); transition: all 0.2s; white-space: nowrap; }
-    html[lang="ar"] .nav-links a { font-size: 0.88rem; }
-    .nav-links a:hover { color: var(--green); background: var(--green-mint); }
-    .btn-nav { background: var(--green) !important; color: #fff !important; font-weight: 600 !important; }
-    .btn-nav:hover { background: var(--green-mid) !important; }
-    .btn-nav-factory { background: var(--amber-pale) !important; color: var(--amber) !important; font-weight: 600 !important; }
-    .btn-nav-factory:hover { background: #EDCFAC !important; }
-    .lang-toggle {
-      background: var(--surface3); border: 1px solid var(--border); color: var(--muted);
-      padding: 0.32rem 0.8rem; font-family: var(--font-mono); font-size: 0.62rem;
-      cursor: pointer; border-radius: var(--r-pill); letter-spacing: 0.04em;
-      transition: all 0.2s; white-space: nowrap;
-    }
-    .lang-toggle:hover { color: var(--green); border-color: var(--green); background: var(--green-mint); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--green); border-radius: 2px; transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2.5rem; height: 66px;
+  background: rgba(245,241,234,.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+.nav-logo-mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--green); display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white; flex-shrink: 0;
+}
+.nav-logo-text { font-family: var(--font-display); font-size: 1.3rem; color: var(--text); font-weight: 700; }
+.nav-logo-text span { color: var(--green); }
+.nav-links { display: flex; gap: 0.15rem; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.81rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: var(--r-pill); transition: all 0.2s; white-space: nowrap; }
+html[lang="ar"] .nav-links a { font-size: 0.88rem; }
+.nav-links a:hover { color: var(--green); background: var(--green-mint); }
+.btn-nav { background: var(--green) !important; color: #fff !important; font-weight: 600 !important; }
+.btn-nav:hover { background: var(--green-mid) !important; }
+.btn-nav-factory { background: var(--amber-pale) !important; color: var(--amber) !important; font-weight: 600 !important; }
+.btn-nav-factory:hover { background: #EDCFAC !important; }
+.lang-toggle {
+  background: var(--surface3); border: 1px solid var(--border); color: var(--muted);
+  padding: 0.32rem 0.8rem; font-family: var(--font-mono); font-size: 0.62rem;
+  cursor: pointer; border-radius: var(--r-pill); letter-spacing: 0.04em;
+  transition: all 0.2s; white-space: nowrap;
+}
+.lang-toggle:hover { color: var(--green); border-color: var(--green); background: var(--green-mint); }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--green); border-radius: 2px; transition: all 0.3s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ── Buttons ── */
-    .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.78rem 1.65rem; border-radius: var(--r-pill); font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; font-family: var(--font-body); }
-    .btn-primary { background: var(--green); color: white; }
-    .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: var(--sh); }
-    .btn-secondary { background: transparent; color: var(--green); border: 1.5px solid var(--green-light); }
-    .btn-secondary:hover { background: var(--green-mint); }
-    .btn-factory { background: var(--amber-pale); color: var(--amber); }
-    .btn-factory:hover { background: #edcfac; }
+/* ── Buttons ── */
+.btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.78rem 1.65rem; border-radius: var(--r-pill); font-weight: 600; font-size: 0.88rem; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; font-family: var(--font-body); }
+.btn-primary { background: var(--green); color: white; }
+.btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: var(--sh); }
+.btn-secondary { background: transparent; color: var(--green); border: 1.5px solid var(--green-light); }
+.btn-secondary:hover { background: var(--green-mint); }
+.btn-factory { background: var(--amber-pale); color: var(--amber); }
+.btn-factory:hover { background: #edcfac; }
 
-    /* ── Scroll reveal ── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
+/* ── Scroll reveal ── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: none; }
 
-    /* ── Sections ── */
-    section { padding: 6rem 2.5rem; position: relative; overflow: hidden; }
-    .section-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
-    .section-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-mint); color: var(--green);
-      padding: 4px 14px; border-radius: var(--r-pill);
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 1.1rem;
-    }
-    .section-title { font-family: var(--font-display); font-size: clamp(2rem,5vw,3.5rem); line-height: 1.12; color: var(--text); margin-bottom: 0.85rem; }
-    .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.75; margin-bottom: 2.5rem; }
+/* ── Sections ── */
+section { padding: 6rem 2.5rem; position: relative; overflow: hidden; }
+.section-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+.section-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-mint); color: var(--green);
+  padding: 4px 14px; border-radius: var(--r-pill);
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.section-title { font-family: var(--font-display); font-size: clamp(2rem,5vw,3.5rem); line-height: 1.12; color: var(--text); margin-bottom: 0.85rem; }
+.section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.75; margin-bottom: 2.5rem; }
 
-    /* ── Decorative illustrations ── */
-    .deco { position: absolute; pointer-events: none; color: var(--green); z-index: 0; }
-    @keyframes floatY { 0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);} }
-    @keyframes floatYR { 0%,100%{transform:translateY(0) scaleX(-1);}50%{transform:translateY(-14px) scaleX(-1);} }
-    @keyframes slowSpin { from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(360deg);} }
-    @keyframes bottleFloat { 0%,100%{transform:rotate(-20deg) scale(1.15) translateY(0);}50%{transform:rotate(-20deg) scale(1.15) translateY(-14px);} }
-    @keyframes blobMorph {
-      0%,100%{border-radius:60% 40% 55% 45%/50% 60% 40% 55%;}
-      33%{border-radius:45% 55% 40% 60%/60% 45% 55% 40%;}
-      66%{border-radius:55% 45% 60% 40%/40% 55% 45% 60%;}
-    }
+/* ── Decorative illustrations ── */
+.deco { position: absolute; pointer-events: none; color: var(--green); z-index: 0; }
+@keyframes floatY { 0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);} }
+@keyframes floatYR { 0%,100%{transform:translateY(0) scaleX(-1);}50%{transform:translateY(-14px) scaleX(-1);} }
+@keyframes slowSpin { from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(360deg);} }
+@keyframes bottleFloat { 0%,100%{transform:rotate(-20deg) scale(1.15) translateY(0);}50%{transform:rotate(-20deg) scale(1.15) translateY(-14px);} }
+@keyframes blobMorph {
+  0%,100%{border-radius:60% 40% 55% 45%/50% 60% 40% 55%;}
+  33%{border-radius:45% 55% 40% 60%/60% 45% 55% 40%;}
+  66%{border-radius:55% 45% 60% 40%/40% 55% 45% 60%;}
+}
 
-    /* ── Hero ── */
-    #hero {
-      min-height: 100vh; padding-top: 7rem; padding-bottom: 4rem;
-      background: linear-gradient(150deg, #fff 0%, var(--bg) 55%, var(--green-mint) 100%);
-      display: flex; align-items: center;
-    }
-    .hero-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; width: 100%; }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--green-mint); color: var(--green);
-      padding: 5px 16px; border-radius: var(--r-pill);
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 1.6rem;
-    }
-    .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem,6vw,5.2rem); line-height: 1.06; color: var(--text); margin-bottom: 1.4rem; }
-    .hero h1 em { color: var(--green); font-style: italic; }
-    html[lang="ar"] .hero h1 { font-weight: 900; line-height: 1.18; }
-    .hero-sub { font-size: 1.02rem; color: var(--muted); line-height: 1.78; margin-bottom: 2.1rem; max-width: 480px; }
-    .hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
-    .segment-tabs { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .seg-tab { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: var(--muted); }
-    .seg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .seg-dot.consumer { background: var(--green); }
-    .seg-dot.factory  { background: var(--amber); }
+/* ── Hero ── */
+#hero {
+  min-height: 100vh; padding-top: 7rem; padding-bottom: 4rem;
+  background: linear-gradient(150deg, #fff 0%, var(--bg) 55%, var(--green-mint) 100%);
+  display: flex; align-items: center;
+}
+.hero-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; width: 100%; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-mint); color: var(--green);
+  padding: 5px 16px; border-radius: var(--r-pill);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 1.6rem;
+}
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem,6vw,5.2rem); line-height: 1.06; color: var(--text); margin-bottom: 1.4rem; }
+.hero h1 em { color: var(--green); font-style: italic; }
+html[lang="ar"] .hero h1 { font-weight: 900; line-height: 1.18; }
+.hero-sub { font-size: 1.02rem; color: var(--muted); line-height: 1.78; margin-bottom: 2.1rem; max-width: 480px; }
+.hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
+.segment-tabs { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.seg-tab { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: var(--muted); }
+.seg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.seg-dot.consumer { background: var(--green); }
+.seg-dot.factory { background: var(--amber); }
 
-    /* Hero visual */
-    .hero-visual { position: relative; height: 480px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: var(--r); }
-    .hero-blob {
-      position: absolute; width: 360px; height: 360px; z-index: 0;
-      background: linear-gradient(135deg, var(--green-pale) 0%, var(--green-mint) 100%);
-      animation: blobMorph 9s ease-in-out infinite;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .blob-recycle {
-      font-size: 9rem; opacity: 0.1; user-select: none;
-      color: var(--green); line-height: 1;
-    }
-    .hero-bottle {
-      position: absolute; z-index: 2;
-      width: 295px;
-      bottom: -55px; right: -25px;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 18px 36px rgba(61,107,79,0.22));
-      animation: bottleFloat 5s ease-in-out infinite;
-    }
-    .leaf-a { position: absolute; top: 8%; left: 8%; width: 78px; z-index: 1; animation: floatY 6.5s ease-in-out infinite 0.6s; }
-    .leaf-b { position: absolute; bottom: 12%; right: 6%; width: 58px; z-index: 1; animation: floatY 7.2s ease-in-out infinite 0.2s; }
-    .leaf-c { position: absolute; top: 18%; right: 4%; width: 48px; z-index: 1; animation: floatY 5.8s ease-in-out infinite 1s; }
-    .leaf-d { position: absolute; bottom: 8%; left: 10%; width: 42px; z-index: 1; animation: floatY 8s ease-in-out infinite 0.4s; }
+/* Hero visual */
+.hero-visual { position: relative; height: 480px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: var(--r); }
+.hero-blob {
+  position: absolute; width: 360px; height: 360px; z-index: 0;
+  background: linear-gradient(135deg, var(--green-pale) 0%, var(--green-mint) 100%);
+  animation: blobMorph 9s ease-in-out infinite;
+  display: flex; align-items: center; justify-content: center;
+}
+.blob-recycle { font-size: 9rem; opacity: 0.1; user-select: none; color: var(--green); line-height: 1; }
+.hero-bottle {
+  position: absolute; z-index: 2; width: 295px; bottom: -55px; right: -25px;
+  mix-blend-mode: multiply; filter: drop-shadow(0 18px 36px rgba(61,107,79,0.22));
+  animation: bottleFloat 5s ease-in-out infinite;
+}
+.leaf-a { position: absolute; top: 8%; left: 8%; width: 78px; z-index: 1; animation: floatY 6.5s ease-in-out infinite 0.6s; }
+.leaf-b { position: absolute; bottom: 12%; right: 6%; width: 58px; z-index: 1; animation: floatY 7.2s ease-in-out infinite 0.2s; }
+.leaf-c { position: absolute; top: 18%; right: 4%; width: 48px; z-index: 1; animation: floatY 5.8s ease-in-out infinite 1s; }
+.leaf-d { position: absolute; bottom: 8%; left: 10%; width: 42px; z-index: 1; animation: floatY 8s ease-in-out infinite 0.4s; }
 
-    /* ── Stats ── */
-    #stats-bar { padding: 2.75rem 2.5rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .stats-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(155px,1fr)); gap: 1.25rem; }
-    .stat-card { text-align: center; padding: 1.4rem 1rem; background: var(--surface3); border-radius: var(--r); border: 1px solid var(--border); }
-    .stat-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
-    .stat-value { font-family: var(--font-display); font-size: 2.2rem; color: var(--green); line-height: 1; font-weight: 700; }
-    .stat-label { font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.35rem; }
-    html[lang="ar"] .stat-label { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
+/* ── Stats ── */
+#stats-bar { padding: 2.75rem 2.5rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stats-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(155px,1fr)); gap: 1.25rem; }
+.stat-card { text-align: center; padding: 1.4rem 1rem; background: var(--surface3); border-radius: var(--r); border: 1px solid var(--border); }
+.stat-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+.stat-value { font-family: var(--font-display); font-size: 2.2rem; color: var(--green); line-height: 1; font-weight: 700; }
+.stat-label { font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.35rem; }
+html[lang="ar"] .stat-label { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
 
-    /* ── Vision & Mission ── */
-    #vision-mission { background: var(--bg); }
-    .vm-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.5rem; margin-top: 2.75rem; }
-    .vm-card { background: var(--surface); padding: 2.5rem; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-sm); position: relative; overflow: hidden; }
-    .vm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: var(--r) var(--r) 0 0; }
-    .vm-vision::before { background: var(--green); }
-    .vm-mission::before { background: var(--amber); }
-    .vm-eyebrow { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.7rem; }
-    html[lang="ar"] .vm-eyebrow { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
-    .vm-vision .vm-eyebrow { color: var(--green); }
-    .vm-mission .vm-eyebrow { color: var(--amber); }
-    .vm-card h3 { font-family: var(--font-display); font-size: 1.55rem; margin-bottom: 1.1rem; font-weight: 700; }
-    .vm-card p, .vm-card li { color: var(--muted); font-size: 0.91rem; line-height: 1.82; }
-    .vm-card ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-    .vm-card li { padding-left: 1.4rem; position: relative; }
-    .vm-card li::before { content: '→'; position: absolute; left: 0; color: var(--amber); line-height: 1.82; }
-    /* Deco for vm section */
-    .vm-deco-tl { width: 160px; top: -30px; left: -25px; opacity: 0.09; animation: floatY 9s ease-in-out infinite 1s; }
-    .vm-deco-br { width: 110px; bottom: -10px; right: 3%; opacity: 0.07; animation: floatY 7.5s ease-in-out infinite 0.3s; }
+/* ── Pollution Carousel ── */
+#pollution {
+  background: linear-gradient(180deg, var(--surface) 0%, #f0ece4 100%);
+  border-bottom: 1px solid var(--border);
+}
+.pollution-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.pollution-text .section-badge { background: #FEE2E2; color: #B91C1C; }
+.pollution-text .section-title { color: var(--text); }
+.pollution-body { color: var(--muted); font-size: 0.95rem; line-height: 1.82; }
+.pollution-body p { margin-bottom: 1rem; }
+.pollution-body p:last-child { margin-bottom: 0; }
+.pollution-stat-row { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.pollution-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 0.9rem 1.1rem;
+  flex: 1; min-width: 120px;
+}
+.pollution-stat-val { font-family: var(--font-display); font-size: 1.5rem; color: #B91C1C; font-weight: 700; line-height: 1; }
+.pollution-stat-label { font-size: 0.68rem; color: var(--muted); margin-top: 0.25rem; font-weight: 600; }
+html[lang="ar"] .pollution-stat-label { font-size: 0.75rem; }
 
-    /* ── How It Works ── */
-    #how-it-works { background: var(--surface2); }
-    .how-tabs { display: flex; gap: 0.4rem; margin-bottom: 2.75rem; background: rgba(255,255,255,.7); padding: 0.35rem; border-radius: var(--r-pill); width: fit-content; border: 1px solid var(--border); }
-    .how-tab { font-size: 0.82rem; font-weight: 600; padding: 0.52rem 1.45rem; cursor: pointer; background: none; border: none; color: var(--muted); border-radius: var(--r-pill); transition: all 0.2s; font-family: var(--font-body); }
-    html[lang="ar"] .how-tab { font-size: 0.9rem; }
-    .how-tab.active-consumer { background: var(--green); color: white; }
-    .how-tab.active-factory  { background: var(--amber); color: white; }
-    .steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 1.1rem; }
-    .steps.hidden { display: none; }
-    .step { background: var(--surface); padding: 2rem; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-sm); transition: all 0.25s; }
-    .step:hover { transform: translateY(-4px); box-shadow: var(--sh); }
-    .step-num { font-family: var(--font-display); font-size: 2.4rem; color: var(--green-pale); font-weight: 700; line-height: 1; margin-bottom: 0.7rem; }
-    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
-    .step p { font-size: 0.84rem; color: var(--muted); line-height: 1.72; }
-    /* Deco recycle symbol */
-    .how-deco-recycle { width: 220px; right: 3%; top: 50%; z-index: 0; mix-blend-mode: multiply; filter: sepia(1) saturate(2.5) hue-rotate(85deg); opacity: 0.18; animation: slowSpin 40s linear infinite; }
-    html[dir="rtl"] .how-deco-recycle { right: auto; left: 3%; }
+.carousel-container {
+  position: relative;
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--sh-lg);
+  aspect-ratio: 4/3;
+  background: #1D2B1E;
+}
+.carousel-track {
+  display: flex;
+  width: 400%;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+}
+.carousel-slide {
+  width: 25%;
+  height: 100%;
+  flex-shrink: 0;
+}
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.85);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  z-index: 2;
+}
+.carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+.carousel-prev { left: 0.75rem; }
+.carousel-next { right: 0.75rem; }
+.carousel-dots {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  z-index: 2;
+}
+.carousel-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.8);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+.carousel-dot.active {
+  background: #fff;
+  transform: scale(1.15);
+}
 
-    /* ── Dashboard ── */
-    #dashboard { background: var(--bg); }
-    .dashboard-tabs { display: flex; gap: 0.4rem; margin-bottom: 2.25rem; background: var(--surface); padding: 0.35rem; border-radius: var(--r-pill); width: fit-content; border: 1px solid var(--border); }
-    .dash-tab { font-size: 0.82rem; font-weight: 600; padding: 0.52rem 1.45rem; cursor: pointer; background: none; border: none; color: var(--muted); border-radius: var(--r-pill); transition: all 0.2s; font-family: var(--font-body); }
-    html[lang="ar"] .dash-tab { font-size: 0.9rem; }
-    .dash-tab.active-consumer { background: var(--green); color: white; }
-    .dash-tab.active-factory  { background: var(--amber); color: white; }
-    .dash-panel { display: none; }
-    .dash-panel.active { display: block; }
+@media(max-width:900px) {
+  .pollution-layout { grid-template-columns: 1fr; }
+}
+@media(max-width:600px) {
+  #pollution { padding: 4rem 1.25rem; }
+  .pollution-stat-row { flex-direction: column; }
+}
 
-    /* Session bar */
-    .session-bar { display: none; align-items: center; gap: 1rem; padding: 0.9rem 1.25rem; border-radius: var(--r); margin-bottom: 1.5rem; }
-    .session-bar.visible { display: flex; }
-    #consumerSessionBar { background: var(--green-mint); border: 1px solid var(--green-pale); }
-    #factorySessionBar  { background: var(--amber-pale); border: 1px solid #E8C9A0; }
-    .session-name { font-weight: 700; font-size: 0.95rem; }
-    #sessionName { color: var(--green); }
-    #factorySessionName { color: var(--amber); }
-    .session-points { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
-    .sb-actions { margin-left: auto; }
-    .btn-logout { background: white; border: 1px solid var(--border); color: var(--muted); padding: 0.38rem 0.95rem; border-radius: var(--r-pill); font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
-    .btn-logout:hover { border-color: var(--green); color: var(--green); }
+/* ── Vision & Mission ── */
+#vision-mission { background: var(--bg); }
+.vm-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.5rem; margin-top: 2.75rem; }
+.vm-card { background: var(--surface); padding: 2.5rem; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-sm); position: relative; overflow: hidden; }
+.vm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: var(--r) var(--r) 0 0; }
+.vm-vision::before { background: var(--green); }
+.vm-mission::before { background: var(--amber); }
+.vm-eyebrow { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.7rem; }
+html[lang="ar"] .vm-eyebrow { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
+.vm-vision .vm-eyebrow { color: var(--green); }
+.vm-mission .vm-eyebrow { color: var(--amber); }
+.vm-card h3 { font-family: var(--font-display); font-size: 1.55rem; margin-bottom: 1.1rem; font-weight: 700; }
+.vm-card p, .vm-card li { color: var(--muted); font-size: 0.91rem; line-height: 1.82; }
+.vm-card ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.vm-card li { padding-left: 1.4rem; position: relative; }
+.vm-card li::before { content: '→'; position: absolute; left: 0; color: var(--amber); line-height: 1.82; }
 
-    /* Dashboard grid */
-    .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media(max-width:768px){ .dashboard-grid { grid-template-columns: 1fr; } }
-    .card { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); padding: 1.75rem; box-shadow: var(--sh-sm); }
-    .card-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
-    html[lang="ar"] .card-title { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
-    .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+/* Deco for vm section */
+.vm-deco-tl { width: 160px; top: -30px; left: -25px; opacity: 0.09; animation: floatY 9s ease-in-out infinite 1s; }
+.vm-deco-br { width: 110px; bottom: -10px; right: 3%; opacity: 0.07; animation: floatY 7.5s ease-in-out infinite 0.3s; }
 
-    /* Warning box */
-    .warning-box { background: var(--amber-pale); border: 1px solid #E8C9A0; border-radius: var(--r-sm); padding: 0.8rem 1rem; font-size: 0.82rem; color: var(--amber); margin-bottom: 1.1rem; }
-    .warning-box a { color: var(--amber); font-weight: 700; cursor: pointer; text-decoration: underline; }
+/* ── How It Works ── */
+#how-it-works { background: var(--surface2); }
+.how-tabs { display: flex; gap: 0.4rem; margin-bottom: 2.75rem; background: rgba(255,255,255,.7); padding: 0.35rem; border-radius: var(--r-pill); width: fit-content; border: 1px solid var(--border); }
+.how-tab { font-size: 0.82rem; font-weight: 600; padding: 0.52rem 1.45rem; cursor: pointer; background: none; border: none; color: var(--muted); border-radius: var(--r-pill); transition: all 0.2s; font-family: var(--font-body); }
+html[lang="ar"] .how-tab { font-size: 0.9rem; }
+.how-tab.active-consumer { background: var(--green); color: white; }
+.how-tab.active-factory { background: var(--amber); color: white; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 1.1rem; }
+.steps.hidden { display: none; }
+.step { background: var(--surface); padding: 2rem; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--sh-sm); transition: all 0.25s; }
+.step:hover { transform: translateY(-4px); box-shadow: var(--sh); }
+.step-num { font-family: var(--font-display); font-size: 2.4rem; color: var(--green-pale); font-weight: 700; line-height: 1; margin-bottom: 0.7rem; }
+.step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
+.step p { font-size: 0.84rem; color: var(--muted); line-height: 1.72; }
 
-    /* Forms */
-    .form-group { margin-bottom: 0.9rem; }
-    .form-group label { display: block; font-size: 0.76rem; font-weight: 600; color: var(--muted); margin-bottom: 0.3rem; }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: 0.65rem 0.9rem;
-      background: var(--surface3); border: 1.5px solid var(--border);
-      border-radius: var(--r-sm); color: var(--text); font-family: var(--font-body); font-size: 0.88rem;
-      transition: border-color .2s, box-shadow .2s; outline: none;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(160,200,144,.2);
-    }
-    .form-group textarea { min-height: 76px; resize: vertical; }
-    .btn-submit { width: 100%; padding: 0.82rem; background: var(--green); color: white; border: none; border-radius: var(--r-pill); font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all .2s; margin-top: 0.4rem; font-family: var(--font-body); }
-    .btn-submit:hover { background: var(--green-mid); }
-    .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
-    .btn-submit-factory { width: 100%; padding: 0.82rem; background: var(--amber); color: white; border: none; border-radius: var(--r-pill); font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all .2s; margin-top: 0.4rem; font-family: var(--font-body); }
-    .btn-submit-factory:hover { background: #A8662A; }
-    .btn-submit-factory:disabled { opacity: 0.55; cursor: not-allowed; }
+/* Deco recycle symbol */
+.how-deco-recycle { width: 220px; right: 3%; top: 50%; z-index: 0; mix-blend-mode: multiply; filter: sepia(1) saturate(2.5) hue-rotate(85deg); opacity: 0.18; animation: slowSpin 40s linear infinite; }
+html[dir="rtl"] .how-deco-recycle { right: auto; left: 3%; }
 
-    /* Feed */
-    .feed { display: flex; flex-direction: column; gap: 0.55rem; max-height: 340px; overflow-y: auto; }
-    .feed-item, .pickup-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.85rem; background: var(--surface3); border-radius: var(--r-sm); font-size: 0.8rem; }
-    .feed-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
-    .feed-item-left { flex: 1; min-width: 0; }
-    .feed-user { font-weight: 600; color: var(--text); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .feed-meta { color: var(--muted); font-size: 0.72rem; }
-    .feed-bottles { font-family: var(--font-mono); font-size: 0.78rem; color: var(--green); font-weight: 700; white-space: nowrap; }
-    .feed-bottles span { display: block; font-family: var(--font-body); font-size: 0.68rem; color: var(--muted); font-weight: 400; }
-    .pickup-status { padding: 2px 9px; border-radius: var(--r-pill); font-size: 0.67rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
-    html[lang="ar"] .pickup-status { text-transform: none; }
-    .status-pending   { background: var(--amber-pale); color: var(--amber); }
-    .status-confirmed { background: var(--green-mint);  color: var(--green); }
-    .status-completed { background: var(--green-pale);  color: var(--green); }
-    .status-cancelled { background: #FEE2E2; color: #B91C1C; }
-    .pickup-item { align-items: flex-start; }
+/* ── Dashboard ── */
+#dashboard { background: var(--bg); }
+.dashboard-tabs { display: flex; gap: 0.4rem; margin-bottom: 2.25rem; background: var(--surface); padding: 0.35rem; border-radius: var(--r-pill); width: fit-content; border: 1px solid var(--border); }
+.dash-tab { font-size: 0.82rem; font-weight: 600; padding: 0.52rem 1.45rem; cursor: pointer; background: none; border: none; color: var(--muted); border-radius: var(--r-pill); transition: all 0.2s; font-family: var(--font-body); }
+html[lang="ar"] .dash-tab { font-size: 0.9rem; }
+.dash-tab.active-consumer { background: var(--green); color: white; }
+.dash-tab.active-factory { background: var(--amber); color: white; }
+.dash-panel { display: none; }
+.dash-panel.active { display: block; }
 
-    /* Factory section */
-    .supply-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    @media(max-width:600px){ .supply-grid { grid-template-columns: 1fr; } }
-    .supply-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem; text-align: center; box-shadow: var(--sh-sm); }
-    .supply-val { font-family: var(--font-display); font-size: 1.9rem; color: var(--amber); font-weight: 700; }
-    .supply-label { font-size: 0.68rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
-    html[lang="ar"] .supply-label { text-transform: none; letter-spacing: 0; }
+/* Session bar */
+.session-bar { display: none; align-items: center; gap: 1rem; padding: 0.9rem 1.25rem; border-radius: var(--r); margin-bottom: 1.5rem; }
+.session-bar.visible { display: flex; }
+#consumerSessionBar { background: var(--green-mint); border: 1px solid var(--green-pale); }
+#factorySessionBar { background: var(--amber-pale); border: 1px solid #E8C9A0; }
+.session-name { font-weight: 700; font-size: 0.95rem; }
+#sessionName { color: var(--green); }
+#factorySessionName { color: var(--amber); }
+.session-points { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+.sb-actions { margin-left: auto; }
+.btn-logout { background: white; border: 1px solid var(--border); color: var(--muted); padding: 0.38rem 0.95rem; border-radius: var(--r-pill); font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+.btn-logout:hover { border-color: var(--green); color: var(--green); }
 
-    /* ── Leaderboard ── */
-    #leaderboard { background: var(--surface2); }
-    .leaderboard-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 2rem; border-radius: var(--r); overflow: hidden; box-shadow: var(--sh-sm); }
-    .leaderboard-table th { background: var(--surface); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0.85rem 1rem; text-align: left; border-bottom: 2px solid var(--border); }
-    html[lang="ar"] .leaderboard-table th { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
-    .leaderboard-table td { padding: 0.9rem 1rem; font-size: 0.88rem; border-bottom: 1px solid var(--border); background: var(--surface); }
-    .leaderboard-table tr:last-child td { border-bottom: none; }
-    .leaderboard-table tr:hover td { background: var(--surface3); }
-    .rank { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
-    .rank-1 { color: #DAA520; font-weight: 700; font-size: 0.9rem; }
-    .rank-2 { color: #9CA3AF; font-weight: 700; }
-    .rank-3 { color: #B45309; font-weight: 700; }
-    .points-badge { background: var(--green-mint); color: var(--green); padding: 2px 10px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; }
-    /* Deco tree */
-    .lb-deco-tree { width: 130px; right: 5%; bottom: 0; opacity: 0.08; animation: floatY 10s ease-in-out infinite; }
-    html[dir="rtl"] .lb-deco-tree { right: auto; left: 5%; }
+/* Dashboard grid */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media(max-width:768px){ .dashboard-grid { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); padding: 1.75rem; box-shadow: var(--sh-sm); }
+.card-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+html[lang="ar"] .card-title { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 
-    /* ── Footer ── */
-    footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.5rem; }
-    .footer-inner { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
-    .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
-    .footer-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
-    .footer-logo-text { font-family: var(--font-display); font-size: 1.1rem; color: white; font-weight: 700; }
-    .footer-copy { font-size: 0.78rem; }
-    .footer-vision { font-size: 0.74rem; opacity: 0.45; }
+/* Warning box */
+.warning-box { background: var(--amber-pale); border: 1px solid #E8C9A0; border-radius: var(--r-sm); padding: 0.8rem 1rem; font-size: 0.82rem; color: var(--amber); margin-bottom: 1.1rem; }
+.warning-box a { color: var(--amber); font-weight: 700; cursor: pointer; text-decoration: underline; }
 
-    /* ── Modals ── */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(29,43,30,.6); backdrop-filter: blur(8px); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity .3s; }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .modal { background: var(--surface); border-radius: var(--r); padding: 2.4rem; width: 100%; max-width: 430px; position: relative; box-shadow: var(--sh-lg); transform: translateY(18px); transition: transform .3s; }
-    .modal-overlay.active .modal { transform: translateY(0); }
-    .modal-close { position: absolute; top: 1.1rem; right: 1.1rem; background: var(--surface3); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--muted); transition: all .2s; }
-    .modal-close:hover { background: var(--border); color: var(--text); }
-    .modal-title { font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 0.35rem; font-weight: 700; color: var(--text); }
-    .modal-sub { font-size: 0.84rem; color: var(--muted); margin-bottom: 1.6rem; line-height: 1.65; }
-    .modal-switch { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; text-align: center; }
-    .modal-switch a { color: var(--green); font-weight: 600; cursor: pointer; text-decoration: none; }
+/* Forms */
+.form-group { margin-bottom: 0.9rem; }
+.form-group label { display: block; font-size: 0.76rem; font-weight: 600; color: var(--muted); margin-bottom: 0.3rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 0.65rem 0.9rem;
+  background: var(--surface3); border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); color: var(--text); font-family: var(--font-body); font-size: 0.88rem;
+  transition: border-color .2s, box-shadow .2s; outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(160,200,144,.2);
+}
+.form-group textarea { min-height: 76px; resize: vertical; }
+.btn-submit { width: 100%; padding: 0.82rem; background: var(--green); color: white; border: none; border-radius: var(--r-pill); font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all .2s; margin-top: 0.4rem; font-family: var(--font-body); }
+.btn-submit:hover { background: var(--green-mid); }
+.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-submit-factory { width: 100%; padding: 0.82rem; background: var(--amber); color: white; border: none; border-radius: var(--r-pill); font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all .2s; margin-top: 0.4rem; font-family: var(--font-body); }
+.btn-submit-factory:hover { background: #A8662A; }
+.btn-submit-factory:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* ── Toast ── */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--text); color: white; padding: 0.82rem 1.45rem; border-radius: var(--r-pill); font-size: 0.84rem; font-weight: 500; z-index: 900; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; box-shadow: var(--sh-lg); max-width: 320px; }
-    .toast.show { opacity: 1; transform: translateY(0); pointer-events: all; }
-    .toast.error { background: #B91C1C; }
+/* Feed */
+.feed { display: flex; flex-direction: column; gap: 0.55rem; max-height: 340px; overflow-y: auto; }
+.feed-item, .pickup-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.85rem; background: var(--surface3); border-radius: var(--r-sm); font-size: 0.8rem; }
+.feed-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+.feed-item-left { flex: 1; min-width: 0; }
+.feed-user { font-weight: 600; color: var(--text); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.feed-meta { color: var(--muted); font-size: 0.72rem; }
+.feed-bottles { font-family: var(--font-mono); font-size: 0.78rem; color: var(--green); font-weight: 700; white-space: nowrap; }
+.feed-bottles span { display: block; font-family: var(--font-body); font-size: 0.68rem; color: var(--muted); font-weight: 400; }
+.pickup-status { padding: 2px 9px; border-radius: var(--r-pill); font-size: 0.67rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+html[lang="ar"] .pickup-status { text-transform: none; }
+.status-pending { background: var(--amber-pale); color: var(--amber); }
+.status-confirmed { background: var(--green-mint); color: var(--green); }
+.status-completed { background: var(--green-pale); color: var(--green); }
+.status-cancelled { background: #FEE2E2; color: #B91C1C; }
+.pickup-item { align-items: flex-start; }
 
-    /* ── Scroll top ── */
-    .scroll-top { position: fixed; bottom: 2rem; right: 2rem; width: 42px; height: 42px; background: var(--green); color: white; border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer; z-index: 200; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; box-shadow: var(--sh); }
-    .scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
-    .scroll-top:hover { background: var(--green-mid); }
+/* Factory section */
+.supply-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+@media(max-width:600px){ .supply-grid { grid-template-columns: 1fr; } }
+.supply-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem; text-align: center; box-shadow: var(--sh-sm); }
+.supply-val { font-family: var(--font-display); font-size: 1.9rem; color: var(--amber); font-weight: 700; }
+.supply-label { font-size: 0.68rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
+html[lang="ar"] .supply-label { text-transform: none; letter-spacing: 0; }
 
-    /* ── Misc ── */
-    .hidden { display: none !important; }
-    .loading-text { color: var(--muted); font-size: 0.78rem; text-align: center; padding: 1.8rem; font-family: var(--font-mono); }
-    .empty-state { text-align: center; padding: 2.25rem 1rem; color: var(--muted); }
-    .empty-state p { font-size: 0.84rem; margin-top: 0.35rem; }
+/* ── Footer ── */
+footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.5rem; }
+.footer-inner { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
+.footer-brand { display: flex; align-items: center; gap: 0.6rem; }
+.footer-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
+.footer-logo-text { font-family: var(--font-display); font-size: 1.1rem; color: white; font-weight: 700; }
+.footer-copy { font-size: 0.78rem; }
+.footer-vision { font-size: 0.74rem; opacity: 0.45; }
 
-    /* ── Mobile ── */
-    @media(max-width:900px){
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      nav { padding: 0 1.25rem; }
-      .nav-links { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 1.25rem; gap: 0.4rem; border-bottom: 1px solid var(--border); box-shadow: var(--sh); z-index: 99; }
-      .nav-links.open { display: flex; }
-      .hamburger { display: flex; }
-    }
-    @media(max-width:600px){
-      .deco { z-index: -1; }
-      section { padding: 4rem 1.25rem; }
-      #stats-bar { padding: 2rem 1.25rem; }
-      footer { padding: 2rem 1.25rem; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-      .vm-grid { grid-template-columns: 1fr; }
-    }
+/* ── Modals ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(29,43,30,.6); backdrop-filter: blur(8px); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border-radius: var(--r); padding: 2.4rem; width: 100%; max-width: 430px; position: relative; box-shadow: var(--sh-lg); transform: translateY(18px); transition: transform .3s; }
+.modal-overlay.active .modal { transform: translateY(0); }
+.modal-close { position: absolute; top: 1.1rem; right: 1.1rem; background: var(--surface3); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--muted); transition: all .2s; }
+.modal-close:hover { background: var(--border); color: var(--text); }
+.modal-title { font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 0.35rem; font-weight: 700; color: var(--text); }
+.modal-sub { font-size: 0.84rem; color: var(--muted); margin-bottom: 1.6rem; line-height: 1.65; }
+.modal-switch { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; text-align: center; }
+.modal-switch a { color: var(--green); font-weight: 600; cursor: pointer; text-decoration: none; }
+
+/* ── Toast ── */
+.toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--text); color: white; padding: 0.82rem 1.45rem; border-radius: var(--r-pill); font-size: 0.84rem; font-weight: 500; z-index: 900; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; box-shadow: var(--sh-lg); max-width: 320px; }
+.toast.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+.toast.error { background: #B91C1C; }
+
+/* ── Scroll top ── */
+.scroll-top { position: fixed; bottom: 2rem; right: 2rem; width: 42px; height: 42px; background: var(--green); color: white; border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer; z-index: 200; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; box-shadow: var(--sh); }
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+.scroll-top:hover { background: var(--green-mid); }
+
+/* ── Misc ── */
+.hidden { display: none !important; }
+.loading-text { color: var(--muted); font-size: 0.78rem; text-align: center; padding: 1.8rem; font-family: var(--font-mono); }
+.empty-state { text-align: center; padding: 2.25rem 1rem; color: var(--muted); }
+.empty-state p { font-size: 0.84rem; margin-top: 0.35rem; }
+
+/* ── Mobile ── */
+@media(max-width:900px){
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  nav { padding: 0 1.25rem; }
+  .nav-links { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 1.25rem; gap: 0.4rem; border-bottom: 1px solid var(--border); box-shadow: var(--sh); z-index: 99; }
+  .nav-links.open { display: flex; }
+  /* FIXED: Ensure RTL mobile menu also stacks vertically */
+  html[dir="rtl"] .nav-links { flex-direction: column; }
+  html[dir="rtl"] .nav-links.open { display: flex; flex-direction: column; }
+  .hamburger { display: flex; }
+}
+@media(max-width:600px){
+  .deco { z-index: -1; }
+  section { padding: 4rem 1.25rem; }
+  #stats-bar { padding: 2rem 1.25rem; }
+  footer { padding: 2rem 1.25rem; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .vm-grid { grid-template-columns: 1fr; }
+}
+```
+
   </style>
 </head>
 <body>
 
-<!-- ── Nav ── -->
-<nav>
-  <a class="nav-brand" href="#">
-    <div class="nav-logo-mark">♻</div>
-    <span class="nav-logo-text">Tadweer<span>Hub</span></span>
-  </a>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#vision-mission" class="nav-link" data-i18n="nav.vision">Vision &amp; Mission</a></li>
-    <li><a href="#how-it-works"   class="nav-link" data-i18n="nav.how">How It Works</a></li>
-    <li><a href="#dashboard"      class="nav-link" data-i18n="nav.dashboard">Dashboard</a></li>
-    <li><a href="#leaderboard"    class="nav-link" data-i18n="nav.leaderboard">Leaderboard</a></li>
-    <li><a href="#" class="btn-nav-factory nav-link" id="openFactoryRegister" data-i18n="nav.factory">Factory Portal</a></li>
-    <li><a href="#" class="btn-nav nav-link" id="openRegister" data-i18n="nav.join">Join Now</a></li>
-    <li><button class="lang-toggle" id="langToggle">عربي</button></li>
-  </ul>
-</nav>
+  <!-- ── Nav ── -->
 
-<!-- ── Hero ── -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="reveal">
-      <p class="hero-tag" data-i18n="hero.tag">Egypt's Plastic &amp; Can Recycling Network</p>
-      <h1>
-        <em data-i18n="hero.l1">COLLECT.</em><br>
-        <span data-i18n="hero.l2">RECYCLE.</span><br>
-        <span data-i18n="hero.l3">EARN.</span>
-      </h1><br>
-      <p class="hero-sub" data-i18n="hero.sub">TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.</p>
-      <div class="hero-cta">
-        <a href="#dashboard" class="btn btn-primary" data-i18n="hero.cta1">I Have Waste to Recycle</a>
-        <a href="#dashboard" class="btn btn-factory" id="factoryHeroBtn" data-i18n="hero.cta2">I'm a Recycling Factory</a>
-        <a href="#how-it-works" class="btn btn-secondary" data-i18n="hero.cta3">How It Works</a>
-      </div>
-      <div class="segment-tabs">
-        <div class="seg-tab"><div class="seg-dot consumer"></div><span data-i18n="hero.seg1">Consumers — earn cash from plastic</span></div>
-        <div class="seg-tab"><div class="seg-dot factory"></div><span data-i18n="hero.seg2">Factories — get clean sorted supply</span></div>
-      </div>
-    </div>
+  <nav>
+    <a class="nav-brand" href="#">
+      <div class="nav-logo-mark">♻</div>
+      <span class="nav-logo-text">Tadweer<span>Hub</span></span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#vision-mission" class="nav-link" data-i18n="nav.vision">Vision &amp; Mission</a></li>
+      <li><a href="#how-it-works" class="nav-link" data-i18n="nav.how">How It Works</a></li>
+      <li><a href="#dashboard" class="nav-link" data-i18n="nav.dashboard">Dashboard</a></li>
+      <li><a href="#" class="btn-nav-factory nav-link" id="openFactoryRegister" data-i18n="nav.factory">Factory Portal</a></li>
+      <li><a href="#" class="btn-nav nav-link" id="openRegister" data-i18n="nav.join">Join Now</a></li>
+      <li><button class="lang-toggle" id="langToggle">عربي</button></li>
+    </ul>
+  </nav>
 
-    <!-- Hero illustration -->
-    <div class="hero-visual">
-      <div class="hero-blob"><span class="blob-recycle">♻</span></div>
-      <!-- Plastic bottle image -->
-      <img class="hero-bottle" src="resources/Empty_plastic_bottle.png" alt="" />
-      <!-- Floating leaves -->
-      <svg class="leaf-a" viewBox="0 0 80 118" fill="none"><path d="M40 112C40 112 5 78 5 43 5 18 21 4 40 4 59 4 75 18 75 43 75 78 40 112 40 112Z" fill="#5A8F6A" opacity=".38"/><line x1="40" y1="112" x2="40" y2="8" stroke="#3D6B4F" stroke-width="1.5" opacity=".5"/><path d="M40 40 Q58 30 68 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q60 52 72 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 40 Q22 30 12 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q20 52 8 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/></svg>
-      <svg class="leaf-b" viewBox="0 0 60 88" fill="none"><path d="M30 83C30 83 4 60 4 33 4 15 16 4 30 4 44 4 56 15 56 33 56 60 30 83 30 83Z" fill="#A0C890" opacity=".45"/><line x1="30" y1="83" x2="30" y2="7" stroke="#5A8F6A" stroke-width="1.5" opacity=".5"/></svg>
-      <svg class="leaf-c" viewBox="0 0 50 72" fill="none"><path d="M25 68C25 68 3 50 3 28 3 13 13 3 25 3 37 3 47 13 47 28 47 50 25 68 25 68Z" fill="#D4EBCA" opacity=".7"/><line x1="25" y1="68" x2="25" y2="6" stroke="#3D6B4F" stroke-width="1" opacity=".4"/></svg>
-      <svg class="leaf-d" viewBox="0 0 44 64" fill="none"><path d="M22 60C22 60 3 44 3 25 3 12 12 3 22 3 32 3 41 12 41 25 41 44 22 60 22 60Z" fill="#EAF5E4" opacity=".8"/></svg>
-    </div>
-  </div>
-</section>
+  <!-- ── Hero ── -->
 
-<!-- ── Stats ── -->
-<div id="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-card reveal"><div class="stat-icon">♻️</div><div class="stat-value" id="statBottles">—</div><div class="stat-label" data-i18n="stats.bottles">Bottles Collected</div></div>
-    <div class="stat-card reveal"><div class="stat-icon">👥</div><div class="stat-value" id="statUsers">—</div><div class="stat-label" data-i18n="stats.members">Active Members</div></div>
-    <div class="stat-card reveal"><div class="stat-icon">🚛</div><div class="stat-value" id="statPickups">—</div><div class="stat-label" data-i18n="stats.pickups">Pickup Requests</div></div>
-    <div class="stat-card reveal"><div class="stat-icon">🌿</div><div class="stat-value" id="statCO2">—</div><div class="stat-label" data-i18n="stats.co2">KG CO₂ Saved</div></div>
-    <div class="stat-card reveal"><div class="stat-icon">💧</div><div class="stat-value" id="statWater">—</div><div class="stat-label" data-i18n="stats.water">Litres Water Saved</div></div>
-  </div>
-</div>
-
-<!-- ── Vision & Mission ── -->
-<section id="vision-mission">
-  <!-- Decorative leaves -->
-  <svg class="deco vm-deco-tl" viewBox="0 0 160 240" fill="none"><path d="M80 230C80 230 10 168 10 96 10 43 43 8 80 8 117 8 150 43 150 96 150 168 80 230 80 230Z" fill="currentColor"/><line x1="80" y1="230" x2="80" y2="11" stroke="currentColor" stroke-width="2"/><path d="M80 70 Q108 56 124 38" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 108 Q112 94 130 82" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 146 Q106 134 120 124" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 70 Q52 56 36 38" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 108 Q48 94 30 82" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 146 Q54 134 40 124" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-  <svg class="deco vm-deco-br" viewBox="0 0 110 160" fill="none"><path d="M55 152C55 152 8 112 8 64 8 30 29 6 55 6 81 6 102 30 102 64 102 112 55 152 55 152Z" fill="currentColor"/><line x1="55" y1="152" x2="55" y2="9" stroke="currentColor" stroke-width="1.5"/></svg>
-  <div class="section-inner reveal">
-    <span class="section-badge" data-i18n="vm.tag">Our Purpose</span>
-    <h2 class="section-title" data-i18n="vm.title">Vision &amp; Mission</h2>
-    <div class="vm-grid">
-      <div class="vm-card vm-vision">
-        <p class="vm-eyebrow" data-i18n="vm.vTag">Vision Statement</p>
-        <h3 data-i18n="vm.vTitle">Vision Statement</h3>
-        <p data-i18n="vm.vBody">Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.</p>
-      </div>
-      <div class="vm-card vm-mission">
-        <p class="vm-eyebrow" data-i18n="vm.mTag">Mission Statement</p>
-        <h3 data-i18n="vm.mTitle">Mission Statement</h3>
-        <ul>
-          <li data-i18n="vm.mBody1">Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.</li>
-          <li data-i18n="vm.mBody2">We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── How It Works ── -->
-<section id="how-it-works">
-  <!-- Decorative recycling image -->
-  <img class="deco how-deco-recycle" src="resources/mszinger-Recycle-simple.png" alt="" />
-  <div class="section-inner reveal">
-    <span class="section-badge" data-i18n="how.tag">Process</span>
-    <h2 class="section-title" data-i18n="how.title">HOW IT WORKS</h2>
-    <div class="how-tabs">
-      <button class="how-tab active-consumer" id="howTabConsumer" onclick="switchHowTab('consumer')" data-i18n="how.tabC">For Consumers</button>
-      <button class="how-tab" id="howTabFactory" onclick="switchHowTab('factory')" data-i18n="how.tabF">For Factories</button>
-    </div>
-    <div class="steps" id="consumerSteps">
-      <div class="step"><div class="step-num">01</div><h3 data-i18n="how.c1t">Collect Your Plastic</h3><p data-i18n="how.c1b">Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.</p></div>
-      <div class="step"><div class="step-num">02</div><h3 data-i18n="how.c2t">Choose Drop-off or Pickup</h3><p data-i18n="how.c2b">Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.</p></div>
-      <div class="step"><div class="step-num">03</div><h3 data-i18n="how.c3t">Log Your Drop-off</h3><p data-i18n="how.c3b">Create your account and log how many items you've dropped off. Every bottle counts toward your balance.</p></div>
-      <div class="step"><div class="step-num">04</div><h3 data-i18n="how.c4t">Earn Cash &amp; Track Impact</h3><p data-i18n="how.c4b">Earn points redeemable for cash payments. Track your environmental impact: CO₂ saved, water conserved, and more.</p></div>
-    </div>
-    <div class="steps hidden" id="factorySteps">
-      <div class="step"><div class="step-num">01</div><h3 data-i18n="how.f1t">Register Your Factory</h3><p data-i18n="how.f1b">Create a factory account and specify what materials you need and your required quantities.</p></div>
-      <div class="step"><div class="step-num">02</div><h3 data-i18n="how.f2t">View Available Supply</h3><p data-i18n="how.f2b">See real-time inventory of collected, sorted plastic and cans available in your region.</p></div>
-      <div class="step"><div class="step-num">03</div><h3 data-i18n="how.f3t">Place a Supply Order</h3><p data-i18n="how.f3b">Request the quantity you need. TadweerHub handles collection, sorting, and delivery directly to your factory site.</p></div>
-      <div class="step"><div class="step-num">04</div><h3 data-i18n="how.f4t">Receive Sorted Materials</h3><p data-i18n="how.f4b">Get clean, quality-tested, well-sorted plastic and aluminum delivered on schedule at competitive prices.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Dashboard ── -->
-<section id="dashboard">
-  <!-- Decorative bottle (small, background) -->
-  <svg class="deco" style="width:180px;right:-20px;top:60px;opacity:.05;animation:floatY 7s ease-in-out infinite;" viewBox="0 0 160 340" fill="none"><path d="M48 52 Q20 88 18 145 L18 268 Q18 318 80 322 Q142 318 142 268 L142 145 Q140 88 112 52 Z" fill="currentColor"/><rect x="55" y="18" width="50" height="34" rx="4" fill="currentColor"/><rect x="60" y="0" width="40" height="20" rx="6" fill="currentColor"/></svg>
-  <div class="section-inner">
-    <span class="section-badge" data-i18n="dash.tag">Dashboard</span>
-    <h2 class="section-title reveal" data-i18n="dash.title">YOUR PORTAL</h2>
-    <div class="dashboard-tabs">
-      <button class="dash-tab active-consumer" id="dashTabConsumer" onclick="switchDashTab('consumer')" data-i18n="dash.tabC">Consumer Dashboard</button>
-      <button class="dash-tab" id="dashTabFactory" onclick="switchDashTab('factory')" data-i18n="dash.tabF">Factory Dashboard</button>
-    </div>
-
-    <!-- Consumer Panel -->
-    <div class="dash-panel active" id="panelConsumer">
-      <div id="consumerSessionBar" class="session-bar">
-        <div>
-          <div class="session-name" id="sessionName">—</div>
-          <div class="session-points" id="sessionPoints">0 points</div>
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="reveal">
+        <p class="hero-tag" data-i18n="hero.tag">Egypt's Plastic &amp; Can Recycling Network</p>
+        <h1>
+          <em data-i18n="hero.l1">COLLECT.</em><br>
+          <span data-i18n="hero.l2">RECYCLE.</span><br>
+          <span data-i18n="hero.l3">EARN.</span>
+        </h1><br>
+        <p class="hero-sub" data-i18n="hero.sub">TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.</p>
+        <div class="hero-cta">
+          <a href="#dashboard" class="btn btn-primary" data-i18n="hero.cta1">I Have Waste to Recycle</a>
+          <a href="#dashboard" class="btn btn-factory" id="factoryHeroBtn" data-i18n="hero.cta2">I'm a Recycling Factory</a>
+          <a href="#how-it-works" class="btn btn-secondary" data-i18n="hero.cta3">How It Works</a>
         </div>
-        <div class="sb-actions">
-          <button class="btn-logout" id="logoutBtn" data-i18n="common.signOut">Sign Out</button>
+        <div class="segment-tabs">
+          <div class="seg-tab"><div class="seg-dot consumer"></div><span data-i18n="hero.seg1">Consumers — earn cash from plastic</span></div>
+          <div class="seg-tab"><div class="seg-dot factory"></div><span data-i18n="hero.seg2">Factories — get clean sorted supply</span></div>
         </div>
       </div>
-      <div class="dashboard-grid">
-        <div class="card">
-          <div class="card-title" data-i18n="dropoff.title">// Log a Drop-off</div>
-          <div id="noUserWarning" class="warning-box">
-            <span data-i18n="dropoff.warn1">You need to</span> <a id="joinPromptLink" data-i18n="dropoff.warnLink">create an account</a> <span data-i18n="dropoff.warn2">before logging a drop-off.</span>
+      <!-- Hero illustration -->
+      <div class="hero-visual">
+        <div class="hero-blob"><span class="blob-recycle">♻</span></div>
+        <img class="hero-bottle" src="resources/Empty_plastic_bottle.png" alt="" />
+        <svg class="leaf-a" viewBox="0 0 80 118" fill="none"><path d="M40 112C40 112 5 78 5 43 5 18 21 4 40 4 59 4 75 18 75 43 75 78 40 112 40 112Z" fill="#5A8F6A" opacity=".38"/><line x1="40" y1="112" x2="40" y2="8" stroke="#3D6B4F" stroke-width="1.5" opacity=".5"/><path d="M40 40 Q58 30 68 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q60 52 72 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 40 Q22 30 12 18" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/><path d="M40 62 Q20 52 8 44" stroke="#3D6B4F" stroke-width="1" fill="none" opacity=".4"/></svg>
+        <svg class="leaf-b" viewBox="0 0 60 88" fill="none"><path d="M30 83C30 83 4 60 4 33 4 15 16 4 30 4 44 4 56 15 56 33 56 60 30 83 30 83Z" fill="#A0C890" opacity=".45"/><line x1="30" y1="83" x2="30" y2="7" stroke="#5A8F6A" stroke-width="1.5" opacity=".5"/></svg>
+        <svg class="leaf-c" viewBox="0 0 50 72" fill="none"><path d="M25 68C25 68 3 50 3 28 3 13 13 3 25 3 37 3 47 13 47 28 47 50 25 68 25 68Z" fill="#D4EBCA" opacity=".7"/><line x1="25" y1="68" x2="25" y2="6" stroke="#3D6B4F" stroke-width="1" opacity=".4"/></svg>
+        <svg class="leaf-d" viewBox="0 0 44 64" fill="none"><path d="M22 60C22 60 3 44 3 25 3 12 12 3 22 3 32 3 41 12 41 25 41 44 22 60 22 60Z" fill="#EAF5E4" opacity=".8"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ── -->
+
+  <div id="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-card reveal"><div class="stat-icon">♻️</div><div class="stat-value" id="statBottles">—</div><div class="stat-label" data-i18n="stats.bottles">Bottles Collected</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">🚛</div><div class="stat-value" id="statPickups">—</div><div class="stat-label" data-i18n="stats.pickups">Pickup Requests</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">🌿</div><div class="stat-value" id="statCO2">—</div><div class="stat-label" data-i18n="stats.co2">KG CO₂ Saved</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">💧</div><div class="stat-value" id="statWater">—</div><div class="stat-label" data-i18n="stats.water">Litres Water Saved</div></div>
+    </div>
+  </div>
+
+  <!-- ── Pollution Carousel ── -->
+
+  <section id="pollution">
+    <div class="section-inner">
+      <div class="pollution-layout reveal">
+        <div class="pollution-text">
+          <span class="section-badge" data-i18n="poll.tag">⚠ The Cost of Inaction</span>
+          <h2 class="section-title" data-i18n="poll.title">THIS IS WHAT HAPPENS WHEN WE LOOK AWAY</h2>
+          <div class="pollution-body">
+            <p data-i18n="poll.body1">Every year, millions of plastic bottles and aluminum cans end up in Egypt's rivers, canals, and streets instead of recycling facilities. The Nile — our lifeline — carries tons of plastic waste into the Mediterranean, poisoning marine life and contaminating the water we drink.</p>
+            <p data-i18n="poll.body2">These photos were taken in Egypt. They show what happens when recyclable materials are discarded instead of collected. Plastic takes over 400 years to decompose. Every bottle you recycle through TadweerHub is one less in our waterways.</p>
           </div>
-          <form id="dropoffForm">
-            <div class="form-group"><label data-i18n="dropoff.bottles">Number of Bottles / Cans</label><input type="number" id="bottleCount" min="1" max="10000" placeholder="e.g. 25" required /></div>
-            <div class="form-group">
-              <label data-i18n="dropoff.material">Material Type</label>
-              <select id="materialType" required>
-                <option value="" data-i18n="c.selType">Select type...</option>
-                <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
-                <option value="cans"    data-i18n="c.cans">Aluminum Cans</option>
-                <option value="mixed"   data-i18n="c.mixed">Mixed (Plastic + Cans)</option>
-              </select>
+          <div class="pollution-stat-row">
+            <div class="pollution-stat">
+              <div class="pollution-stat-val">12M+</div>
+              <div class="pollution-stat-label" data-i18n="poll.s1">Tons of plastic waste in Egypt yearly</div>
             </div>
-            <div class="form-group">
-              <label data-i18n="dropoff.location">Drop-off Location</label>
-              <select id="locationSelect" required>
-                <option value="" data-i18n="c.selLoc">Select a location...</option>
-                <option data-i18n="loc.eng">Faculty of Engineering — Main Gate</option>
-                <option data-i18n="loc.sci">Faculty of Science — Library Entrance</option>
-                <option data-i18n="loc.union">Student Union Building</option>
-                <option data-i18n="loc.sports">Sports Complex</option>
-                <option data-i18n="loc.admin">Administration Block</option>
-                <option data-i18n="loc.cafe">Campus Cafeteria</option>
-                <option data-i18n="loc.dormA">Dormitory Block A</option>
-                <option data-i18n="loc.dormB">Dormitory Block B</option>
-                <option data-i18n="loc.community">Community Centre — City</option>
-                <option data-i18n="c.other">Other</option>
-              </select>
+            <div class="pollution-stat">
+              <div class="pollution-stat-val">5%</div>
+              <div class="pollution-stat-label" data-i18n="poll.s2">Actually gets recycled</div>
             </div>
-            <div class="form-group"><label data-i18n="dropoff.notes">Notes (optional)</label><textarea id="dropoffNotes" rows="2"></textarea></div>
-            <button type="submit" class="btn-submit" id="submitDropoff" disabled data-i18n="dropoff.submit">Log Drop-off</button>
-          </form>
-          <hr class="divider" />
-          <div class="card-title" data-i18n="pickup.title">// Request Home Pickup</div>
-          <div id="noUserPickup" class="warning-box">
-            <a id="joinPromptPickup" data-i18n="common.signIn">Sign in</a> <span data-i18n="pickup.warn">to request a home pickup.</span>
           </div>
-          <form id="pickupForm">
-            <div class="form-group"><label data-i18n="pickup.address">Your Address</label><input type="text" id="pickupAddress" /></div>
-            <div class="form-group"><label data-i18n="pickup.qty">Estimated Quantity</label><input type="number" id="pickupQty" min="1" /></div>
-            <div class="form-group"><label data-i18n="pickup.date">Preferred Date</label><input type="date" id="pickupDate" /></div>
-            <div class="form-group">
-              <label data-i18n="dropoff.material">Material Type</label>
-              <select id="pickupMaterial">
-                <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
-                <option value="cans"    data-i18n="c.cans">Aluminum Cans</option>
-                <option value="mixed"   data-i18n="c.mixed">Mixed</option>
-              </select>
-            </div>
-            <button type="submit" class="btn-submit" id="submitPickup" disabled data-i18n="pickup.submit">Request Pickup</button>
-          </form>
         </div>
-        <div class="card">
-          <div class="card-title" data-i18n="feed.title">// Live Activity Feed</div>
-          <div class="feed" id="feed"><div class="loading-text" data-i18n="c.loading">Loading...</div></div>
+        <div class="carousel-container" id="pollutionCarousel">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide"><img src="frontend/ resources/pollution_1.JPG" alt="Plastic pollution in Egyptian waterway" /></div>
+            <div class="carousel-slide"><img src="frontend/resources/pollution_2.JPG" alt="Waste accumulated along river bank" /></div>
+            <div class="carousel-slide"><img src="frontend/ resources/pollution_3.JPG" alt="Plastic bottles tangled in vegetation" /></div>
+            <div class="carousel-slide"><img src="frontend/ resources/pollution_4.JPG" alt="Collected aluminum cans for recycling" /></div>
+          </div>
+          <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+          <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+          <div class="carousel-dots" id="carouselDots">
+            <button class="carousel-dot active" data-index="0"></button>
+            <button class="carousel-dot" data-index="1"></button>
+            <button class="carousel-dot" data-index="2"></button>
+            <button class="carousel-dot" data-index="3"></button>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Factory Panel -->
-    <div class="dash-panel" id="panelFactory">
-      <div id="factorySessionBar" class="session-bar">
-        <div>
-          <div class="session-name" id="factorySessionName">—</div>
-          <div class="session-points" id="factorySessionSub" data-i18n="fac.account">Factory Account</div>
+  <!-- ── Vision & Mission ── -->
+
+  <section id="vision-mission">
+    <svg class="deco vm-deco-tl" viewBox="0 0 160 240" fill="none"><path d="M80 230C80 230 10 168 10 96 10 43 43 8 80 8 117 8 150 43 150 96 150 168 80 230 80 230Z" fill="currentColor"/><line x1="80" y1="230" x2="80" y2="11" stroke="currentColor" stroke-width="2"/><path d="M80 70 Q108 56 124 38" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 108 Q112 94 130 82" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 146 Q106 134 120 124" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 70 Q52 56 36 38" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 108 Q48 94 30 82" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M80 146 Q54 134 40 124" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    <svg class="deco vm-deco-br" viewBox="0 0 110 160" fill="none"><path d="M55 152C55 152 8 112 8 64 8 30 29 6 55 6 81 6 102 30 102 64 102 112 55 152 55 152Z" fill="currentColor"/><line x1="55" y1="152" x2="55" y2="9" stroke="currentColor" stroke-width="1.5"/></svg>
+    <div class="section-inner reveal">
+      <span class="section-badge" data-i18n="vm.tag">Our Purpose</span>
+      <h2 class="section-title" data-i18n="vm.title">Vision &amp; Mission</h2>
+      <div class="vm-grid">
+        <div class="vm-card vm-vision">
+          <p class="vm-eyebrow" data-i18n="vm.vTag">Vision Statement</p>
+          <h3 data-i18n="vm.vTitle">Vision Statement</h3>
+          <p data-i18n="vm.vBody">Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.</p>
         </div>
-        <div class="sb-actions">
-          <button class="btn-logout" id="factoryLogoutBtn" data-i18n="common.signOut">Sign Out</button>
-        </div>
-      </div>
-      <div id="noFactoryWarning" class="warning-box">
-        <a id="joinFactoryPrompt" data-i18n="fac.regPrompt">Register your factory</a> <span data-i18n="fac.regPrompt2">to access the supply portal.</span>
-      </div>
-      <div class="supply-grid">
-        <div class="supply-card"><div class="supply-val" id="supplyBottles">—</div><div class="supply-label" data-i18n="fac.sb">Plastic Bottles Available</div></div>
-        <div class="supply-card"><div class="supply-val" id="supplyPickups">—</div><div class="supply-label" data-i18n="fac.sp">Pending Pickups</div></div>
-        <div class="supply-card"><div class="supply-val" id="supplyMembers">—</div><div class="supply-label" data-i18n="fac.sm">Active Collectors</div></div>
-      </div>
-      <div class="dashboard-grid" style="margin-top:1.5rem;">
-        <div class="card">
-          <div class="card-title" data-i18n="order.title">// Request Supply Delivery</div>
-          <form id="supplyOrderForm">
-            <div class="form-group">
-              <label data-i18n="order.material">Material Needed</label>
-              <select id="supplyMaterial" required>
-                <option value="" data-i18n="c.selMat">Select material...</option>
-                <option value="plastic_flakes"  data-i18n="order.flakes">Plastic Flakes (sorted)</option>
-                <option value="plastic_pellets" data-i18n="order.pellets">Plastic Pellets</option>
-                <option value="aluminum_cans"   data-i18n="c.cans">Aluminum Cans</option>
-                <option value="mixed_plastic"   data-i18n="order.mixedP">Mixed Plastic</option>
-              </select>
-            </div>
-            <div class="form-group"><label data-i18n="order.qty">Quantity (KG)</label><input type="number" id="supplyQty" min="50" required /></div>
-            <div class="form-group"><label data-i18n="order.address">Delivery Address</label><input type="text" id="supplyAddress" required /></div>
-            <div class="form-group"><label data-i18n="order.date">Required By (Date)</label><input type="date" id="supplyDate" /></div>
-            <div class="form-group"><label data-i18n="dropoff.notes">Notes</label><textarea id="supplyNotes" rows="2"></textarea></div>
-            <button type="submit" class="btn-submit-factory" id="submitSupplyOrder" disabled data-i18n="order.submit">Submit Supply Order</button>
-          </form>
-        </div>
-        <div class="card">
-          <div class="card-title" data-i18n="fac.pfTitle">// Recent Pickup Requests</div>
-          <div class="feed" id="pickupFeed"><div class="loading-text" data-i18n="c.loading">Loading...</div></div>
+        <div class="vm-card vm-mission">
+          <p class="vm-eyebrow" data-i18n="vm.mTag">Mission Statement</p>
+          <h3 data-i18n="vm.mTitle">Mission Statement</h3>
+          <ul>
+            <li data-i18n="vm.mBody1">Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.</li>
+            <li data-i18n="vm.mBody2">We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.</li>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Leaderboard ── -->
-<section id="leaderboard">
-  <!-- Decorative tree -->
-  <svg class="deco lb-deco-tree" viewBox="0 0 130 200" fill="none">
-    <rect x="55" y="155" width="20" height="40" rx="4" fill="currentColor" opacity=".4"/>
-    <path d="M15 160 L65 65 L115 160Z" fill="currentColor" opacity=".2"/>
-    <path d="M25 130 L65 48 L105 130Z" fill="currentColor" opacity=".25"/>
-    <path d="M38 106 L65 34 L92 106Z" fill="currentColor" opacity=".3"/>
-    <path d="M15 160 L65 65 L115 160Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-    <path d="M25 130 L65 48 L105 130Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-    <path d="M38 106 L65 34 L92 106Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-  </svg>
-  <div class="section-inner reveal">
-    <span class="section-badge" data-i18n="lb.tag">Top Collectors</span>
-    <h2 class="section-title" data-i18n="lb.title">LEADERBOARD</h2>
-    <table class="leaderboard-table">
-      <thead><tr>
-        <th>#</th>
-        <th data-i18n="lb.member">Member</th>
-        <th data-i18n="lb.dropoffs">Drop-offs</th>
-        <th data-i18n="lb.items">Items Collected</th>
-        <th data-i18n="lb.points">Points</th>
-      </tr></thead>
-      <tbody id="leaderboardBody"><tr><td colspan="5" class="loading-text" data-i18n="c.loading">Loading...</td></tr></tbody>
-    </table>
-  </div>
-</section>
+  <!-- ── How It Works ── -->
 
-<!-- ── Footer ── -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-logo-mark">♻</div>
-      <span class="footer-logo-text">TadweerHub</span>
+  <section id="how-it-works">
+    <img class="deco how-deco-recycle" src="resources/mszinger-Recycle-simple.png" alt="" />
+    <div class="section-inner reveal">
+      <span class="section-badge" data-i18n="how.tag">Process</span>
+      <h2 class="section-title" data-i18n="how.title">HOW IT WORKS</h2>
+      <div class="how-tabs">
+        <button class="how-tab active-consumer" id="howTabConsumer" onclick="switchHowTab('consumer')" data-i18n="how.tabC">For Consumers</button>
+        <button class="how-tab" id="howTabFactory" onclick="switchHowTab('factory')" data-i18n="how.tabF">For Factories</button>
+      </div>
+      <div class="steps" id="consumerSteps">
+        <div class="step"><div class="step-num">01</div><h3 data-i18n="how.c1t">Collect Your Plastic</h3><p data-i18n="how.c1b">Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.</p></div>
+        <div class="step"><div class="step-num">02</div><h3 data-i18n="how.c2t">Choose Drop-off or Pickup</h3><p data-i18n="how.c2b">Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.</p></div>
+        <div class="step"><div class="step-num">03</div><h3 data-i18n="how.c3t">Log Your Drop-off</h3><p data-i18n="how.c3b">Create your account and log how many items you've dropped off. Every bottle counts toward your balance.</p></div>
+        <div class="step"><div class="step-num">04</div><h3 data-i18n="how.c4t">Earn Cash &amp; Track Impact</h3><p data-i18n="how.c4b">Earn points redeemable for cash payments. Track your environmental impact: CO₂ saved, water conserved, and more.</p></div>
+      </div>
+      <div class="steps hidden" id="factorySteps">
+        <div class="step"><div class="step-num">01</div><h3 data-i18n="how.f1t">Register Your Factory</h3><p data-i18n="how.f1b">Create a factory account and specify what materials you need and your required quantities.</p></div>
+        <div class="step"><div class="step-num">02</div><h3 data-i18n="how.f2t">View Available Supply</h3><p data-i18n="how.f2b">See real-time inventory of collected, sorted plastic and cans available in your region.</p></div>
+        <div class="step"><div class="step-num">03</div><h3 data-i18n="how.f3t">Place a Supply Order</h3><p data-i18n="how.f3b">Request the quantity you need. TadweerHub handles collection, sorting, and delivery directly to your factory site.</p></div>
+        <div class="step"><div class="step-num">04</div><h3 data-i18n="how.f4t">Receive Sorted Materials</h3><p data-i18n="how.f4b">Get clean, quality-tested, well-sorted plastic and aluminum delivered on schedule at competitive prices.</p></div>
+      </div>
     </div>
-    <p class="footer-copy" data-i18n="footer.copy">© 2025 TadweerHub. Bridging waste and recycling across Egypt.</p>
-    <p class="footer-vision" data-i18n="footer.vision">Built for Egypt's Vision 2030 🌿</p>
-  </div>
-</footer>
+  </section>
 
-<!-- ── Consumer Modal ── -->
-<div class="modal-overlay" id="registerModal">
-  <div class="modal">
-    <button class="modal-close" id="closeModal">×</button>
-    <div class="modal-title" data-i18n="reg.title">JOIN TADWEERHUB</div>
-    <p class="modal-sub" data-i18n="reg.sub">Create your consumer account to log drop-offs, request pickups, and earn rewards.</p>
-    <form id="registerForm">
-      <div class="form-group"><label data-i18n="reg.name">Full Name</label><input type="text" id="regName" required /></div>
-      <div class="form-group"><label data-i18n="reg.email">Email Address</label><input type="email" id="regEmail" placeholder="you@example.com" required /></div>
-      <div class="form-group"><label data-i18n="reg.phone">Phone Number</label><input type="tel" id="regPhone" placeholder="+20 1xx xxx xxxx" /></div>
-      <button type="submit" class="btn-submit" id="registerBtn" data-i18n="reg.submit">Create Account</button>
-    </form>
-    <p class="modal-switch"><span data-i18n="reg.already">Already joined?</span> <a href="#" id="loginLink" data-i18n="reg.signInLink">Sign in with email</a></p>
-    <div id="loginSection" class="hidden" style="margin-top:1.4rem;border-top:1px solid var(--border);padding-top:1.4rem;">
-      <div class="form-group"><label data-i18n="reg.email">Your Email</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
-      <button class="btn-submit" id="loginBtn" style="background:transparent;border:1.5px solid var(--green);color:var(--green);" data-i18n="common.signIn">Sign In</button>
+  <!-- ── Dashboard ── -->
+
+  <section id="dashboard">
+    <svg class="deco" style="width:180px;right:-20px;top:60px;opacity:.05;animation:floatY 7s ease-in-out infinite;" viewBox="0 0 160 340" fill="none"><path d="M48 52 Q20 88 18 145 L18 268 Q18 318 80 322 Q142 318 142 268 L142 145 Q140 88 112 52 Z" fill="currentColor"/><rect x="55" y="18" width="50" height="34" rx="4" fill="currentColor"/><rect x="60" y="0" width="40" height="20" rx="6" fill="currentColor"/></svg>
+    <div class="section-inner">
+      <span class="section-badge" data-i18n="dash.tag">Dashboard</span>
+      <h2 class="section-title reveal" data-i18n="dash.title">YOUR PORTAL</h2>
+      <div class="dashboard-tabs">
+        <button class="dash-tab active-consumer" id="dashTabConsumer" onclick="switchDashTab('consumer')" data-i18n="dash.tabC">Consumer Dashboard</button>
+        <button class="dash-tab" id="dashTabFactory" onclick="switchDashTab('factory')" data-i18n="dash.tabF">Factory Dashboard</button>
+      </div>
+
+```
+  <!-- Consumer Panel -->
+  <div class="dash-panel active" id="panelConsumer">
+    <div id="consumerSessionBar" class="session-bar">
+      <div>
+        <div class="session-name" id="sessionName">—</div>
+        <div class="session-points" id="sessionPoints">0 points</div>
+      </div>
+      <div class="sb-actions">
+        <button class="btn-logout" id="logoutBtn" data-i18n="common.signOut">Sign Out</button>
+      </div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-title" data-i18n="dropoff.title">// Log a Drop-off</div>
+        <div id="noUserWarning" class="warning-box">
+          <span data-i18n="dropoff.warn1">You need to</span> <a id="joinPromptLink" data-i18n="dropoff.warnLink">create an account</a> <span data-i18n="dropoff.warn2">before logging a drop-off.</span>
+        </div>
+        <form id="dropoffForm">
+          <div class="form-group"><label data-i18n="dropoff.bottles">Number of Bottles / Cans</label><input type="number" id="bottleCount" min="1" max="10000" placeholder="e.g. 25" required /></div>
+          <div class="form-group">
+            <label data-i18n="dropoff.material">Material Type</label>
+            <select id="materialType" required>
+              <option value="" data-i18n="c.selType">Select type...</option>
+              <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
+              <option value="cans" data-i18n="c.cans">Aluminum Cans</option>
+              <option value="mixed" data-i18n="c.mixed">Mixed (Plastic + Cans)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="dropoff.location">Drop-off Location</label>
+            <select id="locationSelect" required>
+              <option value="" data-i18n="c.selLoc">Select a location...</option>
+              <option data-i18n="loc.sadat">El Sadat Metro Station — Tahrir Square</option>
+              <option data-i18n="loc.shohada">El Shohada Metro Station — Ramses</option>
+              <option data-i18n="loc.dokki">El Dokki Metro Station</option>
+              <option data-i18n="loc.giza">Giza Metro Station</option>
+              <option data-i18n="loc.attaba">El Attaba Square</option>
+              <option data-i18n="loc.tahrir">Tahrir Square</option>
+              <option data-i18n="loc.qasr">Qasr El Nil Street</option>
+              <option data-i18n="loc.mohandessin">Mohandessin — Gamaet El Dewal Street</option>
+              <option data-i18n="loc.maadi">Maadi — Road 9</option>
+              <option data-i18n="loc.heliopolis">Heliopolis — Korba</option>
+              <option data-i18n="loc.nasr">Nasr City — City Stars Area</option>
+              <option data-i18n="loc.october">6th of October — Juhayna Square</option>
+              <option data-i18n="loc.pyramids">Giza — Al Haram Street (near Pyramids)</option>
+              <option data-i18n="loc.cairo_tower">Cairo Tower — Zamalek</option>
+              <option data-i18n="loc.ecu">Egyptian Chinese University — ECU Campus</option>
+            </select>
+          </div>
+          <div class="form-group"><label data-i18n="dropoff.notes">Notes (optional)</label><textarea id="dropoffNotes" rows="2"></textarea></div>
+          <button type="submit" class="btn-submit" id="submitDropoff" disabled data-i18n="dropoff.submit">Log Drop-off</button>
+        </form>
+        <hr class="divider" />
+        <div class="card-title" data-i18n="pickup.title">// Request Home Pickup</div>
+        <div id="noUserPickup" class="warning-box">
+          <a id="joinPromptPickup" data-i18n="common.signIn">Sign in</a> <span data-i18n="pickup.warn">to request a home pickup.</span>
+        </div>
+        <form id="pickupForm">
+          <div class="form-group"><label data-i18n="pickup.address">Your Address</label><input type="text" id="pickupAddress" /></div>
+          <div class="form-group"><label data-i18n="pickup.qty">Estimated Quantity</label><input type="number" id="pickupQty" min="1" /></div>
+          <div class="form-group"><label data-i18n="pickup.date">Preferred Date</label><input type="date" id="pickupDate" /></div>
+          <div class="form-group">
+            <label data-i18n="dropoff.material">Material Type</label>
+            <select id="pickupMaterial">
+              <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
+              <option value="cans" data-i18n="c.cans">Aluminum Cans</option>
+              <option value="mixed" data-i18n="c.mixed">Mixed</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-submit" id="submitPickup" disabled data-i18n="pickup.submit">Request Pickup</button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-title" data-i18n="feed.title">// Live Activity Feed</div>
+        <div class="feed" id="feed"><div class="loading-text" data-i18n="c.loading">Loading...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Factory Panel -->
+  <div class="dash-panel" id="panelFactory">
+    <div id="factorySessionBar" class="session-bar">
+      <div>
+        <div class="session-name" id="factorySessionName">—</div>
+        <div class="session-points" id="factorySessionSub" data-i18n="fac.account">Factory Account</div>
+      </div>
+      <div class="sb-actions">
+        <button class="btn-logout" id="factoryLogoutBtn" data-i18n="common.signOut">Sign Out</button>
+      </div>
+    </div>
+    <div id="noFactoryWarning" class="warning-box">
+      <a id="joinFactoryPrompt" data-i18n="fac.regPrompt">Register your factory</a> <span data-i18n="fac.regPrompt2">to access the supply portal.</span>
+    </div>
+    <div class="supply-grid">
+      <div class="supply-card"><div class="supply-val" id="supplyBottles">—</div><div class="supply-label" data-i18n="fac.sb">Plastic Bottles Available</div></div>
+      <div class="supply-card"><div class="supply-val" id="supplyPickups">—</div><div class="supply-label" data-i18n="fac.sp">Pending Pickups</div></div>
+      <div class="supply-card"><div class="supply-val" id="supplyMembers">—</div><div class="supply-label" data-i18n="fac.sm">Active Collectors</div></div>
+    </div>
+    <div class="dashboard-grid" style="margin-top:1.5rem;">
+      <div class="card">
+        <div class="card-title" data-i18n="order.title">// Request Supply Delivery</div>
+        <form id="supplyOrderForm">
+          <div class="form-group">
+            <label data-i18n="order.material">Material Needed</label>
+            <select id="supplyMaterial" required>
+              <option value="" data-i18n="c.selMat">Select material...</option>
+              <option value="plastic_flakes" data-i18n="order.flakes">Plastic Flakes (sorted)</option>
+              <option value="plastic_pellets" data-i18n="order.pellets">Plastic Pellets</option>
+              <option value="aluminum_cans" data-i18n="c.cans">Aluminum Cans</option>
+              <option value="mixed_plastic" data-i18n="order.mixedP">Mixed Plastic</option>
+            </select>
+          </div>
+          <div class="form-group"><label data-i18n="order.qty">Quantity (KG)</label><input type="number" id="supplyQty" min="50" required /></div>
+          <div class="form-group"><label data-i18n="order.address">Delivery Address</label><input type="text" id="supplyAddress" required /></div>
+          <div class="form-group"><label data-i18n="order.date">Required By (Date)</label><input type="date" id="supplyDate" /></div>
+          <div class="form-group"><label data-i18n="dropoff.notes">Notes</label><textarea id="supplyNotes" rows="2"></textarea></div>
+          <button type="submit" class="btn-submit-factory" id="submitSupplyOrder" disabled data-i18n="order.submit">Submit Supply Order</button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-title" data-i18n="fac.pfTitle">// Recent Pickup Requests</div>
+        <div class="feed" id="pickupFeed"><div class="loading-text" data-i18n="c.loading">Loading...</div></div>
+      </div>
     </div>
   </div>
 </div>
+```
 
-<!-- ── Factory Modal ── -->
-<div class="modal-overlay" id="factoryModal">
-  <div class="modal">
-    <button class="modal-close" id="closeFactoryModal">×</button>
-    <div class="modal-title" style="color:var(--amber)" data-i18n="freg.title">FACTORY PORTAL</div>
-    <p class="modal-sub" data-i18n="freg.sub">Register your recycling factory to access sorted supply, place orders, and manage deliveries.</p>
-    <form id="factoryRegisterForm">
-      <div class="form-group"><label data-i18n="freg.name">Factory / Company Name</label><input type="text" id="factoryName" required /></div>
-      <div class="form-group"><label data-i18n="freg.contact">Contact Person</label><input type="text" id="factoryContact" required /></div>
-      <div class="form-group"><label data-i18n="freg.email">Business Email</label><input type="email" id="factoryEmail" placeholder="factory@company.com" required /></div>
-      <div class="form-group"><label data-i18n="reg.phone">Phone</label><input type="tel" id="factoryPhone" placeholder="+20 2 xxxx xxxx" /></div>
-      <div class="form-group">
-        <label data-i18n="freg.gov">Factory Location / Governorate</label>
-        <select id="factoryGov" required>
-          <option value="" data-i18n="freg.selGov">Select governorate...</option>
-          <option data-i18n="gov.cairo">Cairo</option><option data-i18n="gov.giza">Giza</option>
-          <option data-i18n="gov.alex">Alexandria</option><option data-i18n="gov.qaly">Qalyubia</option>
-          <option data-i18n="gov.sharq">Sharqia</option><option data-i18n="gov.dak">Dakahlia</option>
-          <option data-i18n="gov.beh">Beheira</option><option data-i18n="c.other">Other</option>
-        </select>
+  </section>
+
+  <!-- ── Footer ── -->
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-mark">♻</div>
+        <span class="footer-logo-text">TadweerHub</span>
       </div>
-      <div class="form-group">
-        <label data-i18n="freg.matPref">Primary Material Needed</label>
-        <select id="factoryMaterialPref">
-          <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
-          <option value="cans"    data-i18n="c.cans">Aluminum Cans</option>
-          <option value="both"    data-i18n="c.both">Both</option>
-        </select>
+      <p class="footer-copy" data-i18n="footer.copy">© 2025 TadweerHub. Bridging waste and recycling across Egypt.</p>
+      <p class="footer-vision" data-i18n="footer.vision">Built for Egypt's Vision 2030 🌿</p>
+    </div>
+  </footer>
+
+  <!-- ── Consumer Modal ── -->
+
+  <div class="modal-overlay" id="registerModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">×</button>
+      <div class="modal-title" data-i18n="reg.title">JOIN TADWEERHUB</div>
+      <p class="modal-sub" data-i18n="reg.sub">Create your consumer account to log drop-offs, request pickups, and earn rewards.</p>
+      <form id="registerForm">
+        <div class="form-group"><label data-i18n="reg.name">Full Name</label><input type="text" id="regName" required /></div>
+        <div class="form-group"><label data-i18n="reg.email">Email Address</label><input type="email" id="regEmail" placeholder="you@example.com" required /></div>
+        <div class="form-group"><label data-i18n="reg.phone">Phone Number</label><input type="tel" id="regPhone" placeholder="+20 1xx xxx xxxx" /></div>
+        <button type="submit" class="btn-submit" id="registerBtn" data-i18n="reg.submit">Create Account</button>
+      </form>
+      <p class="modal-switch"><span data-i18n="reg.already">Already joined?</span> <a href="#" id="loginLink" data-i18n="reg.signInLink">Sign in with email</a></p>
+      <div id="loginSection" class="hidden" style="margin-top:1.4rem;border-top:1px solid var(--border);padding-top:1.4rem;">
+        <div class="form-group"><label data-i18n="reg.email">Your Email</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
+        <button class="btn-submit" id="loginBtn" style="background:transparent;border:1.5px solid var(--green);color:var(--green);" data-i18n="common.signIn">Sign In</button>
       </div>
-      <button type="submit" class="btn-submit-factory" id="factoryRegisterBtn" data-i18n="freg.submit">Register Factory</button>
-    </form>
-    <p class="modal-switch"><span data-i18n="freg.already">Already registered?</span> <a href="#" id="factoryLoginLink" data-i18n="common.signIn">Sign in</a></p>
-    <div id="factoryLoginSection" class="hidden" style="margin-top:1.4rem;border-top:1px solid var(--border);padding-top:1.4rem;">
-      <div class="form-group"><label data-i18n="freg.email">Factory Email</label><input type="email" id="factoryLoginEmail" placeholder="factory@company.com" /></div>
-      <button class="btn-submit-factory" id="factoryLoginBtn" style="background:transparent;border:1.5px solid var(--amber);color:var(--amber);" data-i18n="common.signIn">Sign In</button>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+  <!-- ── Factory Modal ── -->
 
-<script>
-// ── Translations ──────────────────────────────────────────────────────────────
-const T = {
-  en: {
-    'nav.vision':'Vision & Mission','nav.how':'How It Works','nav.dashboard':'Dashboard','nav.leaderboard':'Leaderboard',
-    'nav.factory':'Factory Portal','nav.join':'Join Now',
-    'hero.tag':"// Egypt's Plastic & Can Recycling Network",
-    'hero.l1':'COLLECT.','hero.l2':'RECYCLE.','hero.l3':'EARN.',
-    'hero.sub':'TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.',
-    'hero.cta1':'I Have Waste to Recycle','hero.cta2':"I'm a Recycling Factory",'hero.cta3':'How It Works',
-    'hero.seg1':'Consumers — earn cash from plastic','hero.seg2':'Factories — get clean sorted supply',
-    'stats.bottles':'Bottles Collected','stats.members':'Active Members','stats.pickups':'Pickup Requests',
-    'stats.co2':'KG CO₂ Saved','stats.water':'Litres Water Saved',
-    'vm.tag':'// Our Purpose','vm.title':'Vision & Mission',
-    'vm.vTag':'// Vision Statement','vm.vTitle':'Vision Statement',
-    'vm.vBody':"Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.",
-    'vm.mTag':'// Mission Statement','vm.mTitle':'Mission Statement',
-    'vm.mBody1':'Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.',
-    'vm.mBody2':"We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.",
-    'how.tag':'// Process','how.title':'HOW IT WORKS','how.tabC':'For Consumers','how.tabF':'For Factories',
-    'how.c1t':'Collect Your Plastic','how.c1b':'Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.',
-    'how.c2t':'Choose Drop-off or Pickup','how.c2b':'Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.',
-    'how.c3t':'Log Your Drop-off','how.c3b':"Create your account and log how many items you've dropped off. Every bottle counts toward your balance.",
-    'how.c4t':'Earn Cash & Track Impact','how.c4b':'Earn points redeemable for cash payments. Track your environmental impact: CO₂ saved, water conserved, and more.',
-    'how.f1t':'Register Your Factory','how.f1b':'Create a factory account and specify what materials you need and your required quantities.',
-    'how.f2t':'View Available Supply','how.f2b':'See real-time inventory of collected, sorted plastic and cans available in your region.',
-    'how.f3t':'Place a Supply Order','how.f3b':'Request the quantity you need. TadweerHub handles collection, sorting, and delivery directly to your factory site.',
-    'how.f4t':'Receive Sorted Materials','how.f4b':'Get clean, quality-tested, well-sorted plastic and aluminum delivered on schedule at competitive prices.',
-    'dash.tag':'// Dashboard','dash.title':'YOUR PORTAL','dash.tabC':'Consumer Dashboard','dash.tabF':'Factory Dashboard',
-    'dropoff.title':'// Log a Drop-off','dropoff.warn1':'You need to','dropoff.warnLink':'create an account','dropoff.warn2':'before logging a drop-off.',
-    'dropoff.bottles':'Number of Bottles / Cans','dropoff.material':'Material Type','dropoff.location':'Drop-off Location',
-    'dropoff.notes':'Notes (optional)','dropoff.submit':'Log Drop-off',
-    'pickup.title':'// Request Home Pickup','pickup.warn':'to request a home pickup.',
-    'pickup.address':'Your Address','pickup.qty':'Estimated Quantity','pickup.date':'Preferred Date','pickup.submit':'Request Pickup',
-    'feed.title':'// Live Activity Feed',
-    'fac.account':'Factory Account','fac.regPrompt':'Register your factory','fac.regPrompt2':'to access the supply portal.',
-    'fac.sb':'Plastic Bottles Available','fac.sp':'Pending Pickups','fac.sm':'Active Collectors','fac.pfTitle':'// Recent Pickup Requests',
-    'order.title':'// Request Supply Delivery','order.material':'Material Needed','order.flakes':'Plastic Flakes (sorted)',
-    'order.pellets':'Plastic Pellets','order.mixedP':'Mixed Plastic','order.qty':'Quantity (KG)',
-    'order.address':'Delivery Address','order.date':'Required By (Date)','order.submit':'Submit Supply Order',
-    'lb.tag':'// Top Collectors','lb.title':'LEADERBOARD','lb.member':'Member','lb.dropoffs':'Drop-offs','lb.items':'Items Collected','lb.points':'Points',
-    'footer.copy':'© 2025 TadweerHub. Bridging waste and recycling across Egypt.','footer.vision':"Built for Egypt's Vision 2030 🌿",
-    'reg.title':'JOIN TADWEERHUB','reg.sub':'Create your consumer account to log drop-offs, request pickups, and earn rewards.',
-    'reg.name':'Full Name','reg.email':'Email Address','reg.phone':'Phone Number','reg.submit':'Create Account',
-    'reg.already':'Already joined?','reg.signInLink':'Sign in with email',
-    'freg.title':'FACTORY PORTAL','freg.sub':'Register your recycling factory to access sorted supply, place orders, and manage deliveries.',
-    'freg.name':'Factory / Company Name','freg.contact':'Contact Person','freg.email':'Business Email',
-    'freg.gov':'Factory Location / Governorate','freg.selGov':'Select governorate...','freg.matPref':'Primary Material Needed',
-    'freg.submit':'Register Factory','freg.already':'Already registered?',
-    'common.signIn':'Sign In','common.signOut':'Sign Out',
-    'c.loading':'Loading...','c.selType':'Select type...','c.selLoc':'Select a location...','c.selMat':'Select material...',
-    'c.plastic':'Plastic Bottles','c.cans':'Aluminum Cans','c.mixed':'Mixed (Plastic + Cans)','c.both':'Both','c.other':'Other',
-    'loc.eng':'Faculty of Engineering — Main Gate','loc.sci':'Faculty of Science — Library Entrance',
-    'loc.union':'Student Union Building','loc.sports':'Sports Complex','loc.admin':'Administration Block',
-    'loc.cafe':'Campus Cafeteria','loc.dormA':'Dormitory Block A','loc.dormB':'Dormitory Block B','loc.community':'Community Centre — City',
-    'gov.cairo':'Cairo','gov.giza':'Giza','gov.alex':'Alexandria','gov.qaly':'Qalyubia','gov.sharq':'Sharqia','gov.dak':'Dakahlia','gov.beh':'Beheira',
-    'pts':'points',
-    'toast.dropoff':'Drop-off logged! ♻️','toast.pickup':"Pickup requested! We'll confirm shortly. 🚛",
-    'toast.order':'Supply order submitted! Our team will be in touch. 🏭','toast.signedOut':'Signed out.',
-    'toast.signInFirst':'Please sign in first','toast.enterEmail':'Enter your email',
-    'toast.notFound':'Email not found. Please register.','toast.enterFacEmail':'Enter your factory email',
-  },
-  ar: {
-    'nav.vision':'الرؤية والرسالة','nav.how':'كيف يعمل','nav.dashboard':'لوحة التحكم','nav.leaderboard':'المتصدرون',
-    'nav.factory':'بوابة المصانع','nav.join':'انضم الآن',
-    'hero.tag':'// شبكة إعادة تدوير البلاستيك والعلب في مصر',
-    'hero.l1':'اجمع.','hero.l2':'أعد التدوير.','hero.l3':'اكسب.',
-    'hero.sub':'تدوير هاب يربط بين المستهلكين الذين لديهم نفايات بلاستيكية ومصانع إعادة التدوير التي تحتاج إلى مواد نظيفة ومصنفة. سلّم أو اطلب توصيلاً من المنزل واكسب مكافآت نقدية.',
-    'hero.cta1':'لدي نفايات للتدوير','hero.cta2':'أنا مصنع إعادة تدوير','hero.cta3':'كيف يعمل',
-    'hero.seg1':'المستهلكون — اكسب نقوداً من البلاستيك','hero.seg2':'المصانع — احصل على مواد خام نظيفة',
-    'stats.bottles':'زجاجات تم جمعها','stats.members':'أعضاء نشطون','stats.pickups':'طلبات استلام',
-    'stats.co2':'كجم ثاني أكسيد كربون موفر','stats.water':'لتر ماء موفر',
-    'vm.tag':'// غايتنا','vm.title':'الرؤية والرسالة',
-    'vm.vTag':'// الرؤية','vm.vTitle':'رؤيتنا',
-    'vm.vBody':'رؤيتنا هي أن نصبح المنصة الرقمية الرائدة في مصر لإعادة تدوير البلاستيك والألومنيوم، بما يُشكّل جسراً سلساً بين المستهلكين ومصانع إعادة التدوير. نسعى إلى تحويل إعادة التدوير إلى عادة يومية بسيطة ومجزية وفي متناول الجميع، للأسر والشركات على حدٍّ سواء، مساهمةً في بيئة أنظف ودعماً لرؤية مصر 2030 نحو اقتصاد دائري ومستدام.',
-    'vm.mTag':'// الرسالة','vm.mTitle':'رسالتنا',
-    'vm.mBody1':'رسالتنا هي سد الفجوة بين المستهلكين ومصانع إعادة التدوير من خلال منصة رقمية بسيطة وسهلة الوصول ومدفوعة بالحوافز، تُمكّن من الجمع السليم والتصنيف والتوصيل للنفايات البلاستيكية والألومنيوم.',
-    'vm.mBody2':'نهدف إلى رفع معدلات إعادة التدوير، والحد من التلوث البيئي، ودعم انتقال مصر نحو اقتصاد دائري من خلال تزويد المصانع بمواد نظيفة ومصنّفة جيداً، مع تمكين الأفراد والمجتمعات من المشاركة في إدارة النفايات المستدامة بسهولة ومكافآت ملموسة.',
-    'how.tag':'// العملية','how.title':'كيف يعمل','how.tabC':'للمستهلكين','how.tabF':'للمصانع',
-    'how.c1t':'اجمع بلاستيكك','how.c1b':'اجمع زجاجاتك الفارغة وعلب الألومنيوم. كل قطعة تجمعها تمنحك مكافأة نقدية.',
-    'how.c2t':'اختر التسليم أو الاستلام','how.c2b':'زر أقرب نقطة تجميع تدوير هاب، أو اطلب استلاماً مجانياً من منزلك مباشرةً.',
-    'how.c3t':'سجّل عملية التسليم','how.c3b':'أنشئ حسابك وسجّل عدد القطع التي سلّمتها. كل زجاجة تُحسب في رصيدك.',
-    'how.c4t':'اكسب نقوداً وتتبع أثرك','how.c4b':'اكسب نقاطاً قابلة للصرف. تتبع أثرك البيئي: ثاني أكسيد الكربون الموفر والماء وغير ذلك.',
-    'how.f1t':'سجّل مصنعك','how.f1b':'أنشئ حساباً للمصنع وحدد المواد التي تحتاجها والكميات المطلوبة.',
-    'how.f2t':'اعرض المخزون المتاح','how.f2b':'اطلع على المخزون اللحظي من البلاستيك والعلب المجمعة والمصنفة المتاحة في منطقتك.',
-    'how.f3t':'قدّم طلب توريد','how.f3b':'اطلب الكمية التي تحتاجها. تدوير هاب يتولى الجمع والتصنيف والتوصيل لموقع مصنعك.',
-    'how.f4t':'استلم المواد المصنّفة','how.f4b':'احصل على بلاستيك وألومنيوم نظيف ومُختبر الجودة بأسعار تنافسية وفي المواعيد المحددة.',
-    'dash.tag':'// لوحة التحكم','dash.title':'بوابتك','dash.tabC':'لوحة المستهلك','dash.tabF':'لوحة المصنع',
-    'dropoff.title':'// سجّل عملية تسليم','dropoff.warn1':'يجب عليك','dropoff.warnLink':'إنشاء حساب','dropoff.warn2':'قبل تسجيل عملية التسليم.',
-    'dropoff.bottles':'عدد الزجاجات / العلب','dropoff.material':'نوع المادة','dropoff.location':'موقع التسليم',
-    'dropoff.notes':'ملاحظات (اختياري)','dropoff.submit':'سجّل التسليم',
-    'pickup.title':'// اطلب استلاماً من المنزل','pickup.warn':'لطلب استلام من المنزل.',
-    'pickup.address':'عنوانك','pickup.qty':'الكمية التقريبية','pickup.date':'التاريخ المفضل','pickup.submit':'اطلب الاستلام',
-    'feed.title':'// النشاط المباشر',
-    'fac.account':'حساب المصنع','fac.regPrompt':'سجّل مصنعك','fac.regPrompt2':'للوصول إلى بوابة التوريد.',
-    'fac.sb':'زجاجات بلاستيكية متاحة','fac.sp':'طلبات استلام معلقة','fac.sm':'جامعون نشطون','fac.pfTitle':'// طلبات الاستلام الأخيرة',
-    'order.title':'// اطلب توصيل مواد','order.material':'المادة المطلوبة','order.flakes':'رقائق بلاستيك (مصنفة)',
-    'order.pellets':'حبيبات بلاستيك','order.mixedP':'بلاستيك مختلط','order.qty':'الكمية (كجم)',
-    'order.address':'عنوان التوصيل','order.date':'التاريخ المطلوب','order.submit':'أرسل طلب التوريد',
-    'lb.tag':'// أعلى المتصدرين','lb.title':'قائمة المتصدرين','lb.member':'العضو','lb.dropoffs':'عمليات التسليم','lb.items':'القطع المجمعة','lb.points':'النقاط',
-    'footer.copy':'© 2025 تدوير هاب. نربط النفايات بإعادة التدوير في مصر.','footer.vision':'مبني لدعم رؤية مصر 2030 🌿',
-    'reg.title':'انضم إلى تدوير هاب','reg.sub':'أنشئ حسابك كمستهلك لتسجيل عمليات التسليم وطلب الاستلام وكسب المكافآت.',
-    'reg.name':'الاسم الكامل','reg.email':'البريد الإلكتروني','reg.phone':'رقم الهاتف','reg.submit':'إنشاء حساب',
-    'reg.already':'لديك حساب بالفعل؟','reg.signInLink':'سجّل الدخول بالبريد الإلكتروني',
-    'freg.title':'بوابة المصانع','freg.sub':'سجّل مصنعك للوصول إلى مواد البلاستيك المصنفة وتقديم الطلبات وإدارة التوصيل.',
-    'freg.name':'اسم المصنع / الشركة','freg.contact':'جهة الاتصال','freg.email':'البريد الإلكتروني للأعمال',
-    'freg.gov':'موقع المصنع / المحافظة','freg.selGov':'اختر المحافظة...','freg.matPref':'المادة الرئيسية المطلوبة',
-    'freg.submit':'تسجيل المصنع','freg.already':'مسجّل بالفعل؟',
-    'common.signIn':'تسجيل الدخول','common.signOut':'تسجيل الخروج',
-    'c.loading':'جاري التحميل...','c.selType':'اختر النوع...','c.selLoc':'اختر الموقع...','c.selMat':'اختر المادة...',
-    'c.plastic':'زجاجات بلاستيك','c.cans':'علب ألومنيوم','c.mixed':'مختلط (بلاستيك + علب)','c.both':'كلاهما','c.other':'أخرى',
-    'loc.eng':'كلية الهندسة — البوابة الرئيسية','loc.sci':'كلية العلوم — مدخل المكتبة',
-    'loc.union':'مبنى الاتحاد الطلابي','loc.sports':'المجمع الرياضي','loc.admin':'المبنى الإداري',
-    'loc.cafe':'كافيتيريا الحرم الجامعي','loc.dormA':'المبنى السكني أ','loc.dormB':'المبنى السكني ب','loc.community':'المركز المجتمعي — المدينة',
-    'gov.cairo':'القاهرة','gov.giza':'الجيزة','gov.alex':'الإسكندرية','gov.qaly':'القليوبية','gov.sharq':'الشرقية','gov.dak':'الدقهلية','gov.beh':'البحيرة',
-    'pts':'نقطة',
-    'toast.dropoff':'تم تسجيل التسليم! ♻️','toast.pickup':'تم طلب الاستلام! سنتواصل معك قريباً. 🚛',
-    'toast.order':'تم إرسال طلب التوريد! سيتواصل معك فريقنا. 🏭','toast.signedOut':'تم تسجيل الخروج.',
-    'toast.signInFirst':'يرجى تسجيل الدخول أولاً','toast.enterEmail':'أدخل بريدك الإلكتروني',
-    'toast.notFound':'البريد الإلكتروني غير موجود. يرجى التسجيل.','toast.enterFacEmail':'أدخل البريد الإلكتروني للمصنع',
-  }
-};
-
-let lang = localStorage.getItem('tadweerhub_lang') || 'en';
-function t(k) { return T[lang][k] || T.en[k] || k; }
-
-function applyLang() {
-  const html = document.documentElement;
-  html.lang = lang;
-  html.dir  = lang === 'ar' ? 'rtl' : 'ltr';
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const v = t(el.getAttribute('data-i18n'));
-    if (v) el.textContent = v;
-  });
-  document.getElementById('langToggle').textContent = lang === 'en' ? 'عربي' : 'English';
-  document.title = lang === 'ar' ? 'تدوير هاب' : 'TadweerHub';
-  loadFeed(); loadPickupFeed(); loadLeaderboard();
-  updateConsumerUI(); updateFactoryUI();
-}
-
-document.getElementById('langToggle').addEventListener('click', () => {
-  lang = lang === 'en' ? 'ar' : 'en';
-  localStorage.setItem('tadweerhub_lang', lang);
-  applyLang();
-});
-
-// ── Config ────────────────────────────────────────────────────────────────────
-const API = 'https://tadweerhub-api.y-ashraf74.workers.dev';
-let currentUser    = JSON.parse(localStorage.getItem('tadweerhub_user')    || 'null');
-let currentFactory = JSON.parse(localStorage.getItem('tadweerhub_factory') || 'null');
-
-function showToast(msg, type='success') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast show' + (type==='error' ? ' error' : '');
-  setTimeout(() => el.className = 'toast', 3500);
-}
-
-async function api(path, opts={}) {
-  const res  = await fetch(API + path, { headers: {'Content-Type':'application/json'}, ...opts });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Request failed');
-  return data;
-}
-
-function switchHowTab(tab) {
-  const cS=document.getElementById('consumerSteps'), fS=document.getElementById('factorySteps');
-  const cT=document.getElementById('howTabConsumer'), fT=document.getElementById('howTabFactory');
-  if (tab==='consumer') { cS.classList.remove('hidden'); fS.classList.add('hidden'); cT.className='how-tab active-consumer'; fT.className='how-tab'; }
-  else { fS.classList.remove('hidden'); cS.classList.add('hidden'); fT.className='how-tab active-factory'; cT.className='how-tab'; }
-  cT.textContent = t('how.tabC'); fT.textContent = t('how.tabF');
-}
-
-function switchDashTab(tab) {
-  const pC=document.getElementById('panelConsumer'), pF=document.getElementById('panelFactory');
-  const dC=document.getElementById('dashTabConsumer'), dF=document.getElementById('dashTabFactory');
-  if (tab==='consumer') { pC.classList.add('active'); pF.classList.remove('active'); dC.className='dash-tab active-consumer'; dF.className='dash-tab'; }
-  else { pF.classList.add('active'); pC.classList.remove('active'); dF.className='dash-tab active-factory'; dC.className='dash-tab'; loadSupplyStats(); loadPickupFeed(); }
-  dC.textContent = t('dash.tabC'); dF.textContent = t('dash.tabF');
-}
-
-function updateConsumerUI() {
-  const bar=document.getElementById('consumerSessionBar'), warn=document.getElementById('noUserWarning'),
-        wp=document.getElementById('noUserPickup'), sd=document.getElementById('submitDropoff'), sp=document.getElementById('submitPickup');
-  if (currentUser) {
-    bar.classList.add('visible');
-    document.getElementById('sessionName').textContent   = currentUser.name;
-    document.getElementById('sessionPoints').textContent = `${currentUser.points||0} ${t('pts')}`;
-    warn.style.display='none'; wp.style.display='none'; sd.disabled=false; sp.disabled=false;
-  } else {
-    bar.classList.remove('visible'); warn.style.display='block'; wp.style.display='block'; sd.disabled=true; sp.disabled=true;
-  }
-}
-
-function updateFactoryUI() {
-  const bar=document.getElementById('factorySessionBar'), warn=document.getElementById('noFactoryWarning'), so=document.getElementById('submitSupplyOrder');
-  if (currentFactory) { bar.classList.add('visible'); document.getElementById('factorySessionName').textContent=currentFactory.name; warn.style.display='none'; so.disabled=false; }
-  else { bar.classList.remove('visible'); warn.style.display='block'; so.disabled=true; }
-}
-
-async function loadStats() {
-  try {
-    const s = await api('/api/stats');
-    document.getElementById('statBottles').textContent = Number(s.total_bottles).toLocaleString();
-    document.getElementById('statUsers').textContent   = Number(s.total_users).toLocaleString();
-    document.getElementById('statPickups').textContent = Number(s.total_pickups||0).toLocaleString();
-    document.getElementById('statCO2').textContent     = Number(s.co2_saved_kg).toFixed(1);
-    document.getElementById('statWater').textContent   = Number(s.water_saved_liters).toFixed(0);
-  } catch(e) { console.error('Stats:',e); }
-}
-
-async function loadSupplyStats() {
-  try {
-    const s = await api('/api/stats');
-    document.getElementById('supplyBottles').textContent = Number(s.total_bottles).toLocaleString();
-    document.getElementById('supplyPickups').textContent = Number(s.total_pickups||0).toLocaleString();
-    document.getElementById('supplyMembers').textContent = Number(s.total_users).toLocaleString();
-  } catch(e) {}
-}
-
-function timeAgo(d) {
-  const m = Math.floor((Date.now()-new Date(d))/60000);
-  if (lang==='ar') {
-    if (m<1) return 'الآن';
-    if (m<60) return `منذ ${m} دقيقة`;
-    const h=Math.floor(m/60); if (h<24) return `منذ ${h} ساعة`;
-    return `منذ ${Math.floor(h/24)} يوم`;
-  }
-  if (m<1) return 'just now';
-  if (m<60) return `${m}m ago`;
-  const h=Math.floor(m/60); if (h<24) return `${h}h ago`;
-  return `${Math.floor(h/24)}d ago`;
-}
-
-function matLabel(type) {
-  return {plastic:t('c.plastic'),cans:t('c.cans'),mixed:t('c.mixed')}[type]||type;
-}
-
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-async function loadFeed() {
-  const feed=document.getElementById('feed');
-  try {
-    const items=await api('/api/dropoffs');
-    if (!items.length) { feed.innerHTML=`<div class="empty-state"><div style="font-size:2rem">♻️</div><p>${lang==='ar'?'لا يوجد تسليمات بعد. كن الأول!':'No drop-offs yet. Be the first!'}</p></div>`; return; }
-    feed.innerHTML=items.slice(0,8).map(i=>`
-      <div class="feed-item">
-        <div class="feed-avatar">🧍</div>
-        <div class="feed-item-left">
-          <div class="feed-user">${esc(i.user_name)}</div>
-          <div class="feed-meta">${esc(i.location)} · ${timeAgo(i.created_at)}</div>
+  <div class="modal-overlay" id="factoryModal">
+    <div class="modal">
+      <button class="modal-close" id="closeFactoryModal">×</button>
+      <div class="modal-title" style="color:var(--amber)" data-i18n="freg.title">FACTORY PORTAL</div>
+      <p class="modal-sub" data-i18n="freg.sub">Register your recycling factory to access sorted supply, place orders, and manage deliveries.</p>
+      <form id="factoryRegisterForm">
+        <div class="form-group"><label data-i18n="freg.name">Factory / Company Name</label><input type="text" id="factoryName" required /></div>
+        <div class="form-group"><label data-i18n="freg.contact">Contact Person</label><input type="text" id="factoryContact" required /></div>
+        <div class="form-group"><label data-i18n="freg.email">Business Email</label><input type="email" id="factoryEmail" placeholder="factory@company.com" required /></div>
+        <div class="form-group"><label data-i18n="reg.phone">Phone</label><input type="tel" id="factoryPhone" placeholder="+20 2 xxxx xxxx" /></div>
+        <div class="form-group">
+          <label data-i18n="freg.gov">Factory Location / Governorate</label>
+          <select id="factoryGov" required>
+            <option value="" data-i18n="freg.selGov">Select governorate...</option>
+            <option data-i18n="gov.cairo">Cairo</option><option data-i18n="gov.giza">Giza</option>
+            <option data-i18n="gov.alex">Alexandria</option><option data-i18n="gov.qaly">Qalyubia</option>
+            <option data-i18n="gov.sharq">Sharqia</option><option data-i18n="gov.dak">Dakahlia</option>
+            <option data-i18n="gov.beh">Beheira</option><option data-i18n="c.other">Other</option>
+          </select>
         </div>
-        <div class="feed-bottles">${i.bottles}<span>${matLabel(i.material_type)}</span></div>
-      </div>`).join('');
-  } catch(e) { feed.innerHTML=`<div class="loading-text">${lang==='ar'?'تعذر تحميل النشاط.':'Could not load feed.'}</div>`; }
-}
-
-async function loadPickupFeed() {
-  const feed=document.getElementById('pickupFeed');
-  try {
-    const items=await api('/api/pickups');
-    if (!items.length) { feed.innerHTML=`<div class="empty-state"><div style="font-size:2rem">🚛</div><p>${lang==='ar'?'لا يوجد طلبات استلام بعد.':'No pickup requests yet.'}</p></div>`; return; }
-    const sl=s=>({pending:lang==='ar'?'معلق':'pending',confirmed:lang==='ar'?'مؤكد':'confirmed',completed:lang==='ar'?'مكتمل':'completed',cancelled:lang==='ar'?'ملغي':'cancelled'})[s]||s;
-    feed.innerHTML=items.slice(0,8).map(i=>`
-      <div class="pickup-item">
-        <div class="feed-item-left">
-          <div class="feed-user">${esc(i.user_name)}</div>
-          <div class="feed-meta">${esc(i.address)} · ${timeAgo(i.created_at)}</div>
-          <div class="feed-meta">${i.quantity} ${lang==='ar'?'قطعة':'items'} · ${matLabel(i.material_type)}</div>
+        <div class="form-group">
+          <label data-i18n="freg.matPref">Primary Material Needed</label>
+          <select id="factoryMaterialPref">
+            <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
+            <option value="cans" data-i18n="c.cans">Aluminum Cans</option>
+            <option value="both" data-i18n="c.both">Both</option>
+          </select>
         </div>
-        <span class="pickup-status status-${i.status||'pending'}">${sl(i.status||'pending')}</span>
-      </div>`).join('');
-  } catch(e) { feed.innerHTML=`<div class="loading-text">${lang==='ar'?'تعذر تحميل الطلبات.':'Could not load pickups.'}</div>`; }
-}
+        <button type="submit" class="btn-submit-factory" id="factoryRegisterBtn" data-i18n="freg.submit">Register Factory</button>
+      </form>
+      <p class="modal-switch"><span data-i18n="freg.already">Already registered?</span> <a href="#" id="factoryLoginLink" data-i18n="common.signIn">Sign in</a></p>
+      <div id="factoryLoginSection" class="hidden" style="margin-top:1.4rem;border-top:1px solid var(--border);padding-top:1.4rem;">
+        <div class="form-group"><label data-i18n="freg.email">Factory Email</label><input type="email" id="factoryLoginEmail" placeholder="factory@company.com" /></div>
+        <button class="btn-submit-factory" id="factoryLoginBtn" style="background:transparent;border:1.5px solid var(--amber);color:var(--amber);" data-i18n="common.signIn">Sign In</button>
+      </div>
+    </div>
+  </div>
 
-async function loadLeaderboard() {
-  const tb=document.getElementById('leaderboardBody');
-  try {
-    const rows=await api('/api/leaderboard');
-    if (!rows.length) { tb.innerHTML=`<tr><td colspan="5" class="loading-text">${lang==='ar'?'لا توجد بيانات بعد.':'No data yet.'}</td></tr>`; return; }
-    tb.innerHTML=rows.map((r,i)=>`
-      <tr>
-        <td><span class="rank rank-${i+1}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</span></td>
-        <td>${esc(r.name)}</td><td>${r.dropoff_count}</td>
-        <td>${Number(r.total_bottles).toLocaleString()}</td>
-        <td><span class="points-badge">${r.points} ${t('pts')}</span></td>
-      </tr>`).join('');
-  } catch(e) { tb.innerHTML=`<tr><td colspan="5" class="loading-text">${lang==='ar'?'تعذر التحميل.':'Could not load leaderboard.'}</td></tr>`; }
-}
+  <div class="toast" id="toast"></div>
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
 
-// ── Forms ─────────────────────────────────────────────────────────────────────
-document.getElementById('registerForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const btn=document.getElementById('registerBtn');
-  btn.disabled=true; btn.textContent=lang==='ar'?'جاري الإنشاء...':'Creating...';
-  try {
-    const user=await api('/api/users',{method:'POST',body:JSON.stringify({name:document.getElementById('regName').value.trim(),email:document.getElementById('regEmail').value.trim(),phone:document.getElementById('regPhone').value.trim()})});
-    currentUser=user; localStorage.setItem('tadweerhub_user',JSON.stringify(user));
-    closeModal('registerModal'); updateConsumerUI();
-    showToast(lang==='ar'?`أهلاً بك، ${user.name}! 🎉`:`Welcome, ${user.name}! 🎉`);
-    loadLeaderboard();
-  } catch(err){showToast(err.message,'error');}
-  finally{btn.disabled=false;btn.textContent=t('reg.submit');}
-});
+  <script>
+    // ── Translations ──────────────────────────────────────────────────────────────
+    const T = {
+      en: {
+        'nav.vision':'Vision & Mission','nav.how':'How It Works','nav.dashboard':'Dashboard',
+        'nav.factory':'Factory Portal','nav.join':'Join Now',
+        'hero.tag':"// Egypt's Plastic & Can Recycling Network",
+        'hero.l1':'COLLECT.','hero.l2':'RECYCLE.','hero.l3':'EARN.',
+        'hero.sub':'TadweerHub bridges the gap between consumers with plastic waste and recycling factories that need clean, sorted materials. Drop off, request pickup, earn cash rewards.',
+        'hero.cta1':'I Have Waste to Recycle','hero.cta2':"I'm a Recycling Factory",'hero.cta3':'How It Works',
+        'hero.seg1':'Consumers — earn cash from plastic','hero.seg2':'Factories — get clean sorted supply',
+        'stats.bottles':'Bottles Collected','stats.pickups':'Pickup Requests',
+        'stats.co2':'KG CO₂ Saved','stats.water':'Litres Water Saved',
+        'poll.tag':'⚠ The Cost of Inaction','poll.title':'THIS IS WHAT HAPPENS WHEN WE LOOK AWAY',
+        'poll.body1':"Every year, millions of plastic bottles and aluminum cans end up in Egypt's rivers, canals, and streets instead of recycling facilities. The Nile — our lifeline — carries tons of plastic waste into the Mediterranean, poisoning marine life and contaminating the water we drink.",
+        'poll.body2':'These photos were taken in Egypt. They show what happens when recyclable materials are discarded instead of collected. Plastic takes over 400 years to decompose. Every bottle you recycle through TadweerHub is one less in our waterways.',
+        'poll.s1':'Tons of plastic waste in Egypt yearly','poll.s2':'Actually gets recycled',
+        'vm.tag':'// Our Purpose','vm.title':'Vision & Mission',
+        'vm.vTag':'// Vision Statement','vm.vTitle':'Vision Statement',
+        'vm.vBody':"Our vision is to become Egypt's leading digital platform for plastic and aluminum recycling, creating a seamless bridge between consumers and recycling factories. We aim to transform recycling into a simple, rewarding, and accessible daily habit for every household and business, contributing to a cleaner environment and supporting Egypt's Vision 2030 toward a circular and sustainable economy.",
+        'vm.mTag':'// Mission Statement','vm.mTitle':'Mission Statement',
+        'vm.mBody1':'Our mission is to bridge the gap between consumers and recycling factories by creating a simple, accessible, and incentive-driven digital platform that enables the proper collection, sorting, and delivery of plastic and aluminum waste.',
+        'vm.mBody2':"We aim to increase recycling rates, reduce environmental pollution, and support Egypt's transition toward a circular economy by supplying factories with clean, well-sorted materials while empowering individuals and communities to participate in sustainable waste management with ease and tangible rewards.",
+        'how.tag':'// Process','how.title':'HOW IT WORKS','how.tabC':'For Consumers','how.tabF':'For Factories',
+        'how.c1t':'Collect Your Plastic','how.c1b':'Gather your empty plastic bottles and aluminum cans. Every item you collect earns you cash rewards.',
+        'how.c2t':'Choose Drop-off or Pickup','how.c2b':'Either visit a TadweerHub collection point near you, or request a free home pickup directly from the platform.',
+        'how.c3t':'Log Your Drop-off','how.c3b':"Create your account and log how many items you've dropped off. Every bottle counts toward your balance.",
+        'how.c4t':'Earn Cash & Track Impact','how.c4b':'Earn points redeemable for cash payments. Track your environmental impact: CO₂ saved, water conserved, and more.',
+        'how.f1t':'Register Your Factory','how.f1b':'Create a factory account and specify what materials you need and your required quantities.',
+        'how.f2t':'View Available Supply','how.f2b':'See real-time inventory of collected, sorted plastic and cans available in your region.',
+        'how.f3t':'Place a Supply Order','how.f3b':'Request the quantity you need. TadweerHub handles collection, sorting, and delivery directly to your factory site.',
+        'how.f4t':'Receive Sorted Materials','how.f4b':'Get clean, quality-tested, well-sorted plastic and aluminum delivered on schedule at competitive prices.',
+        'dash.tag':'// Dashboard','dash.title':'YOUR PORTAL','dash.tabC':'Consumer Dashboard','dash.tabF':'Factory Dashboard',
+        'dropoff.title':'// Log a Drop-off','dropoff.warn1':'You need to','dropoff.warnLink':'create an account','dropoff.warn2':'before logging a drop-off.',
+        'dropoff.bottles':'Number of Bottles / Cans','dropoff.material':'Material Type','dropoff.location':'Drop-off Location',
+        'dropoff.notes':'Notes (optional)','dropoff.submit':'Log Drop-off',
+        'pickup.title':'// Request Home Pickup','pickup.warn':'to request a home pickup.',
+        'pickup.address':'Your Address','pickup.qty':'Estimated Quantity','pickup.date':'Preferred Date','pickup.submit':'Request Pickup',
+        'feed.title':'// Live Activity Feed',
+        'fac.account':'Factory Account','fac.regPrompt':'Register your factory','fac.regPrompt2':'to access the supply portal.',
+        'fac.sb':'Plastic Bottles Available','fac.sp':'Pending Pickups','fac.sm':'Active Collectors','fac.pfTitle':'// Recent Pickup Requests',
+        'order.title':'// Request Supply Delivery','order.material':'Material Needed','order.flakes':'Plastic Flakes (sorted)',
+        'order.pellets':'Plastic Pellets','order.mixedP':'Mixed Plastic','order.qty':'Quantity (KG)',
+        'order.address':'Delivery Address','order.date':'Required By (Date)','order.submit':'Submit Supply Order',
+        'footer.copy':'© 2025 TadweerHub. Bridging waste and recycling across Egypt.','footer.vision':"Built for Egypt's Vision 2030 🌿",
+        'reg.title':'JOIN TADWEERHUB','reg.sub':'Create your consumer account to log drop-offs, request pickups, and earn rewards.',
+        'reg.name':'Full Name','reg.email':'Email Address','reg.phone':'Phone Number','reg.submit':'Create Account',
+        'reg.already':'Already joined?','reg.signInLink':'Sign in with email',
+        'freg.title':'FACTORY PORTAL','freg.sub':'Register your recycling factory to access sorted supply, place orders, and manage deliveries.',
+        'freg.name':'Factory / Company Name','freg.contact':'Contact Person','freg.email':'Business Email',
+        'freg.gov':'Factory Location / Governorate','freg.selGov':'Select governorate...','freg.matPref':'Primary Material Needed',
+        'freg.submit':'Register Factory','freg.already':'Already registered?',
+        'common.signIn':'Sign In','common.signOut':'Sign Out',
+        'c.loading':'Loading...','c.selType':'Select type...','c.selLoc':'Select a location...','c.selMat':'Select material...',
+        'c.plastic':'Plastic Bottles','c.cans':'Aluminum Cans','c.mixed':'Mixed (Plastic + Cans)','c.both':'Both','c.other':'Other',
+        'loc.sadat':'El Sadat Metro Station — Tahrir Square','loc.shohada':'El Shohada Metro Station — Ramses',
+        'loc.dokki':'El Dokki Metro Station','loc.giza':'Giza Metro Station',
+        'loc.attaba':'El Attaba Square','loc.tahrir':'Tahrir Square',
+        'loc.qasr':'Qasr El Nil Street','loc.mohandessin':'Mohandessin — Gamaet El Dewal Street',
+        'loc.maadi':'Maadi — Road 9','loc.heliopolis':'Heliopolis — Korba',
+        'loc.nasr':'Nasr City — City Stars Area','loc.october':'6th of October — Juhayna Square',
+        'loc.pyramids':'Giza — Al Haram Street (near Pyramids)','loc.cairo_tower':'Cairo Tower — Zamalek',
+        'loc.ecu':'Egyptian Chinese University — ECU Campus',
+        'gov.cairo':'Cairo','gov.giza':'Giza','gov.alex':'Alexandria','gov.qaly':'Qalyubia','gov.sharq':'Sharqia','gov.dak':'Dakahlia','gov.beh':'Beheira',
+        'pts':'points',
+        'toast.dropoff':'Drop-off logged! ♻️','toast.pickup':"Pickup requested! We'll confirm shortly. 🚛",
+        'toast.order':'Supply order submitted! Our team will be in touch. 🏭','toast.signedOut':'Signed out.',
+        'toast.signInFirst':'Please sign in first','toast.enterEmail':'Enter your email',
+        'toast.notFound':'Email not found. Please register.','toast.enterFacEmail':'Enter your factory email',
+      },
+      ar: {
+        'nav.vision':'الرؤية والرسالة','nav.how':'كيف يعمل','nav.dashboard':'لوحة التحكم',
+        'nav.factory':'بوابة المصانع','nav.join':'انضم الآن',
+        'hero.tag':'// شبكة إعادة تدوير البلاستيك والعلب في مصر',
+        'hero.l1':'اجمع.','hero.l2':'أعد التدوير.','hero.l3':'اكسب.',
+        'hero.sub':'تدوير هاب يربط بين المستهلكين الذين لديهم نفايات بلاستيكية ومصانع إعادة التدوير التي تحتاج إلى مواد نظيفة ومصنفة. سلّم أو اطلب توصيلاً من المنزل واكسب مكافآت نقدية.',
+        'hero.cta1':'لدي نفايات للتدوير','hero.cta2':'أنا مصنع إعادة تدوير','hero.cta3':'كيف يعمل',
+        'hero.seg1':'المستهلكون — اكسب نقوداً من البلاستيك','hero.seg2':'المصانع — احصل على مواد خام نظيفة',
+        'stats.bottles':'زجاجات تم جمعها','stats.pickups':'طلبات استلام',
+        'stats.co2':'كجم ثاني أكسيد كربون موفر','stats.water':'لتر ماء موفر',
+        'poll.tag':'⚠ ثمن التجاهل','poll.title':'هذا ما يحدث عندما نغض الطرف',
+        'poll.body1':'كل عام، ينتهي المطاف بملايين الزجاجات البلاستيكية وعلب الألومنيوم في أنهار مصر وقنواتها وشوارعها بدلاً من مرافق إعادة التدوير. النيل — شريان حياتنا — يحمل أطناناً من النفايات البلاستيكية إلى البحر المتوسط، مسمماً الحياة البحرية وملوثاً المياه التي نشربها.',
+        'poll.body2':'هذه الصور التُقطت في مصر. إنها تُظهر ما يحدث عندما يُلقى بالمواد القابلة لإعادة التدوير بدلاً من جمعها. البلاستيك يحتاج أكثر من 400 سنة ليتحلل. كل زجاجة تعيد تدويرها عبر تدوير هاب هي واحدة أقل في مجارينا المائية.',
+        'poll.s1':'طن نفايات بلاستيكية في مصر سنوياً','poll.s2':'فقط يُعاد تدويره فعلاً',
+        'vm.tag':'// غايتنا','vm.title':'الرؤية والرسالة',
+        'vm.vTag':'// الرؤية','vm.vTitle':'رؤيتنا',
+        'vm.vBody':'رؤيتنا هي أن نصبح المنصة الرقمية الرائدة في مصر لإعادة تدوير البلاستيك والألومنيوم، بما يُشكّل جسراً سلساً بين المستهلكين ومصانع إعادة التدوير. نسعى إلى تحويل إعادة التدوير إلى عادة يومية بسيطة ومجزية وفي متناول الجميع، للأسر والشركات على حدٍّ سواء، مساهمةً في بيئة أنظف ودعماً لرؤية مصر 2030 نحو اقتصاد دائري ومستدام.',
+        'vm.mTag':'// الرسالة','vm.mTitle':'رسالتنا',
+        'vm.mBody1':'رسالتنا هي سد الفجوة بين المستهلكين ومصانع إعادة التدوير من خلال منصة رقمية بسيطة وسهلة الوصول ومدفوعة بالحوافز، تُمكّن من الجمع السليم والتصنيف والتوصيل للنفايات البلاستيكية والألومنيوم.',
+        'vm.mBody2':'نهدف إلى رفع معدلات إعادة التدوير، والحد من التلوث البيئي، ودعم انتقال مصر نحو اقتصاد دائري من خلال تزويد المصانع بمواد نظيفة ومصنّفة جيداً، مع تمكين الأفراد والمجتمعات من المشاركة في إدارة النفايات المستدامة بسهولة ومكافآت ملموسة.',
+        'how.tag':'// العملية','how.title':'كيف يعمل','how.tabC':'للمستهلكين','how.tabF':'للمصانع',
+        'how.c1t':'اجمع بلاستيكك','how.c1b':'اجمع زجاجاتك الفارغة وعلب الألومنيوم. كل قطعة تجمعها تمنحك مكافأة نقدية.',
+        'how.c2t':'اختر التسليم أو الاستلام','how.c2b':'زر أقرب نقطة تجميع تدوير هاب، أو اطلب استلاماً مجانياً من منزلك مباشرةً.',
+        'how.c3t':'سجّل عملية التسليم','how.c3b':'أنشئ حسابك وسجّل عدد القطع التي سلّمتها. كل زجاجة تُحسب في رصيدك.',
+        'how.c4t':'اكسب نقوداً وتتبع أثرك','how.c4b':'اكسب نقاطاً قابلة للصرف. تتبع أثرك البيئي: ثاني أكسيد الكربون الموفر والماء وغير ذلك.',
+        'how.f1t':'سجّل مصنعك','how.f1b':'أنشئ حساباً للمصنع وحدد المواد التي تحتاجها والكميات المطلوبة.',
+        'how.f2t':'اعرض المخزون المتاح','how.f2b':'اطلع على المخزون اللحظي من البلاستيك والعلب المجمعة والمصنفة المتاحة في منطقتك.',
+        'how.f3t':'قدّم طلب توريد','how.f3b':'اطلب الكمية التي تحتاجها. تدوير هاب يتولى الجمع والتصنيف والتوصيل لموقع مصنعك.',
+        'how.f4t':'استلم المواد المصنّفة','how.f4b':'احصل على بلاستيك وألومنيوم نظيف ومُختبر الجودة بأسعار تنافسية وفي المواعيد المحددة.',
+        'dash.tag':'// لوحة التحكم','dash.title':'بوابتك','dash.tabC':'لوحة المستهلك','dash.tabF':'لوحة المصنع',
+        'dropoff.title':'// سجّل عملية تسليم','dropoff.warn1':'يجب عليك','dropoff.warnLink':'إنشاء حساب','dropoff.warn2':'قبل تسجيل عملية التسليم.',
+        'dropoff.bottles':'عدد الزجاجات / العلب','dropoff.material':'نوع المادة','dropoff.location':'موقع التسليم',
+        'dropoff.notes':'ملاحظات (اختياري)','dropoff.submit':'سجّل التسليم',
+        'pickup.title':'// اطلب استلاماً من المنزل','pickup.warn':'لطلب استلام من المنزل.',
+        'pickup.address':'عنوانك','pickup.qty':'الكمية التقريبية','pickup.date':'التاريخ المفضل','pickup.submit':'اطلب الاستلام',
+        'feed.title':'// النشاط المباشر',
+        'fac.account':'حساب المصنع','fac.regPrompt':'سجّل مصنعك','fac.regPrompt2':'للوصول إلى بوابة التوريد.',
+        'fac.sb':'زجاجات بلاستيكية متاحة','fac.sp':'طلبات استلام معلقة','fac.sm':'جامعون نشطون','fac.pfTitle':'// طلبات الاستلام الأخيرة',
+        'order.title':'// اطلب توصيل مواد','order.material':'المادة المطلوبة','order.flakes':'رقائق بلاستيك (مصنفة)',
+        'order.pellets':'حبيبات بلاستيك','order.mixedP':'بلاستيك مختلط','order.qty':'الكمية (كجم)',
+        'order.address':'عنوان التوصيل','order.date':'التاريخ المطلوب','order.submit':'أرسل طلب التوريد',
+        'footer.copy':'© 2025 تدوير هاب. نربط النفايات بإعادة التدوير في مصر.','footer.vision':'مبني لدعم رؤية مصر 2030 🌿',
+        'reg.title':'انضم إلى تدوير هاب','reg.sub':'أنشئ حسابك كمستهلك لتسجيل عمليات التسليم وطلب الاستلام وكسب المكافآت.',
+        'reg.name':'الاسم الكامل','reg.email':'البريد الإلكتروني','reg.phone':'رقم الهاتف','reg.submit':'إنشاء حساب',
+        'reg.already':'لديك حساب بالفعل؟','reg.signInLink':'سجّل الدخول بالبريد الإلكتروني',
+        'freg.title':'بوابة المصانع','freg.sub':'سجّل مصنعك للوصول إلى مواد البلاستيك المصنفة وتقديم الطلبات وإدارة التوصيل.',
+        'freg.name':'اسم المصنع / الشركة','freg.contact':'جهة الاتصال','freg.email':'البريد الإلكتروني للأعمال',
+        'freg.gov':'موقع المصنع / المحافظة','freg.selGov':'اختر المحافظة...','freg.matPref':'المادة الرئيسية المطلوبة',
+        'freg.submit':'تسجيل المصنع','freg.already':'مسجّل بالفعل؟',
+        'common.signIn':'تسجيل الدخول','common.signOut':'تسجيل الخروج',
+        'c.loading':'جاري التحميل...','c.selType':'اختر النوع...','c.selLoc':'اختر الموقع...','c.selMat':'اختر المادة...',
+        'c.plastic':'زجاجات بلاستيك','c.cans':'علب ألومنيوم','c.mixed':'مختلط (بلاستيك + علب)','c.both':'كلاهما','c.other':'أخرى',
+        'loc.sadat':'محطة مترو السادات — ميدان التحرير','loc.shohada':'محطة مترو الشهداء — رمسيس',
+        'loc.dokki':'محطة مترو الدقي','loc.giza':'محطة مترو الجيزة',
+        'loc.attaba':'ميدان العتبة','loc.tahrir':'ميدان التحرير',
+        'loc.qasr':'شارع قصر النيل','loc.mohandessin':'المهندسين — شارع جامعة الدول العربية',
+        'loc.maadi':'المعادي — شارع 9','loc.heliopolis':'مصر الجديدة — كوربة',
+        'loc.nasr':'مدينة نصر — منطقة سيتي ستارز','loc.october':'السادس من أكتوبر — ميدان جهينة',
+        'loc.pyramids':'الجيزة — شارع الهرم (بالقرب من الأهرامات)','loc.cairo_tower':'برج القاهرة — الزمالك',
+        'loc.ecu':'الجامعة المصرية الصينية — حرم الجامعة',
+        'gov.cairo':'القاهرة','gov.giza':'الجيزة','gov.alex':'الإسكندرية','gov.qaly':'القليوبية','gov.sharq':'الشرقية','gov.dak':'الدقهلية','gov.beh':'البحيرة',
+        'pts':'نقطة',
+        'toast.dropoff':'تم تسجيل التسليم! ♻️','toast.pickup':'تم طلب الاستلام! سنتواصل معك قريباً. 🚛',
+        'toast.order':'تم إرسال طلب التوريد! سيتواصل معك فريقنا. 🏭','toast.signedOut':'تم تسجيل الخروج.',
+        'toast.signInFirst':'يرجى تسجيل الدخول أولاً','toast.enterEmail':'أدخل بريدك الإلكتروني',
+        'toast.notFound':'البريد الإلكتروني غير موجود. يرجى التسجيل.','toast.enterFacEmail':'أدخل البريد الإلكتروني للمصنع',
+      }
+    };
 
-document.getElementById('loginLink').addEventListener('click',e=>{e.preventDefault();document.getElementById('loginSection').classList.toggle('hidden');});
-document.getElementById('loginBtn').addEventListener('click',async()=>{
-  const email=document.getElementById('loginEmail').value.trim();
-  if(!email)return showToast(t('toast.enterEmail'),'error');
-  try{const users=await api('/api/users');const user=users.find(u=>u.email.toLowerCase()===email.toLowerCase());if(!user)return showToast(t('toast.notFound'),'error');currentUser=user;localStorage.setItem('tadweerhub_user',JSON.stringify(user));closeModal('registerModal');updateConsumerUI();showToast(lang==='ar'?`أهلاً بعودتك، ${user.name}!`:`Welcome back, ${user.name}!`);}catch(err){showToast(err.message,'error');}
-});
-document.getElementById('logoutBtn').addEventListener('click',()=>{currentUser=null;localStorage.removeItem('tadweerhub_user');updateConsumerUI();showToast(t('toast.signedOut'));});
+    let lang = localStorage.getItem('tadweerhub_lang') || 'en';
+    function t(k) { return T[lang][k] || T.en[k] || k; }
 
-document.getElementById('factoryRegisterForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const btn=document.getElementById('factoryRegisterBtn');
-  btn.disabled=true; btn.textContent=lang==='ar'?'جاري التسجيل...':'Registering...';
-  try{
-    const f=await api('/api/factories',{method:'POST',body:JSON.stringify({name:document.getElementById('factoryName').value.trim(),contact:document.getElementById('factoryContact').value.trim(),email:document.getElementById('factoryEmail').value.trim(),phone:document.getElementById('factoryPhone').value.trim(),governorate:document.getElementById('factoryGov').value,material_pref:document.getElementById('factoryMaterialPref').value})});
-    currentFactory=f;localStorage.setItem('tadweerhub_factory',JSON.stringify(f));closeModal('factoryModal');updateFactoryUI();switchDashTab('factory');
-    showToast(lang==='ar'?`تم تسجيل المصنع! أهلاً بك، ${f.name} 🏭`:`Factory registered! Welcome, ${f.name} 🏭`);
-  }catch(err){showToast(err.message,'error');}
-  finally{btn.disabled=false;btn.textContent=t('freg.submit');}
-});
-document.getElementById('factoryLoginLink').addEventListener('click',e=>{e.preventDefault();document.getElementById('factoryLoginSection').classList.toggle('hidden');});
-document.getElementById('factoryLoginBtn').addEventListener('click',async()=>{
-  const email=document.getElementById('factoryLoginEmail').value.trim();
-  if(!email)return showToast(t('toast.enterFacEmail'),'error');
-  try{const fs=await api('/api/factories');const f=fs.find(x=>x.email.toLowerCase()===email.toLowerCase());if(!f)return showToast(t('toast.notFound'),'error');currentFactory=f;localStorage.setItem('tadweerhub_factory',JSON.stringify(f));closeModal('factoryModal');updateFactoryUI();switchDashTab('factory');showToast(lang==='ar'?`أهلاً بعودتك، ${f.name}!`:`Welcome back, ${f.name}!`);}catch(err){showToast(err.message,'error');}
-});
-document.getElementById('factoryLogoutBtn').addEventListener('click',()=>{currentFactory=null;localStorage.removeItem('tadweerhub_factory');updateFactoryUI();showToast(t('toast.signedOut'));});
+    function applyLang() {
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = t(el.getAttribute('data-i18n'));
+        if (v) el.textContent = v;
+      });
+      document.getElementById('langToggle').textContent = lang === 'en' ? 'عربي' : 'English';
+      document.title = lang === 'ar' ? 'تدوير هاب' : 'TadweerHub';
+      loadFeed(); loadPickupFeed();
+      updateConsumerUI(); updateFactoryUI();
+    }
 
-document.getElementById('dropoffForm').addEventListener('submit',async e=>{
-  e.preventDefault();if(!currentUser)return showToast(t('toast.signInFirst'),'error');
-  const btn=document.getElementById('submitDropoff');btn.disabled=true;btn.textContent=lang==='ar'?'جاري التسجيل...':'Logging...';
-  try{
-    const bottles=parseInt(document.getElementById('bottleCount').value);
-    await api('/api/dropoffs',{method:'POST',body:JSON.stringify({user_id:currentUser.id,bottles,location:document.getElementById('locationSelect').value,material_type:document.getElementById('materialType').value,notes:document.getElementById('dropoffNotes').value})});
-    currentUser.points=(currentUser.points||0)+bottles;localStorage.setItem('tadweerhub_user',JSON.stringify(currentUser));
-    updateConsumerUI();document.getElementById('dropoffForm').reset();showToast(t('toast.dropoff'));loadFeed();loadStats();loadLeaderboard();
-  }catch(err){showToast(err.message,'error');}
-  finally{btn.disabled=false;btn.textContent=t('dropoff.submit');}
-});
+    document.getElementById('langToggle').addEventListener('click', () => {
+      lang = lang === 'en' ? 'ar' : 'en';
+      localStorage.setItem('tadweerhub_lang', lang);
+      applyLang();
+    });
 
-document.getElementById('pickupForm').addEventListener('submit',async e=>{
-  e.preventDefault();if(!currentUser)return showToast(t('toast.signInFirst'),'error');
-  const btn=document.getElementById('submitPickup');btn.disabled=true;btn.textContent=lang==='ar'?'جاري الطلب...':'Requesting...';
-  try{
-    await api('/api/pickups',{method:'POST',body:JSON.stringify({user_id:currentUser.id,address:document.getElementById('pickupAddress').value.trim(),quantity:parseInt(document.getElementById('pickupQty').value),preferred_date:document.getElementById('pickupDate').value,material_type:document.getElementById('pickupMaterial').value})});
-    document.getElementById('pickupForm').reset();showToast(t('toast.pickup'));loadStats();
-  }catch(err){showToast(err.message,'error');}
-  finally{btn.disabled=false;btn.textContent=t('pickup.submit');}
-});
+    // ── Config ────────────────────────────────────────────────────────────────────
+    const API = 'https://tadweerhub-api.y-ashraf74.workers.dev';
+    let currentUser = JSON.parse(localStorage.getItem('tadweerhub_user') || 'null');
+    let currentFactory = JSON.parse(localStorage.getItem('tadweerhub_factory') || 'null');
 
-document.getElementById('supplyOrderForm').addEventListener('submit',async e=>{
-  e.preventDefault();if(!currentFactory)return showToast(t('toast.signInFirst'),'error');
-  const btn=document.getElementById('submitSupplyOrder');btn.disabled=true;btn.textContent=lang==='ar'?'جاري الإرسال...':'Submitting...';
-  try{
-    await api('/api/orders',{method:'POST',body:JSON.stringify({factory_id:currentFactory.id,material:document.getElementById('supplyMaterial').value,quantity_kg:parseInt(document.getElementById('supplyQty').value),address:document.getElementById('supplyAddress').value.trim(),required_by:document.getElementById('supplyDate').value,notes:document.getElementById('supplyNotes').value})});
-    document.getElementById('supplyOrderForm').reset();showToast(t('toast.order'));
-  }catch(err){showToast(err.message,'error');}
-  finally{btn.disabled=false;btn.textContent=t('order.submit');}
-});
+    function showToast(msg, type='success') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = 'toast show' + (type==='error' ? ' error' : '');
+      setTimeout(() => el.className = 'toast', 3500);
+    }
 
-// ── Modals ────────────────────────────────────────────────────────────────────
-function openModal(id){document.getElementById(id).classList.add('active');}
-function closeModal(id){document.getElementById(id).classList.remove('active');}
-document.getElementById('openRegister').addEventListener('click',e=>{e.preventDefault();openModal('registerModal');});
-document.getElementById('joinPromptLink').addEventListener('click',e=>{e.preventDefault();openModal('registerModal');});
-document.getElementById('joinPromptPickup').addEventListener('click',e=>{e.preventDefault();openModal('registerModal');});
-document.getElementById('closeModal').addEventListener('click',()=>closeModal('registerModal'));
-document.getElementById('registerModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('registerModal');});
-document.getElementById('openFactoryRegister').addEventListener('click',e=>{e.preventDefault();openModal('factoryModal');});
-document.getElementById('joinFactoryPrompt').addEventListener('click',e=>{e.preventDefault();openModal('factoryModal');});
-document.getElementById('factoryHeroBtn').addEventListener('click',e=>{e.preventDefault();openModal('factoryModal');});
-document.getElementById('closeFactoryModal').addEventListener('click',()=>closeModal('factoryModal'));
-document.getElementById('factoryModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('factoryModal');});
+    async function api(path, opts={}) {
+      const res = await fetch(API + path, { headers: {'Content-Type':'application/json'}, ...opts });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      return data;
+    }
 
-// ── Hamburger ─────────────────────────────────────────────────────────────────
-const hbg=document.getElementById('hamburger'),nl=document.getElementById('navLinks');
-hbg.addEventListener('click',()=>{hbg.classList.toggle('open');nl.classList.toggle('open');});
-document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>{hbg.classList.remove('open');nl.classList.remove('open');}));
+    function switchHowTab(tab) {
+      const cS=document.getElementById('consumerSteps'), fS=document.getElementById('factorySteps');
+      const cT=document.getElementById('howTabConsumer'), fT=document.getElementById('howTabFactory');
+      if (tab==='consumer') { cS.classList.remove('hidden'); fS.classList.add('hidden'); cT.className='how-tab active-consumer'; fT.className='how-tab'; }
+      else { fS.classList.remove('hidden'); cS.classList.add('hidden'); fT.className='how-tab active-factory'; cT.className='how-tab'; }
+      cT.textContent = t('how.tabC'); fT.textContent = t('how.tabF');
+    }
 
-// ── Scroll top ────────────────────────────────────────────────────────────────
-const sb=document.getElementById('scrollTop');
-window.addEventListener('scroll',()=>sb.classList.toggle('visible',window.scrollY>400));
-sb.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    function switchDashTab(tab) {
+      const pC=document.getElementById('panelConsumer'), pF=document.getElementById('panelFactory');
+      const dC=document.getElementById('dashTabConsumer'), dF=document.getElementById('dashTabFactory');
+      if (tab==='consumer') { pC.classList.add('active'); pF.classList.remove('active'); dC.className='dash-tab active-consumer'; dF.className='dash-tab'; }
+      else { pF.classList.add('active'); pC.classList.remove('active'); dF.className='dash-tab active-factory'; dC.className='dash-tab'; loadSupplyStats(); loadPickupFeed(); }
+      dC.textContent = t('dash.tabC'); dF.textContent = t('dash.tabF');
+    }
 
-// ── Scroll reveal ─────────────────────────────────────────────────────────────
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    function updateConsumerUI() {
+      const bar=document.getElementById('consumerSessionBar'), warn=document.getElementById('noUserWarning'),
+            warnP=document.getElementById('noUserPickup'), btn=document.getElementById('submitDropoff'),
+            btnP=document.getElementById('submitPickup');
+      if (currentUser) {
+        bar.classList.add('visible');
+        document.getElementById('sessionName').textContent = currentUser.name;
+        document.getElementById('sessionPoints').textContent = (currentUser.points||0)+' '+t('pts');
+        warn.style.display='none'; warnP.style.display='none';
+        btn.disabled=false; btnP.disabled=false;
+      } else {
+        bar.classList.remove('visible');
+        warn.style.display=''; warnP.style.display='';
+        btn.disabled=true; btnP.disabled=true;
+      }
+    }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-applyLang();
-updateConsumerUI();
-updateFactoryUI();
-loadStats();
-loadFeed();
-loadLeaderboard();
-setInterval(()=>{loadStats();loadFeed();loadLeaderboard();},30000);
-</script>
+    function updateFactoryUI() {
+      const bar=document.getElementById('factorySessionBar'), warn=document.getElementById('noFactoryWarning'),
+            btn=document.getElementById('submitSupplyOrder');
+      if (currentFactory) {
+        bar.classList.add('visible');
+        document.getElementById('factorySessionName').textContent = currentFactory.name;
+        warn.style.display='none'; btn.disabled=false;
+      } else {
+        bar.classList.remove('visible');
+        warn.style.display=''; btn.disabled=true;
+      }
+    }
+
+    // ── Stats ──
+    async function loadStats() {
+      try {
+        const s = await api('/api/stats');
+        document.getElementById('statBottles').textContent = Number(s.total_bottles).toLocaleString();
+        document.getElementById('statPickups').textContent = Number(s.total_pickups).toLocaleString();
+        document.getElementById('statCO2').textContent = Number(s.co2_saved_kg).toLocaleString();
+        document.getElementById('statWater').textContent = Number(s.water_saved_liters).toLocaleString();
+      } catch(e) { /* silent */ }
+    }
+
+    // ── Feed ──
+    async function loadFeed() {
+      try {
+        const items = await api('/api/dropoffs');
+        const feed = document.getElementById('feed');
+        if (!items.length) { feed.innerHTML = '<div class="empty-state"><p>'+t('c.loading')+'</p></div>'; return; }
+        feed.innerHTML = items.slice(0,20).map(d => `
+          <div class="feed-item">
+            <div class="feed-avatar">♻</div>
+            <div class="feed-item-left">
+              <div class="feed-user">${d.user_name||'User'}</div>
+              <div class="feed-meta">${d.location} · ${d.material_type}</div>
+            </div>
+            <div class="feed-bottles">${d.bottles}<span>${d.bottles===1?'bottle':'bottles'}</span></div>
+          </div>`).join('');
+      } catch(e) { /* silent */ }
+    }
+
+    async function loadPickupFeed() {
+      try {
+        const items = await api('/api/pickups');
+        const feed = document.getElementById('pickupFeed');
+        if (!items.length) { feed.innerHTML = '<div class="empty-state"><p>'+t('c.loading')+'</p></div>'; return; }
+        feed.innerHTML = items.slice(0,20).map(p => {
+          const sc = 'status-'+(p.status||'pending');
+          return `<div class="pickup-item">
+            <div class="feed-avatar">🚛</div>
+            <div class="feed-item-left">
+              <div class="feed-user">${p.user_name||'User'}</div>
+              <div class="feed-meta">${p.address} · ${p.quantity} items</div>
+            </div>
+            <div class="pickup-status ${sc}">${p.status||'pending'}</div>
+          </div>`;
+        }).join('');
+      } catch(e) { /* silent */ }
+    }
+
+    // ── Supply Stats ──
+    async function loadSupplyStats() {
+      try {
+        const s = await api('/api/stats');
+        document.getElementById('supplyBottles').textContent = Number(s.total_bottles).toLocaleString();
+        document.getElementById('supplyPickups').textContent = Number(s.total_pickups).toLocaleString();
+        document.getElementById('supplyMembers').textContent = Number(s.total_users).toLocaleString();
+      } catch(e) { /* silent */ }
+    }
+
+    // ── Modals ──
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    document.getElementById('openRegister').addEventListener('click', e => { e.preventDefault(); openModal('registerModal'); });
+    document.getElementById('closeModal').addEventListener('click', () => closeModal('registerModal'));
+    document.getElementById('openFactoryRegister').addEventListener('click', e => { e.preventDefault(); openModal('factoryModal'); });
+    document.getElementById('closeFactoryModal').addEventListener('click', () => closeModal('factoryModal'));
+    document.getElementById('joinPromptLink').addEventListener('click', e => { e.preventDefault(); openModal('registerModal'); });
+    document.getElementById('joinPromptPickup').addEventListener('click', e => { e.preventDefault(); openModal('registerModal'); });
+    document.getElementById('joinFactoryPrompt').addEventListener('click', e => { e.preventDefault(); openModal('factoryModal'); });
+
+    document.getElementById('loginLink').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('loginSection').classList.toggle('hidden');
+    });
+    document.getElementById('factoryLoginLink').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('factoryLoginSection').classList.toggle('hidden');
+    });
+
+    // Close modals on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+      o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+    });
+
+    // ── Register Consumer ──
+    document.getElementById('registerForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      if (!name || !email) return;
+      try {
+        const user = await api('/api/users', { method:'POST', body: JSON.stringify({name,email,phone}) });
+        currentUser = user;
+        localStorage.setItem('tadweerhub_user', JSON.stringify(user));
+        closeModal('registerModal');
+        updateConsumerUI(); loadStats();
+        showToast('Welcome, '+user.name+'! ♻️');
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Login Consumer ──
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) return showToast(t('toast.enterEmail'), 'error');
+      try {
+        const users = await api('/api/users');
+        const found = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (!found) return showToast(t('toast.notFound'), 'error');
+        currentUser = found;
+        localStorage.setItem('tadweerhub_user', JSON.stringify(found));
+        closeModal('registerModal');
+        updateConsumerUI(); loadStats();
+        showToast('Welcome back, '+found.name+'! ♻️');
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Logout Consumer ──
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      currentUser = null;
+      localStorage.removeItem('tadweerhub_user');
+      updateConsumerUI();
+      showToast(t('toast.signedOut'));
+    });
+
+    // ── Register Factory ──
+    document.getElementById('factoryRegisterForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('factoryName').value.trim();
+      const contact = document.getElementById('factoryContact').value.trim();
+      const email = document.getElementById('factoryEmail').value.trim();
+      const phone = document.getElementById('factoryPhone').value.trim();
+      const governorate = document.getElementById('factoryGov').value;
+      const material_pref = document.getElementById('factoryMaterialPref').value;
+      if (!name||!contact||!email) return;
+      try {
+        const factory = await api('/api/factories', { method:'POST', body: JSON.stringify({name,contact,email,phone,governorate,material_pref}) });
+        currentFactory = factory;
+        localStorage.setItem('tadweerhub_factory', JSON.stringify(factory));
+        closeModal('factoryModal');
+        updateFactoryUI(); loadSupplyStats();
+        showToast('Factory registered! 🏭');
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Login Factory ──
+    document.getElementById('factoryLoginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('factoryLoginEmail').value.trim();
+      if (!email) return showToast(t('toast.enterFacEmail'), 'error');
+      try {
+        const factories = await api('/api/factories');
+        const found = factories.find(f => f.email.toLowerCase() === email.toLowerCase());
+        if (!found) return showToast(t('toast.notFound'), 'error');
+        currentFactory = found;
+        localStorage.setItem('tadweerhub_factory', JSON.stringify(found));
+        closeModal('factoryModal');
+        updateFactoryUI(); loadSupplyStats();
+        showToast('Welcome back, '+found.name+'! 🏭');
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Logout Factory ──
+    document.getElementById('factoryLogoutBtn').addEventListener('click', () => {
+      currentFactory = null;
+      localStorage.removeItem('tadweerhub_factory');
+      updateFactoryUI();
+      showToast(t('toast.signedOut'));
+    });
+
+    // ── Drop-off Form ──
+    document.getElementById('dropoffForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!currentUser) return showToast(t('toast.signInFirst'), 'error');
+      const bottles = parseInt(document.getElementById('bottleCount').value);
+      const material_type = document.getElementById('materialType').value;
+      const location = document.getElementById('locationSelect').value;
+      const notes = document.getElementById('dropoffNotes').value.trim();
+      if (!bottles||!material_type||!location) return;
+      try {
+        await api('/api/dropoffs', { method:'POST', body: JSON.stringify({ user_id:currentUser.id, bottles, location, material_type, notes }) });
+        currentUser.points = (currentUser.points||0) + bottles;
+        localStorage.setItem('tadweerhub_user', JSON.stringify(currentUser));
+        updateConsumerUI();
+        document.getElementById('dropoffForm').reset();
+        loadFeed(); loadStats();
+        showToast(t('toast.dropoff'));
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Pickup Form ──
+    document.getElementById('pickupForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!currentUser) return showToast(t('toast.signInFirst'), 'error');
+      const address = document.getElementById('pickupAddress').value.trim();
+      const quantity = parseInt(document.getElementById('pickupQty').value);
+      const preferred_date = document.getElementById('pickupDate').value;
+      const material_type = document.getElementById('pickupMaterial').value;
+      if (!address||!quantity) return;
+      try {
+        await api('/api/pickups', { method:'POST', body: JSON.stringify({ user_id:currentUser.id, address, quantity, material_type, preferred_date }) });
+        document.getElementById('pickupForm').reset();
+        loadPickupFeed();
+        showToast(t('toast.pickup'));
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Supply Order Form ──
+    document.getElementById('supplyOrderForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!currentFactory) return showToast(t('toast.signInFirst'), 'error');
+      const material = document.getElementById('supplyMaterial').value;
+      const quantity_kg = parseInt(document.getElementById('supplyQty').value);
+      const address = document.getElementById('supplyAddress').value.trim();
+      const required_by = document.getElementById('supplyDate').value;
+      const notes = document.getElementById('supplyNotes').value.trim();
+      if (!material||!quantity_kg||!address) return;
+      try {
+        await api('/api/orders', { method:'POST', body: JSON.stringify({ factory_id:currentFactory.id, material, quantity_kg, address, required_by, notes }) });
+        document.getElementById('supplyOrderForm').reset();
+        showToast(t('toast.order'));
+      } catch(err) { showToast(err.message, 'error'); }
+    });
+
+    // ── Factory Hero Button ──
+    document.getElementById('factoryHeroBtn').addEventListener('click', e => {
+      e.preventDefault();
+      switchDashTab('factory');
+      document.getElementById('dashboard').scrollIntoView({ behavior:'smooth' });
+    });
+
+    // ── Hamburger ──
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('hamburger').classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('hamburger').classList.remove('open');
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // ── Scroll reveal ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Scroll-to-top ──
+    const scrollBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // ── Pollution Carousel ──
+    (function() {
+      let idx = 0;
+      const total = 4;
+      const track = document.getElementById('carouselTrack');
+      const dots = document.querySelectorAll('.carousel-dot');
+      function goTo(i) {
+        idx = ((i % total) + total) % total;
+        track.style.transform = 'translateX(-'+(idx*25)+'%)';
+        dots.forEach((d,j) => d.classList.toggle('active', j===idx));
+      }
+      document.getElementById('carouselPrev').addEventListener('click', () => goTo(idx-1));
+      document.getElementById('carouselNext').addEventListener('click', () => goTo(idx+1));
+      dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.index))));
+      setInterval(() => goTo(idx+1), 5000);
+    })();
+
+    // ── Auto-refresh ──
+    setInterval(() => { loadStats(); loadFeed(); loadPickupFeed(); }, 30000);
+
+    // ── Init ──
+    applyLang();
+    loadStats();
+    loadFeed();
+    loadPickupFeed();
+    updateConsumerUI();
+    updateFactoryUI();
+  </script>
+
 </body>
 </html>
