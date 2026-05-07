@@ -685,9 +685,9 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
               <option value="" data-i18n="c.selType">Select type...</option>
               <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
               <option value="cans" data-i18n="c.cans">Aluminum Cans</option>
-              <option value="mixed" data-i18n="c.mixed">Mixed (Plastic + Cans)</option>
             </select>
           </div>
+          <div class="form-group"><label data-i18n="dropoff.weight">Weight (KG)</label><input type="number" id="weightKg" min="0.1" step="0.1" placeholder="e.g. 3.5" required /></div>
           <div class="form-group">
             <label data-i18n="dropoff.location">Drop-off Location</label>
             <select id="locationSelect" required>
@@ -726,7 +726,6 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
             <select id="pickupMaterial">
               <option value="plastic" data-i18n="c.plastic">Plastic Bottles</option>
               <option value="cans" data-i18n="c.cans">Aluminum Cans</option>
-              <option value="mixed" data-i18n="c.mixed">Mixed</option>
             </select>
           </div>
           <button type="submit" class="btn-submit" id="submitPickup" disabled data-i18n="pickup.submit">Request Pickup</button>
@@ -748,6 +747,21 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
     </div>
     <div id="noFactoryWarning" class="warning-box">
       <a id="joinFactoryPrompt" data-i18n="fac.regPrompt">Register your factory</a> <span data-i18n="fac.regPrompt2">to access the supply portal.</span>
+    </div>
+    <!-- Pricing Reference -->
+    <div class="supply-grid" style="margin-bottom:0.75rem;">
+      <div class="supply-card" style="border-left:3px solid var(--green);">
+        <div class="supply-val" style="font-size:1.5rem;">25 <span style="font-size:0.8rem;font-weight:500;color:var(--muted);">EGP/kg</span></div>
+        <div class="supply-label" data-i18n="fac.priceP">Plastic Bottles — Price per KG</div>
+      </div>
+      <div class="supply-card" style="border-left:3px solid var(--amber);">
+        <div class="supply-val" style="font-size:1.5rem;color:var(--amber);">30 <span style="font-size:0.8rem;font-weight:500;color:var(--muted);">EGP/kg</span></div>
+        <div class="supply-label" data-i18n="fac.priceC">Aluminum Cans — Price per KG</div>
+      </div>
+      <div class="supply-card" style="background:var(--green-mint);border:1px dashed var(--green-light);">
+        <div class="supply-val" style="font-size:1rem;color:var(--green);">Invoice Generated</div>
+        <div class="supply-label" data-i18n="fac.invoiceNote">Auto invoice ID on every order</div>
+      </div>
     </div>
     <div class="supply-grid">
       <div class="supply-card"><div class="supply-val" id="supplyBottles">—</div><div class="supply-label" data-i18n="fac.sb">Plastic Bottles Available</div></div>
@@ -897,7 +911,8 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
         'dash.tag':'// Dashboard','dash.title':'YOUR PORTAL','dash.tabC':'Consumer Dashboard','dash.tabF':'Factory Dashboard',
         'dropoff.title':'// Log a Drop-off','dropoff.warn1':'You need to','dropoff.warnLink':'create an account','dropoff.warn2':'before logging a drop-off.',
         'dropoff.bottles':'Number of Bottles / Cans','dropoff.material':'Material Type','dropoff.location':'Drop-off Location',
-        'dropoff.notes':'Notes (optional)','dropoff.submit':'Log Drop-off',
+        'dropoff.notes':'Notes (optional)','dropoff.submit':'Log Drop-off','dropoff.weight':'Weight (KG)',
+        'fac.priceP':'Plastic Bottles — Price per KG','fac.priceC':'Aluminum Cans — Price per KG','fac.invoiceNote':'Auto invoice ID on every order',
         'pickup.title':'// Request Home Pickup','pickup.warn':'to request a home pickup.',
         'pickup.address':'Your Address','pickup.qty':'Estimated Quantity','pickup.date':'Preferred Date','pickup.submit':'Request Pickup',
         'feed.title':'// Live Activity Feed',
@@ -964,7 +979,8 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
         'dash.tag':'// لوحة التحكم','dash.title':'بوابتك','dash.tabC':'لوحة المستهلك','dash.tabF':'لوحة المصنع',
         'dropoff.title':'// سجّل عملية تسليم','dropoff.warn1':'يجب عليك','dropoff.warnLink':'إنشاء حساب','dropoff.warn2':'قبل تسجيل عملية التسليم.',
         'dropoff.bottles':'عدد الزجاجات / العلب','dropoff.material':'نوع المادة','dropoff.location':'موقع التسليم',
-        'dropoff.notes':'ملاحظات (اختياري)','dropoff.submit':'سجّل التسليم',
+        'dropoff.notes':'ملاحظات (اختياري)','dropoff.submit':'سجّل التسليم','dropoff.weight':'الوزن (كجم)',
+        'fac.priceP':'زجاجات بلاستيك — السعر لكل كجم','fac.priceC':'علب ألومنيوم — السعر لكل كجم','fac.invoiceNote':'رقم فاتورة تلقائي لكل طلب',
         'pickup.title':'// اطلب استلاماً من المنزل','pickup.warn':'لطلب استلام من المنزل.',
         'pickup.address':'عنوانك','pickup.qty':'الكمية التقريبية','pickup.date':'التاريخ المفضل','pickup.submit':'اطلب الاستلام',
         'feed.title':'// النشاط المباشر',
@@ -1263,18 +1279,20 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
       e.preventDefault();
       if (!currentUser) return showToast(t('toast.signInFirst'), 'error');
       const bottles = parseInt(document.getElementById('bottleCount').value);
+      const weight_kg = parseFloat(document.getElementById('weightKg').value);
       const material_type = document.getElementById('materialType').value;
       const location = document.getElementById('locationSelect').value;
       const notes = document.getElementById('dropoffNotes').value.trim();
-      if (!bottles||!material_type||!location) return;
+      if (!bottles||!weight_kg||!material_type||!location) return;
       try {
-        await api('/api/dropoffs', { method:'POST', body: JSON.stringify({ user_id:currentUser.id, bottles, location, material_type, notes }) });
-        currentUser.points = (currentUser.points||0) + bottles;
+        const result = await api('/api/dropoffs', { method:'POST', body: JSON.stringify({ user_id:currentUser.id, bottles, weight_kg, location, material_type, notes }) });
+        const pts = result.points_earned || 0;
+        currentUser.points = (currentUser.points||0) + pts;
         localStorage.setItem('tadweerhub_user', JSON.stringify(currentUser));
         updateConsumerUI();
         document.getElementById('dropoffForm').reset();
         loadFeed(); loadStats();
-        showToast(t('toast.dropoff'));
+        showToast(t('toast.dropoff') + ' +' + pts + ' ' + t('pts') + ' 🎉');
       } catch(err) { showToast(err.message, 'error'); }
     });
 
@@ -1306,9 +1324,9 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
       const notes = document.getElementById('supplyNotes').value.trim();
       if (!material||!quantity_kg||!address) return;
       try {
-        await api('/api/orders', { method:'POST', body: JSON.stringify({ factory_id:currentFactory.id, material, quantity_kg, address, required_by, notes }) });
+        const order = await api('/api/orders', { method:'POST', body: JSON.stringify({ factory_id:currentFactory.id, material, quantity_kg, address, required_by, notes }) });
         document.getElementById('supplyOrderForm').reset();
-        showToast(t('toast.order'));
+        showToast('Order submitted! Invoice: ' + (order.invoice_id || '') + ' 🏭');
       } catch(err) { showToast(err.message, 'error'); }
     });
 
