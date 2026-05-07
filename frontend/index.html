@@ -1132,10 +1132,12 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
         document.getElementById('sessionPoints').textContent = (currentUser.points||0)+' '+t('pts');
         warn.style.display='none'; warnP.style.display='none';
         btn.disabled=false; btnP.disabled=false;
+        document.getElementById('openRegister').style.display='none';
       } else {
         bar.classList.remove('visible');
         warn.style.display=''; warnP.style.display='';
         btn.disabled=true; btnP.disabled=true;
+        document.getElementById('openRegister').style.display='';
       }
     }
 
@@ -1146,9 +1148,11 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
         bar.classList.add('visible');
         document.getElementById('factorySessionName').textContent = currentFactory.name;
         warn.style.display='none'; btn.disabled=false;
+        document.getElementById('openFactoryRegister').style.display='none';
       } else {
         bar.classList.remove('visible');
         warn.style.display=''; btn.disabled=true;
+        document.getElementById('openFactoryRegister').style.display='';
       }
     }
 
