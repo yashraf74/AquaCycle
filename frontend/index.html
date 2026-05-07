@@ -1346,7 +1346,7 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
         updateConsumerUI();
         document.getElementById('dropoffForm').reset();
         loadFeed(); loadStats();
-        showToast(t('toast.dropoff') + ' +' + pts + ' ' + t('pts') + ' 🎉');
+        showToast(t('toast.dropoff') + ' +' + bottles + ' ' + t('pts') + ' 🎉');
       } catch(err) { showToast(err.message, 'error'); }
     });
 
