@@ -1,6 +1,20 @@
 // TadweerHub API — Cloudflare Worker
 // Routes: /api/users, /api/factories, /api/dropoffs, /api/pickups, /api/orders, /api/stats, /api/leaderboard
 
+// ── Pricing (EGP per kg) ──────────────────────────────────────────────────────
+const PRICE_PER_KG = { plastic: 25, cans: 30 };
+
+function calcPoints(material_type, weight_kg) {
+  const rate = PRICE_PER_KG[material_type] ?? 0;
+  return Math.round(weight_kg * rate);
+}
+
+function generateInvoiceId() {
+  const ts  = Date.now().toString(36).toUpperCase();
+  const rnd = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `INV-${ts}-${rnd}`;
+}
+
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -36,9 +50,11 @@ async function initDB(db) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL,
       bottles INTEGER NOT NULL,
+      weight_kg REAL NOT NULL DEFAULT 0,
       location TEXT NOT NULL,
       material_type TEXT DEFAULT 'plastic',
       notes TEXT,
+      points_earned INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
@@ -58,8 +74,11 @@ async function initDB(db) {
     CREATE TABLE IF NOT EXISTS orders (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       factory_id INTEGER NOT NULL,
+      invoice_id TEXT NOT NULL,
       material TEXT NOT NULL,
       quantity_kg INTEGER NOT NULL,
+      price_per_kg INTEGER NOT NULL DEFAULT 0,
+      total_egp INTEGER NOT NULL DEFAULT 0,
       address TEXT NOT NULL,
       required_by TEXT,
       notes TEXT,
@@ -139,17 +158,23 @@ export default {
     // ── Drop-offs ─────────────────────────────────────────────
 
     if (path === '/api/dropoffs' && method === 'POST') {
-      const { user_id, bottles, location, material_type, notes } = await request.json();
+      const { user_id, bottles, weight_kg, location, material_type, notes } = await request.json();
       if (!user_id || !bottles || !location) return error('user_id, bottles, and location required');
       if (bottles < 1 || bottles > 10000) return error('bottles must be between 1 and 10000');
+      if (!weight_kg || weight_kg <= 0) return error('weight_kg is required and must be > 0');
+
+      const mat = (material_type || 'plastic').toLowerCase();
+      if (!['plastic','cans'].includes(mat)) return error('material_type must be plastic or cans');
+
+      const pts = calcPoints(mat, weight_kg);
 
       const dropoff = await env.DB.prepare(
-        'INSERT INTO dropoffs (user_id, bottles, location, material_type, notes) VALUES (?, ?, ?, ?, ?) RETURNING *'
-      ).bind(user_id, bottles, location, material_type || 'plastic', notes || null).first();
+        'INSERT INTO dropoffs (user_id, bottles, weight_kg, location, material_type, notes, points_earned) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *'
+      ).bind(user_id, bottles, weight_kg, location, mat, notes || null, pts).first();
 
-      await env.DB.prepare('UPDATE users SET points = points + ? WHERE id = ?').bind(bottles, user_id).run();
+      await env.DB.prepare('UPDATE users SET points = points + ? WHERE id = ?').bind(pts, user_id).run();
 
-      return json(dropoff, 201);
+      return json({ ...dropoff, points_earned: pts }, 201);
     }
 
     if (path === '/api/dropoffs' && method === 'GET') {
@@ -208,9 +233,15 @@ export default {
       if (!factory_id || !material || !quantity_kg || !address) return error('factory_id, material, quantity_kg, and address required');
       if (quantity_kg < 50) return error('Minimum order is 50 kg');
 
+      // Derive price from material key
+      const matKey = material.includes('aluminum') || material.includes('can') ? 'cans' : 'plastic';
+      const price_per_kg = PRICE_PER_KG[matKey] ?? 0;
+      const total_egp    = price_per_kg * quantity_kg;
+      const invoice_id   = generateInvoiceId();
+
       const order = await env.DB.prepare(
-        'INSERT INTO orders (factory_id, material, quantity_kg, address, required_by, notes) VALUES (?, ?, ?, ?, ?, ?) RETURNING *'
-      ).bind(factory_id, material, quantity_kg, address, required_by || null, notes || null).first();
+        'INSERT INTO orders (factory_id, invoice_id, material, quantity_kg, price_per_kg, total_egp, address, required_by, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *'
+      ).bind(factory_id, invoice_id, material, quantity_kg, price_per_kg, total_egp, address, required_by || null, notes || null).first();
 
       return json(order, 201);
     }
@@ -227,6 +258,12 @@ export default {
       }
       const { results } = await env.DB.prepare(stmt).bind(...args).all();
       return json(results);
+    }
+
+    // ── Pricing ───────────────────────────────────────────────
+
+    if (path === '/api/pricing' && method === 'GET') {
+      return json(PRICE_PER_KG);
     }
 
     // ── Stats ─────────────────────────────────────────────────
