@@ -1331,15 +1331,15 @@ footer { background: var(--text); color: rgba(255,255,255,.65); padding: 3rem 2.
       const location = document.getElementById('locationSelect').value;
       const notes = document.getElementById('dropoffNotes').value.trim();
       if (!bottles||!weight_kg||!material_type||!location) return;
+      const RATES = { plastic: 25, cans: 30 };
       try {
         const result = await api('/api/dropoffs', { method:'POST', body: JSON.stringify({ user_id:currentUser.id, bottles, weight_kg, location, material_type, notes }) });
-        const pts = result.points_earned || 0;
+        const pts = result.points_earned || Math.round(weight_kg * (RATES[material_type] || 0));
         // Re-fetch user from server to get accurate points balance
         try {
           const fresh = await api('/api/users/' + currentUser.id);
           currentUser = fresh;
         } catch(_) {
-          // Fallback: update locally if re-fetch fails
           currentUser.points = (currentUser.points||0) + pts;
         }
         localStorage.setItem('tadweerhub_user', JSON.stringify(currentUser));
