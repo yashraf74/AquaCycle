@@ -231,7 +231,7 @@ export default {
     if (path === '/api/orders' && method === 'POST') {
       const { factory_id, material, quantity_kg, address, required_by, notes } = await request.json();
       if (!factory_id || !material || !quantity_kg || !address) return error('factory_id, material, quantity_kg, and address required');
-      if (quantity_kg < 50) return error('Minimum order is 50 kg');
+      if (quantity_kg < 1) return error('Minimum order is 1 kg');
 
       // Derive price from material key
       const matKey = material.includes('aluminum') || material.includes('can') ? 'cans' : 'plastic';
